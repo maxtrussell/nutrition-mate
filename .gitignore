@@ -1,0 +1,7 @@
+*.pyc
+*.swp
+*.swo
+*~
+env
+external
+secrets
