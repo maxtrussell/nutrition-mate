@@ -1,4 +1,5 @@
 CREATE DATABASE IF NOT EXISTS nm;
+CREATE USER IF NOT EXISTS 'maxtrussell'@'localhost';
 GRANT ALL PRIVILEGES ON nm.* TO 'maxtrussell'@'localhost';
 USE nm;
 
