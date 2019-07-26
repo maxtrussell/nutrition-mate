@@ -1,3 +1,5 @@
+import pkg.config.config as config
+
 from flask import Flask
 from flask import render_template
 from flask_bootstrap import Bootstrap
@@ -21,5 +23,9 @@ def weight_handler():
 def home_handler():
     return render_template("home.html", active_page="home")
 
+def init():
+    config.load_config("conf/config.ini")
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    init()
+    app.run(host=config.values["server"]["host"], port=config.values["server"]["port"])
