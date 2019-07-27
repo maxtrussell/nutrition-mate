@@ -5,6 +5,7 @@ USE nm;
 
 CREATE TABLE IF NOT EXISTS food (
     name VARCHAR(255) NOT NULL,
+    calories FLOAT NOT NULL,
     fat FLOAT NOT NULL,
     carbs FLOAT NOT NULL,
     protein FLOAT NOT NULL,

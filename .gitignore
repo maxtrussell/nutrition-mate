@@ -5,3 +5,4 @@
 env
 external
 secrets
+*__pycache__
