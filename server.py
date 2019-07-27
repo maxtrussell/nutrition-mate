@@ -45,7 +45,7 @@ def init():
             config.values["mysql"]["host"],
             config.values["mysql"]["database"]
     )
-    food.insert(db, "food")
+    food.delete(db, "food")
 
 if __name__ == "__main__":
     init()

@@ -73,3 +73,39 @@ class Food:
         )
         database.client.commit()
         cursor.close()
+
+    def delete(self, database, table_name):
+        """Delete food by name from MySQL table
+        
+        Parameters:
+            database (db.db): MySQL database connection
+            table_name (string): name of the table to delete from
+        """
+        query = "DELETE FROM {} WHERE name=%s".format(table_name)
+        cursor = database.client.cursor()
+        cursor.execute(query, (self.name,))
+        database.client.commit()
+        cursor.close()
+
+    def update(self, database, table_name):
+        """Update food item in MySQL table
+
+        Parameters:
+            database (db.db): MySQL database connection
+            table_name (string): name of the table to update in
+        """
+        query = (
+                "UPDATE {} SET calories=%s, fat=%s, carbs=%s, protein=%s, ".format(table_name) +
+                "alcohol=%s, sugar=%s, fiber=%s, servings=%s, username=%s " +
+                "WHERE name=%s"
+                )
+        cursor = database.client.cursor()
+        cursor.execute(
+                query, (
+                    self.calories, self.fat, self.carbs, self.protein,
+                    self.alcohol, self.sugar, self.fiber, json.dumps(self.servings),
+                    self.user, self.name
+                )
+        )
+        database.client.commit()
+        cursor.close()

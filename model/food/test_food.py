@@ -30,15 +30,59 @@ class TestFood(unittest.TestCase):
         self.assertEqual(mock_db.client.mock_cursor.execute_called, 1)
         self.assertEqual(mock_db.client.mock_cursor.close_called, 1)
         expected_query = (
-                "INSERT INTO mock table " + 
+                "INSERT INTO mock table " +
                 "(name, calories, fat, carbs, protein, alcohol, sugar, fiber, servings, username) " +
                 "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                )
+        )
         self.assertEqual(mock_db.client.mock_cursor.query, expected_query)
-        expected_values = (
+        expected_values = (         
                 "Apple", 52.0, 0.2, 14.0, 0.3, 0.0, 10.0, 2.4,
                 '{"100g": 100, "1 medium": 182}', "maxtrussell"
+        )
+        self.assertEqual(mock_db.client.mock_cursor.values, expected_values)
+
+    def test_delete(self):
+        mock_db = DB(
+                "mock username",
+                "mock password",
+                "mock host",
+                "mock database",
+                mock=True
                 )
+        self.food.delete(mock_db, "mock table")
+        self.assertEqual(mock_db.client.cursor_called, 1)
+        self.assertEqual(mock_db.client.commit_called, 1)
+        self.assertEqual(mock_db.client.mock_cursor.execute_called, 1)
+        self.assertEqual(mock_db.client.mock_cursor.close_called, 1)
+        expected_query = "DELETE FROM mock table WHERE name=%s"
+        self.assertEqual(mock_db.client.mock_cursor.query, expected_query)
+        expected_values = ("Apple",)
+        self.assertEqual(mock_db.client.mock_cursor.values, expected_values)
+
+    def test_update(self):
+        mock_db = DB(
+                "mock username",
+                "mock password",
+                "mock host",
+                "mock database",
+                mock=True
+                )
+        self.food.update(mock_db, "mock table")
+        self.assertEqual(mock_db.client.cursor_called, 1)
+        self.assertEqual(mock_db.client.commit_called, 1)
+        self.assertEqual(mock_db.client.mock_cursor.execute_called, 1)
+        self.assertEqual(mock_db.client.mock_cursor.close_called, 1)
+        expected_query = (
+                "UPDATE mock table SET calories=%s, fat=%s, carbs=%s, protein=%s, " +
+                "alcohol=%s, sugar=%s, fiber=%s, servings=%s, username=%s " +
+                "WHERE name=%s"
+        )
+        self.assertEqual(mock_db.client.mock_cursor.query, expected_query)
+        expected_values = (
+                52.0, 0.2, 14.0, 0.3, 0.0, 10.0, 2.4,
+                '{"100g": 100, "1 medium": 182}', "maxtrussell",
+                "Apple"
+        )
         self.assertEqual(mock_db.client.mock_cursor.values, expected_values)
 
     def test_normalize_double(self):
