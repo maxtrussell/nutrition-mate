@@ -1,0 +1,5 @@
+USE nm;
+
+DROP TABLE IF EXISTS food;
+DROP TABLE IF EXISTS food_log;
+DROP TABLE IF EXISTS weight_log;
