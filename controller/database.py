@@ -1,0 +1,89 @@
+from flask import Blueprint, render_template, request, abort, redirect
+
+import model.food.food as _food
+import pkg.config.config as config
+import pkg.db.db as _db
+
+db_controller = Blueprint("db_controller", __name__)
+
+@db_controller.route("/database", methods=["GET", "POST"])
+def database_handler():
+    db = _db.DB(
+            config.values["mysql"]["username"],
+            config.values["mysql"]["password"],
+            config.values["mysql"]["host"],
+            config.values["mysql"]["database"]
+            )
+    foods = _food.get_all_foods(db, config.values["mysql"]["food_table"])
+    if request.method == "GET":
+        return render_template("database.html", active_page="database", foods=foods)
+    else:
+        query = request.form["query"]
+        used_foods = []
+        for food in foods:
+            if query.lower() in food.name.lower():
+                used_foods.append(food)
+        return render_template("database.html", active_page="database", foods=used_foods, query=query)
+
+@db_controller.route("/database/clear", methods=["GET"])
+def database_clear_handler():
+    return redirect("/database")
+
+@db_controller.route("/database/delete", methods=["POST"])
+def database_delete_handler():
+    try:
+        db = _db.DB(
+            config.values["mysql"]["username"],
+            config.values["mysql"]["password"],
+            config.values["mysql"]["host"],
+            config.values["mysql"]["database"]
+            )
+        name = request.form["name"]
+        _food.delete_by_name(db, config.values["mysql"]["food_table"], name)
+    except Exception as e: 
+        # TODO: add banner message on error
+        print("failed to delete food")
+        print(e)
+    finally:
+        return redirect("/database")
+        
+
+@db_controller.route("/database/add", methods=["POST"])
+def database_add_handler():
+    try:
+        if request.form["name"] == "" or request.form["quantity"] == "":
+            raise Exception("food requires 'name' and 'quantity'")
+
+        parsed = {}
+        for key, value in request.form.items():
+            key, value = key.strip(), value.strip()
+            if key == "servings":
+                parsed[key] = _food.parse_servings(value)
+            elif key == "name":
+                parsed[key] = value
+            elif value == "":
+                parsed[key] = 0.0
+            else:
+                parsed[key] = float(value)
+
+        food = _food.Food(
+                name=parsed["name"], calories=parsed["calories"], fat=parsed["fat"],
+                carbs=parsed["carbs"], protein=parsed["protein"],
+                alcohol=parsed["alcohol"], sugar=parsed["sugar"], fiber=parsed["fiber"],
+                user="maxtrussell", servings=parsed["servings"]
+                )
+        food = food.normalize(current=parsed["quantity"])
+
+        db = _db.DB(
+                config.values["mysql"]["username"],
+                config.values["mysql"]["password"],
+                config.values["mysql"]["host"],
+                config.values["mysql"]["database"]
+        )
+        food.insert(db, config.values["mysql"]["food_table"])
+    except Exception as e: 
+        # TODO: add banner message on error
+        print("failed to add food")
+        print(e)
+    finally:
+        return redirect("/database")

@@ -1,3 +1,66 @@
 {% include "blank_page.html" %}
+{% include "db_add_modal.html" %}
+{% include "db_delete_modal.html" %}
+<head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/database.css') }}">
 
-<h1 align="center">Food Database</h1>
+</head>
+
+
+<div align="center" class="slim">
+<h1 align="center" class="pad-vert slim">Food Database</h1>
+
+<div align="center">
+    <div style="float:left;">
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addModal">Add</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+    </div>
+    <div align="right">
+        <form action="/database" method="post" style="display: inline-block;">
+            <input style="width:300px;" name="query" type="text" value="{{ query }}"></input>
+            <button type="submit" class="btn btn-info">Search</button>
+        </form>
+        <form action="/database/clear" method="get" style="display: inline-block;">
+            <button class="btn">Clear</button>
+        </form>
+    </div>
+</div>
+</form>
+
+<div class="tableFixHead">
+    <table class="table table-striped table-bordered table-hover" align="center">
+        <thead class="thead-dark">
+            <tr>
+                <th>Food</th>
+                <th>Serving</th>
+                <th>Calories</th>
+                <th>Fat</th>
+                <th>Carbs</th>
+                <th>Protein</th>
+                <th>Sugar</th>
+                <th>Fiber</th>
+                <th>Alcohol</th>
+                <th>Log</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# Fill out database rows #}
+            {%- for food in foods -%}
+            <tr>
+                <td><a href="/food/{{ food.name }}">{{ food.name }}</a></td>
+                <td>100g</td>
+                <td>{{ food.calories | int }}</td>
+                <td>{{ "%0.2f" | format(food.fat) }}</td>
+                <td>{{ "%0.2f" | format(food.carbs) }}</td>
+                <td>{{ "%0.2f" | format(food.protein) }}</td>
+                <td>{{ "%0.2f" | format(food.sugar) }}</td>
+                <td>{{ "%0.2f" | format(food.fiber) }}</td>
+                <td>{{ "%0.2f" | format(food.alcohol) }}</td>
+                <td><a href="/log/add/{{ food.name }}">Add</a></td>
+            </tr>
+            {%- endfor -%}
+        </tbody>
+    </table>
+</div>
+</div>
+

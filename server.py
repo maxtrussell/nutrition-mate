@@ -1,22 +1,23 @@
-import pkg.config.config as config
-
 from flask import Flask
 from flask import render_template
 from flask_bootstrap import Bootstrap
 
+from controller.database import db_controller
+from model.food.food import Food
+import pkg.config.config as config
 from pkg.db.db import DB
-from model.food.food import Food, get_food
 
 app = Flask("Nutrition Mate")
 bootstrap = Bootstrap(app)
-
-@app.route("/database")
-def database_handler():
-    return render_template("database.html", active_page="database")
+app.register_blueprint(db_controller)
 
 @app.route("/log")
 def log_handler():
     return render_template("log.html", active_page="log")
+
+@app.route("/meals")
+def meals_handler():
+    return render_template("meals.html", active_page="meals")
 
 @app.route("/weight")
 def weight_handler():
@@ -39,16 +40,7 @@ def init():
         servings={"100g": 100, "1 medium": 182},
         user="maxtrussell"
     )
-    db = DB(
-            config.values["mysql"]["username"],
-            config.values["mysql"]["password"],
-            config.values["mysql"]["host"],
-            config.values["mysql"]["database"]
-    )
-    food.insert(db, "food")
-    ret = get_food(db, "food", "APPLE")
-    print(ret.name)
 
 if __name__ == "__main__":
     init()
-    app.run(host=config.values["server"]["host"], port=config.values["server"]["port"])
+    app.run(host=config.values["server"]["host"], port=config.values["server"]["port"], debug=True)

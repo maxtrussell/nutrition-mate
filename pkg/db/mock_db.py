@@ -31,7 +31,7 @@ class MockCursor:
 
     def fetchone(self):
         row = (
-                'Apple', 52.0, 0.2, 14.0, 0.3, 0.0, 10.0, 2.4,
+                'Apple', 52, 0.2, 14, 0.3, 0, 10, 2.4,
                 '{"100g": 100, "1 medium": 182}', 'maxtrussell'
         )
         self.fetchone_called += 1
@@ -39,11 +39,11 @@ class MockCursor:
 
     def fetchall(self):
         row1 = (
-                'Apple', 52.0, 0.2, 14.0, 0.3, 0.0, 10.0, 2.4,
+                'Apple', 52, 0.2, 14, 0.3, 0, 10, 2.4,
                 '{"100g": 100, "1 medium": 182}', 'maxtrussell'
         )
         row2 = (
-                'Big Apple', 104.0, 0.4, 28.0, 0.6, 0.0, 20.0, 4.8,
+                'Big Apple', 104, 0.4, 28, 0.6, 0, 20, 4.8,
                 '{"100g": 100, "1 medium": 182}', 'maxtrussell'
         )
         self.fetchall_called += 1

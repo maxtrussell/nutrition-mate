@@ -1,5 +1,6 @@
 import unittest
-from model.food.food import Food, row_to_food, get_all_foods, get_food
+from model.food.food import Food, row_to_food, get_all_foods, get_food, parse_servings
+from model.food.food import delete_by_name
 from pkg.db.db import DB
 
 class TestFood(unittest.TestCase):
@@ -49,14 +50,14 @@ class TestFood(unittest.TestCase):
                 "mock database",
                 mock=True
                 )
-        self.food.delete(mock_db, "mock table")
+        delete_by_name(mock_db, "mock table", "Apple")
         self.assertEqual(mock_db.client.cursor_called, 1)
         self.assertEqual(mock_db.client.commit_called, 1)
         self.assertEqual(mock_db.client.mock_cursor.execute_called, 1)
         self.assertEqual(mock_db.client.mock_cursor.close_called, 1)
-        expected_query = "DELETE FROM mock table WHERE name=%s"
+        expected_query = "DELETE FROM mock table WHERE lower(name)=%s"
         self.assertEqual(mock_db.client.mock_cursor.query, expected_query)
-        expected_values = ("Apple",)
+        expected_values = ("apple",)
         self.assertEqual(mock_db.client.mock_cursor.values, expected_values)
 
     def test_update(self):
@@ -113,7 +114,7 @@ class TestFood(unittest.TestCase):
         self.assertEqual(mock_db.client.mock_cursor.execute_called, 1)
         self.assertEqual(mock_db.client.mock_cursor.close_called, 1)
         self.assertEqual(mock_db.client.mock_cursor.fetchall_called, 1)
-        expected_query = "SELECT * FROM mock table"
+        expected_query = "SELECT * FROM mock table LIMIT 100"
         self.assertEqual(mock_db.client.mock_cursor.query, expected_query)
         self.assertEqual(mock_db.client.mock_cursor.values, None)
 
@@ -172,6 +173,25 @@ class TestFood(unittest.TestCase):
         self.assertEqual(output.fiber, 2.4)
         self.assertEqual(output.servings, self.food.servings)
         self.assertEqual(output.user, self.food.user)
+
+    def test_parse_servings(self):
+        self.assertEqual(parse_servings("   "), {"100g": 100, "1g": 1})
+        self.assertEqual(parse_servings(""), {"100g": 100, "1g": 1})
+
+        raw1 = "1 bagel : 250"
+        output = parse_servings(raw1)
+        self.assertEqual(len(output), 3)
+        self.assertEqual(output["1 bagel"], 250.0)
+        self.assertEqual(output["100g"], 100.0)
+
+        raw2 = "1 bagel : 250,1 pint: 0.7     ,   1 bag:200"
+        output = parse_servings(raw2)
+        self.assertEqual(len(output), 5)
+        self.assertEqual(output["1 bagel"], 250.0)
+        self.assertEqual(output["1 pint"], 0.7)
+        self.assertEqual(output["1 bag"], 200.0)
+        self.assertEqual(output["100g"], 100.0)
+
 
 if __name__ == "__main__":
     unittest.main()

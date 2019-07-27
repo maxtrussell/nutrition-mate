@@ -1,0 +1,50 @@
+.slim {
+    max-width: 1000px;
+    margin: auto;
+    float: none;
+}
+
+.thead-dark {
+    text-align: left;
+    background-color: #404040;
+    color: white;
+}
+
+.pad-all {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.pad-vert {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.pad-down {
+    padding-bottom: 12px;
+}
+
+.pad-left {
+    padding-left: 12px;
+}
+
+.pad-right {
+    padding-right: 12px;
+}
+
+.db-scroll {
+    max-height: 500px;
+    max-width: 1000px;
+    overflow: auto;
+}
+
+.tableFixHead          { overflow-y: auto; height: 600px; }
+.tableFixHead thead th { position: sticky; top: 0; }
+th     { background:#404040; }
+
+a:link    {color:#000;}  /* unvisited link  */
+a:visited {color:#000;}  /* visited link    */
+a:hover   {color:#000;}  /* mouse over link */
+a:active  {color:#000;}  /* selected link   */

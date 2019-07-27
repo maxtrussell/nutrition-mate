@@ -14,7 +14,7 @@ def get_all_foods(database, table_name):
         foods ([]Food): list of food objects from table
     """
     # send the query
-    query = "SELECT * FROM {}".format(table_name)
+    query = "SELECT * FROM {} LIMIT 100".format(table_name)
     cursor = database.client.cursor()
     cursor.execute(query)
 
@@ -68,6 +68,30 @@ def row_to_food(row):
     food.user = row[9]
     return food
 
+def parse_servings(raw):
+    servings = {"100g": 100.0, "1g": 1.0}
+    pairs = raw.split(",")
+    for pair in pairs:
+        keyvals = pair.split(":")
+        if len(keyvals) == 2:
+            key = keyvals[0].strip()
+            val = float(keyvals[1].strip())
+            servings[key] = val
+    return servings
+
+def delete_by_name(database, table_name, food_name):
+    """Delete food by name from MySQL table
+    
+    Parameters:
+        database (db.db): MySQL database connection
+        table_name (string): name of the table to delete from
+    """
+    query = "DELETE FROM {} WHERE lower(name)=%s".format(table_name)
+    cursor = database.client.cursor()
+    cursor.execute(query, (food_name.lower(),))
+    database.client.commit()
+    cursor.close()
+
 class Food:
     def __init__(self, 
             name="",
@@ -82,7 +106,6 @@ class Food:
             user="",
             ):
         self.name = name
-        self.calories = calories
         self.fat = fat
         self.carbs = carbs
         self.protein = protein
@@ -90,7 +113,20 @@ class Food:
         self.sugar = sugar
         self.fiber = fiber
         self.servings = servings
+        self.servings["100g"] = 100
         self.user = user
+        if calories == 0.0:
+            calories = self.calculate_calories()
+        self.calories = calories
+
+    def calculate_calories(self):
+        """Calculates calories from macro nutrients
+
+        Returns:
+            calories (float): number of calories in this food
+        """
+        return (self.fat*9 + self.carbs*4 + self.protein*4 +
+                self.alcohol*7)
 
     def normalize(self, current=100.0, target=100.0):
         """Scales the nutrition info of a Food object
@@ -136,19 +172,6 @@ class Food:
                     self.user
                 )
         )
-        database.client.commit()
-        cursor.close()
-
-    def delete(self, database, table_name):
-        """Delete food by name from MySQL table
-        
-        Parameters:
-            database (db.db): MySQL database connection
-            table_name (string): name of the table to delete from
-        """
-        query = "DELETE FROM {} WHERE name=%s".format(table_name)
-        cursor = database.client.cursor()
-        cursor.execute(query, (self.name,))
         database.client.commit()
         cursor.close()
 
