@@ -3,6 +3,71 @@ import pkg.db.db as db
 
 import json
 
+def get_all_foods(database, table_name):
+    """Gets all foods from given MySQL table
+
+    Parameters:
+        database (db.DB): MySQL db object 
+        table_name (string): name of MySQL table
+
+    Returns:
+        foods ([]Food): list of food objects from table
+    """
+    # send the query
+    query = "SELECT * FROM {}".format(table_name)
+    cursor = database.client.cursor()
+    cursor.execute(query)
+
+    foods = []
+    for row in cursor.fetchall():
+        foods.append(row_to_food(row))
+
+    cursor.close()
+    return foods
+
+def get_food(database, table_name, food_name):
+    """Gets a food by name from a MySQL table
+
+    Parameters:
+        database (db.DB): MySQL db object 
+        table_name (string): name of MySQL table
+        food_name (string): name of food to query
+
+    Returns:
+        food (Food): food object from table
+    """
+    query = "SELECT * FROM {} WHERE lower(name)=%s".format(table_name)
+    cursor = database.client.cursor()
+    cursor.execute(query, (food_name.lower(),))
+
+    row = cursor.fetchone()
+    food = row_to_food(row)
+
+    cursor.close()
+    return food
+
+def row_to_food(row):
+    """Initializes a food item from a MySQL row
+
+    Parameters:
+        row (tuple): a tuple containing all attributes of food
+
+    Returns:
+        food (Food): a newly instantiated Food object
+    """
+    food = Food()
+    food.name = row[0]
+    food.calories = row[1]
+    food.fat = row[2]
+    food.carbs = row[3]
+    food.protein = row[4]
+    food.alcohol = row[5]
+    food.sugar = row[6]
+    food.fiber = row[7]
+    food.servings = json.loads(row[8])
+    food.user = row[9]
+    return food
+
 class Food:
     def __init__(self, 
             name="",
@@ -109,3 +174,4 @@ class Food:
         )
         database.client.commit()
         cursor.close()
+

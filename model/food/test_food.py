@@ -1,5 +1,5 @@
 import unittest
-from model.food.food import Food
+from model.food.food import Food, row_to_food, get_all_foods, get_food
 from pkg.db.db import DB
 
 class TestFood(unittest.TestCase):
@@ -84,6 +84,55 @@ class TestFood(unittest.TestCase):
                 "Apple"
         )
         self.assertEqual(mock_db.client.mock_cursor.values, expected_values)
+
+    def test_get_food(self):
+        mock_db = DB(
+                "mock username",
+                "mock password",
+                "mock host",
+                "mock database",
+                mock=True
+                )
+        output = get_food(mock_db, "mock table", "Apple")
+        self.assertEqual(mock_db.client.mock_cursor.execute_called, 1)
+        self.assertEqual(mock_db.client.mock_cursor.close_called, 1)
+        self.assertEqual(mock_db.client.mock_cursor.fetchone_called, 1)
+        expected_query = "SELECT * FROM mock table WHERE lower(name)=%s"
+        self.assertEqual(mock_db.client.mock_cursor.query, expected_query)
+        self.assertEqual(mock_db.client.mock_cursor.values, ("apple",))
+
+    def test_get_all_foods(self):
+        mock_db = DB(
+                "mock username",
+                "mock password",
+                "mock host",
+                "mock database",
+                mock=True
+                )
+        outputs = get_all_foods(mock_db, "mock table")
+        self.assertEqual(mock_db.client.mock_cursor.execute_called, 1)
+        self.assertEqual(mock_db.client.mock_cursor.close_called, 1)
+        self.assertEqual(mock_db.client.mock_cursor.fetchall_called, 1)
+        expected_query = "SELECT * FROM mock table"
+        self.assertEqual(mock_db.client.mock_cursor.query, expected_query)
+        self.assertEqual(mock_db.client.mock_cursor.values, None)
+
+    def test_row_to_food(self):
+        row = (
+                'Apple', 52.0, 0.2, 14.0, 0.3, 0.0, 10.0, 2.4,
+                '{"100g": 100, "1 medium": 182}', 'maxtrussell'
+        )
+        output = row_to_food(row)
+        self.assertEqual(output.name, self.food.name)
+        self.assertEqual(output.calories, 52.0)
+        self.assertEqual(output.fat, 0.2)
+        self.assertEqual(output.carbs, 14.0)
+        self.assertEqual(output.protein, 0.3)
+        self.assertEqual(output.alcohol, 0.0)
+        self.assertEqual(output.sugar, 10.0)
+        self.assertEqual(output.fiber, 2.4)
+        self.assertEqual(output.servings, self.food.servings)
+        self.assertEqual(output.user, self.food.user)
 
     def test_normalize_double(self):
         output = self.food.normalize(current=50.0)

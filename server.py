@@ -5,7 +5,7 @@ from flask import render_template
 from flask_bootstrap import Bootstrap
 
 from pkg.db.db import DB
-from model.food.food import Food
+from model.food.food import Food, get_food
 
 app = Flask("Nutrition Mate")
 bootstrap = Bootstrap(app)
@@ -45,7 +45,9 @@ def init():
             config.values["mysql"]["host"],
             config.values["mysql"]["database"]
     )
-    food.delete(db, "food")
+    food.insert(db, "food")
+    ret = get_food(db, "food", "APPLE")
+    print(ret.name)
 
 if __name__ == "__main__":
     init()
