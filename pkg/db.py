@@ -1,5 +1,5 @@
 import mysql.connector
-from pkg.db.mock_db import MockClient
+from pkg.mock_db import MockClient
 
 class DB:
     def __init__(self, username, password, host, database, mock=False):

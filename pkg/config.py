@@ -1,4 +1,4 @@
-from pkg.gcp.gcp import SecretFetcher
+from pkg.gcp import SecretFetcher
 import configparser
 
 values = None

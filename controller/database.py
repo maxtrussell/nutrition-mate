@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, abort, redirect
 
-import model.food.food as _food
-import pkg.config.config as config
-import pkg.db.db as _db
+import model.food as _food
+import pkg.config as config
+import pkg.db as _db
 
 db_controller = Blueprint("db_controller", __name__)
 

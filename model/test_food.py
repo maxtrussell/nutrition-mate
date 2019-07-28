@@ -1,7 +1,7 @@
 import unittest
-from model.food.food import Food, row_to_food, get_all_foods, get_food, parse_servings
-from model.food.food import delete_by_name
-from pkg.db.db import DB
+from model.food import Food, row_to_food, get_all_foods, get_food, parse_servings
+from model.food import delete_by_name
+from pkg.db import DB
 
 class TestFood(unittest.TestCase):
     def setUp(self):

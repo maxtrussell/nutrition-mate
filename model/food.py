@@ -1,5 +1,4 @@
 import pkg.config as config
-import pkg.db.db as db
 
 import json
 

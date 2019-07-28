@@ -25,10 +25,10 @@ CREATE TABLE IF NOT EXISTS food_log (
     PRIMARY KEY (time)
 );
 
-CREATE TABLE IF NOT EXISTS weight_log (
-    time TIMESTAMP NOT NULL,
+CREATE TABLE IF NOT EXISTS weight (
+    date DATE NOT NULL,
     weight FLOAT NOT NULL,
     notes VARCHAR(255),
-    PRIMARY KEY (time)
+    PRIMARY KEY (date)
 );
 

@@ -1,4 +1,55 @@
 {% include "blank_page.html" %}
 
-<h1 align="center">Weight</h1>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/custom.css') }}">
+</head>
+
+
+<div align="center" class="slim">
+    <h1 align="center" class="pad-vert slim">Weight Log</h1>
+
+    <form action="/weight" style="display: inline-block;" class="pad-vert">
+        <font size="+2">Showing: </font><input type="date" name="selected_date" value="{{ date }}">
+        <input type="submit">
+    </form>
+    </br>
+    <div>
+        <form action="/weight/add" method="post" style="display: inline-block;">
+            <input type="text" name="weight" placeholder="155.0" style="width:200px;">
+            <input type="text" name="notes" placeholder="notes" style="width:500px;">
+            <input type="date" name="log_date" value="{{ date }}">
+            <input type="submit">
+        </form>
+    </div>
+
+    <!-- Table -->
+    <div class="tableFixHead">
+        <table class="table table-striped table-bordered table-hover" align="center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Weight</th>
+                    <th>5 Day Avg.</th>
+                    <th>10 Day Avg.</th>
+                    <th>Notes</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {# Fill out database rows #}
+                {%- for row in weights -%}
+                <tr>
+                    <td>{{ row.date }}</td>
+                    <td>{{ "%0.1f" | format(row.weight) }}</td>
+                    <td>{{ "%0.1f" | format(row.weight) }}</td>
+                    <td>{{ "%0.1f" | format(row.weight) }}</td>
+                    <td>{{ row.notes }}</td>
+                    <td><a href="/weight/delete/{{ row.date }}">Delete</a></td>
+                </tr>
+                {%- endfor -%}
+            </tbody>
+        </table>
+    </div>
+
+</div>
 
