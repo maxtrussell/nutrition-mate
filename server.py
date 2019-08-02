@@ -3,6 +3,8 @@ from flask import render_template
 from flask_bootstrap import Bootstrap
 
 from controller.database import db_controller
+from controller.food import food_controller
+from controller.log import log_controller
 from controller.weight import weight_controller
 import pkg.config as config
 
@@ -10,6 +12,9 @@ app = Flask("Nutrition Mate")
 bootstrap = Bootstrap(app)
 app.register_blueprint(db_controller)
 app.register_blueprint(weight_controller)
+app.register_blueprint(food_controller)
+app.register_blueprint(log_controller)
+# TODO: register log
 
 @app.route("/log")
 def log_handler():

@@ -30,10 +30,11 @@ def row_to_weight(row):
     return Weight(row[1], date=row[0], notes=row[2])
 
 class Weight:
-    def __init__(self, weight, date=datetime.now(), notes=""):
+    def __init__(self, weight, date=datetime.now(), notes="", username="maxtrussell"):
         self.weight = weight
         self.date = format_date(date)
         self.notes = notes
+        self.username = username
 
     def insert(self, db, table_name):
         """Inserts weight object into MySQL table
@@ -44,10 +45,10 @@ class Weight:
         """
         query = (
                 "INSERT INTO {} ".format(table_name) +
-                "(date, weight, notes) VALUES (%s, %s, %s)"
+                "(date, weight, notes, username) VALUES (%s, %s, %s, %s)"
                 )
         cursor = db.client.cursor()
-        cursor.execute(query, (self.date, self.weight, self.notes))
+        cursor.execute(query, (self.date, self.weight, self.notes, self.username))
         db.client.commit()
         cursor.close()
 

@@ -91,6 +91,31 @@ def delete_by_name(database, table_name, food_name):
     database.client.commit()
     cursor.close()
 
+# TODO: test
+# TODO: use
+def search(database, table_name, search_text):
+    """Searches for foods from a MySQL table
+
+    Parameters:
+        database (db.DB): MySQL db object 
+        table_name (string): name of MySQL table
+        search_text (string): text to search for
+
+    Returns:
+        matches ([]Food): food object(s) from table
+    """
+    query = "SELECT * FROM {} WHERE lower(name) LIKE %s LIMIT 100".format(table_name)
+    cursor = database.client.cursor()
+    search_text = "%" + search_text + "%"
+    cursor.execute(query, (search_text.lower(),))
+
+    matches = []
+    for row in cursor.fetchall():
+        matches.append(row_to_food(row))
+
+    cursor.close()
+    return matches
+
 class Food:
     def __init__(self, 
             name="",
