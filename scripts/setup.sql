@@ -18,16 +18,15 @@ CREATE TABLE IF NOT EXISTS food (
 );
 
 CREATE TABLE IF NOT EXISTS food_log (
+    id INTEGER NOT NULL AUTO_INCREMENT,
     time TIMESTAMP NOT NULL,
     name VARCHAR(255) NOT NULL,
     serving VARCHAR(255) NOT NULL,
     quantity FLOAT NOT NULL,
     username VARCHAR(255),
-    PRIMARY KEY (time),
+    PRIMARY KEY (id),
     FOREIGN KEY (name)
         REFERENCES food(name)
-        ON DELETE REJECT
-        ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS weight (

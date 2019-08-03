@@ -36,7 +36,7 @@ def log_handler():
         fiberSum += entry.food.fiber
 
     return render_template(
-            "log.html", active_page="log", date=selected_date, entries=entries,
+            "log.html", active_page="log", selectedDate=selected_date, entries=entries,
             calorieSum=calorieSum, proteinSum=proteinSum, sugarSum=sugarSum, fiberSum=fiberSum
             )
 
@@ -48,9 +48,7 @@ def log_add_handler():
         config.values["mysql"]["host"],
         config.values["mysql"]["database"]
         )
-    insert_time = request.form.get("insertDate", default=None)
-    # TODO: remove
-    insert_time = None
+    selected_date = request.form.get("selectedDate", default=None)
     name = request.form.get("name")
     serving = request.form.get("serving")
     quantity = request.form.get("quantity", type=float)
@@ -58,17 +56,39 @@ def log_add_handler():
 
     food = _food.get_food(db, config.values["mysql"]["food_table"], name)
     
-    entry = _log.LogEntry(food, time=insert_time, quantity=quantity, serving=serving)
+    entry = _log.LogEntry(food, time=selected_date, quantity=quantity, serving=serving)
     entry.insert(db, config.values["mysql"]["log_table"], )
-    return redirect(url_for("log_controller.log_handler", selectedDate=insert_time))
+    return redirect(url_for("log_controller.log_handler", selectedDate=selected_date))
 
-@log_controller.route("/log/delete/<time>", methods=["GET"])
-def log_delete_handler(time):
+@log_controller.route("/log/delete/<id>", methods=["GET"])
+def log_delete_handler(id):
     db = DB(
         config.values["mysql"]["username"],
         config.values["mysql"]["password"],
         config.values["mysql"]["host"],
         config.values["mysql"]["database"]
         )
-    _log.delete_entry(db, config.values["mysql"]["log_table"], time)
-    return redirect(url_for("log_controller.log_handler", selectedDate=toTime(time).date()))
+    _log.delete_entry(db, config.values["mysql"]["log_table"], id)
+    selected_date = request.args.get("selectedDate", default="")
+    if selected_date != "":
+        selected_date = toDate(selected_date)
+    else:
+        selected_date = datetime.now().date()
+    return redirect(url_for("log_controller.log_handler", selectedDate=selected_date))
+
+@log_controller.route("/log/search")
+def log_search_handler():
+    db = DB(
+        config.values["mysql"]["username"],
+        config.values["mysql"]["password"],
+        config.values["mysql"]["host"],
+        config.values["mysql"]["database"]
+        )
+    query = request.args.get("query", default="")
+    results = _food.search(db, config.values["mysql"]["food_table"], query.lower())
+    if len(results) == 1:
+        return redirect("/food/{}".format(results[0].name))
+    else:
+        return redirect(url_for("db_controller.database_handler", query=query))
+
+

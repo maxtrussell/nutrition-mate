@@ -10,13 +10,16 @@
 <h1 align="center" class="pad-vert slim">Food Log</h1>
 
 <form action="/log" style="display: inline-block;" class="pad-vert">
-    <font size="+2">Showing: </font><input type="date" name="selectedDate" value="{{ date }}">
+    <font size="+2">Showing: </font><input type="date" name="selectedDate" value="{{ selectedDate }}">
     <input type="submit">
+</form>
+<form action="/log" style="display: inline-block;">
+    <button type="submit">Today</button>
 </form>
 
 <div align="center">
     <div align="right">
-        <form action="/database" style="display: inline-block;" autocomplete="off">
+        <form action="/log/search" style="display: inline-block;" autocomplete="off">
             <input style="width:300px;" name="query" type="text" placeholder="apple"></input>
             <button type="submit" class="btn btn-info">Add</button>
         </form>
@@ -49,7 +52,10 @@
                 <td>{{ "%0.2f" | format(row.food.protein) }}</td>
                 <td>{{ "%0.2f" | format(row.food.sugar) }}</td>
                 <td>{{ "%0.2f" | format(row.food.fiber) }}</td>
-                <td><a href="/log/delete/{{ row.time }}">Delete</a></td>
+                <form id="delete{{ row.food.name }}" action="/log/delete/{{ row.id }}">
+                    <td><a onclick="document.getElementById('delete{{ row.food.name }}').submit();">Delete</a></td>
+                    <input name="selectedDate" type="hidden" value="{{ selectedDate }}"></input>
+                </form>
             </tr>
             {%- endfor -%}
             <tr>

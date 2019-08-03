@@ -21,20 +21,20 @@ def get_entries_by_day(db, log_table, food_table, start=date.today()):
     return entries
 
 def delete_entry(db, log_table, time):
-    query = "DELETE FROM {} WHERE time=%s".format(log_table)
+    query = "DELETE FROM {} WHERE id=%s".format(log_table)
     cursor = db.client.cursor()
     cursor.execute(query, (time,))
     db.client.commit()
     cursor.close()
 
 def process_row(row):
-    food = _food.row_to_food(row[5:])
-    logEntry = LogEntry(food, time=row[0], serving=row[2], quantity=row[3])
+    food = _food.row_to_food(row[6:])
+    logEntry = LogEntry(food, id=row[0], time=row[1], serving=row[3], quantity=row[4])
     return logEntry
 
 class LogEntry:
     def __init__(
-            self, food, time=datetime.now(), username="maxtrussell",
+            self, food, id=None, time=datetime.now(), username="maxtrussell",
             quantity=0.0, serving="100g"
             ):
         self.food = food.normalize(target=quantity*food.servings[serving])
@@ -42,6 +42,7 @@ class LogEntry:
         self.username = username
         self.quantity = quantity
         self.serving = serving
+        self.id = id
 
     def insert(self, db, table_name):
         """Inserts foode entry into MySQL table

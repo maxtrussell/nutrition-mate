@@ -8,18 +8,20 @@
 <div align="center" class="slim">
     <h1 align="center" class="pad-vert slim">{{ food.name }}</h1>
 
-    <h3>Nutrition Info</h3>
-    <div style="float:left;" class="pad-down">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#logAdd">Log</button>
-    </div>
-    <div align="right" class="pad-down">
-        <select>
+    <form action="/log/add" method="post" autocomplete="off" class="pad-vert">
+        <input name="quantity" type="number" step="0.01" placeholder="1.00"></input>
+        X
+        <select name="serving">
             {% for name, qty in food.servings.items() %}
             <option value="{{ name }}">{{ name }}: {{ qty }}</option>
             {% endfor %}
         </select>
-    </div>
+        <input name="name" type="hidden" value="{{ food.name }}"></input>
+        <input type="date" name="selectedDate" value="{{ date }}">
+        <button type="submit" class="btn btn-primary pad-left">Add to Log</button>
+    </form>
 
+    <h3>Nutrition Info</h3>
     <div class="tableFixHead" style="clear: left">
         <table class="table table-striped table-bordered table-hover" align="center">
             <thead class="thead-dark">
