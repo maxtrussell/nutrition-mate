@@ -8,7 +8,7 @@ def get_entries_by_day(db, log_table, food_table, start=date.today()):
     end = start + timedelta(days=1)
     query = (
             "SELECT * FROM {0} INNER JOIN {1} ON ({0}.name={1}.name) ".format(log_table, food_table) +
-            "WHERE {}.time BETWEEN %s AND %s ORDER BY time DESC".format(log_table)
+            "WHERE {0}.time >= %s AND {0}.time < %s ORDER BY time DESC".format(log_table)
             )
     cursor = db.client.cursor()
     cursor.execute(query, (start, end))
