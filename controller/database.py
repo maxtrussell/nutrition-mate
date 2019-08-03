@@ -6,7 +6,7 @@ import pkg.db as _db
 
 db_controller = Blueprint("db_controller", __name__)
 
-@db_controller.route("/database", methods=["GET", "POST"])
+@db_controller.route("/database", methods=["GET"])
 def database_handler():
     db = _db.DB(
             config.values["mysql"]["username"],
@@ -14,16 +14,12 @@ def database_handler():
             config.values["mysql"]["host"],
             config.values["mysql"]["database"]
             )
-    foods = _food.get_all_foods(db, config.values["mysql"]["food_table"])
-    if request.method == "GET":
-        return render_template("database.html", active_page="database", foods=foods)
+    query = request.args.get("query", default="")
+    if query:
+        foods = _food.search(db, config.values["mysql"]["food_table"], query.lower())
     else:
-        query = request.form["query"]
-        used_foods = []
-        for food in foods:
-            if query.lower() in food.name.lower():
-                used_foods.append(food)
-        return render_template("database.html", active_page="database", foods=used_foods, query=query)
+        foods = _food.get_all_foods(db, config.values["mysql"]["food_table"])
+    return render_template("database.html", active_page="database", foods=foods, query=query)
 
 @db_controller.route("/database/clear", methods=["GET"])
 def database_clear_handler():

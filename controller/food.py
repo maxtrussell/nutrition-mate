@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 
 from flask import Blueprint, render_template, request, abort, redirect
 
@@ -19,7 +19,7 @@ def food_handler(name):
             )
     try:
         food = _food.get_food(db, config.values["mysql"]["food_table"], name)
-        return render_template("food.html", food=food)
+        return render_template("food.html", food=food, date=date.today())
     except Exception as e:
         # TODO: handle correctly
         print(e)

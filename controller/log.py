@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from flask import Blueprint, render_template, request, abort, redirect
+from flask import Blueprint, render_template, request, abort, redirect, url_for
 
 import model.food as _food
 import model.log as _log
@@ -48,7 +48,9 @@ def log_add_handler():
         config.values["mysql"]["host"],
         config.values["mysql"]["database"]
         )
-    time = request.form.get("time", default=datetime.now(), type=toTime)
+    insert_time = request.form.get("insertDate", default=None)
+    # TODO: remove
+    insert_time = None
     name = request.form.get("name")
     serving = request.form.get("serving")
     quantity = request.form.get("quantity", type=float)
@@ -56,9 +58,9 @@ def log_add_handler():
 
     food = _food.get_food(db, config.values["mysql"]["food_table"], name)
     
-    entry = _log.LogEntry(food, time=time, quantity=quantity, serving=serving)
-    entry.insert(db, config.values["mysql"]["log_table"])
-    return redirect("/log")
+    entry = _log.LogEntry(food, time=insert_time, quantity=quantity, serving=serving)
+    entry.insert(db, config.values["mysql"]["log_table"], )
+    return redirect(url_for("log_controller.log_handler", selectedDate=insert_time))
 
 @log_controller.route("/log/delete/<time>", methods=["GET"])
 def log_delete_handler(time):
@@ -69,4 +71,4 @@ def log_delete_handler(time):
         config.values["mysql"]["database"]
         )
     _log.delete_entry(db, config.values["mysql"]["log_table"], time)
-    return redirect("/log")
+    return redirect(url_for("log_controller.log_handler", selectedDate=toTime(time).date()))

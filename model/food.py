@@ -45,6 +45,20 @@ def get_food(database, table_name, food_name):
     cursor.close()
     return food
 
+def search(db, table, search):
+    search = "%" + search + "%"
+    query = "SELECT * FROM {} WHERE lower(name) LIKE %s LIMIT 100".format(table)
+    cursor = database.client.cursor()
+    cursor.execute(query)
+
+    foods = []
+    for row in cursor.fetchall():
+        foods.append(row_to_food(row))
+
+    cursor.close()
+    return foods
+
+
 def row_to_food(row):
     """Initializes a food item from a MySQL row
 
