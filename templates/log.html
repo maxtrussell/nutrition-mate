@@ -52,12 +52,9 @@
                 <td><a href="/food/{{ row.food.name }}">{{ row.food.name }}</a></td>
                 <td>{{ "%0.2f" | format(row.quantity) }} x {{ row.serving }}</td>
                 <td>{{ row.food.calories | int }}</td>
-                <td>{{ "%0.2f" | format(row.food.fat) }}</td>
-                <td>{{ "%0.2f" | format(row.food.carbs) }}</td>
                 <td>{{ "%0.2f" | format(row.food.protein) }}</td>
                 <td>{{ "%0.2f" | format(row.food.sugar) }}</td>
                 <td>{{ "%0.2f" | format(row.food.fiber) }}</td>
-                <td>{{ "%0.2f" | format(row.food.alcohol) }}</td>
                 <form id="delete{{ row.id }}" action="/log/delete/{{ row.id }}">
                     <td><a onclick="document.getElementById('delete{{ row.id }}').submit();">Delete</a></td>
                     <input name="selectedDate" type="hidden" value="{{ selectedDate }}"></input>
@@ -69,12 +66,9 @@
                 <td></td>
                 <td></td>
                 <td><b>{{ calorieSum | round | int }}</b></td>
-                <td><b>{{ fatSum | round | int }}</b></td>
-                <td><b>{{ carbsSum | round | int }}</b></td>
                 <td><b>{{ proteinSum | round | int }}</b></td>
                 <td><b>{{ sugarSum | round | int }}</b></td>
                 <td><b>{{ fiberSum | round | int }}</b></td>
-                <td><b>{{ alcoholSum | round | int }}</b></td>
                 <td></td>
             </tr>
         </tbody>

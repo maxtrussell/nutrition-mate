@@ -1,6 +1,6 @@
+# TODO: doc
 from datetime import datetime
 
-# TODO: doc
 def get_last_weights(db, table_name, num_weights=7):
     query = "SELECT * FROM {} ORDER BY date DESC LIMIT {}".format(table_name, num_weights)
     cursor = db.client.cursor()
@@ -13,7 +13,14 @@ def get_last_weights(db, table_name, num_weights=7):
     cursor.close()
     return weights
 
-# TODO: doc
+def get_rolling_averate(db, table_name, num_days):
+    query = "select avg(weight) from ( select * from {} ORDER BY date DESC LIMIT %s  ) as T;".format(table_name)
+    cursor = db.client.cursor()
+    cursor.execute(query, (num_days,))
+    avg = cursor.fetchone()[0]
+    cursor.close()
+    return avg
+
 def delete_by_date(db, table_name, date):
     date = format_date(date)
     query = "DELETE FROM {} WHERE date=%s".format(table_name)
@@ -22,7 +29,6 @@ def delete_by_date(db, table_name, date):
     db.client.commit()
     cursor.close()
 
-# TODO: doc
 def format_date(date=datetime.now()):
     return date.strftime("%Y-%m-%d")
 
