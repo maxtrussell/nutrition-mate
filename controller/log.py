@@ -28,16 +28,20 @@ def log_handler():
             )
 
     # generate daily sums
-    calorieSum, proteinSum, sugarSum, fiberSum = 0.0, 0.0, 0.0, 0.0
+    calorieSum, fatSum, carbsSum, proteinSum, sugarSum, fiberSum, alcoholSum = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
     for entry in entries:
         calorieSum += entry.food.calories
+        fatSum += entry.food.fat
+        carbsSum += entry.food.carbs
         proteinSum += entry.food.protein
         sugarSum += entry.food.sugar
         fiberSum += entry.food.fiber
+        alcoholSum += entry.food.alcohol
 
     return render_template(
             "log.html", active_page="log", selectedDate=selected_date, entries=entries,
-            calorieSum=calorieSum, proteinSum=proteinSum, sugarSum=sugarSum, fiberSum=fiberSum
+            calorieSum=calorieSum, proteinSum=proteinSum, sugarSum=sugarSum, fiberSum=fiberSum,
+            fatSum=fatSum, carbsSum=carbsSum, alcoholSum=alcoholSum
             )
 
 @log_controller.route("/log/add", methods=["POST"])

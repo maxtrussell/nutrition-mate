@@ -8,12 +8,15 @@ def get_last_weights(db, table_name, num_weights=7):
 
     weights = []
     for row in cursor.fetchall():
-        weights.append(row_to_weight(row))
+        weight = row_to_weight(row)
+        weight.five_day_avg = get_rolling_average(db, table_name, 5)
+        weight.ten_day_avg = get_rolling_average(db, table_name, 10)
+        weights.append(weight)
 
     cursor.close()
     return weights
 
-def get_rolling_averate(db, table_name, num_days):
+def get_rolling_average(db, table_name, num_days):
     query = "select avg(weight) from ( select * from {} ORDER BY date DESC LIMIT %s  ) as T;".format(table_name)
     cursor = db.client.cursor()
     cursor.execute(query, (num_days,))
@@ -41,6 +44,8 @@ class Weight:
         self.date = format_date(date)
         self.notes = notes
         self.username = username
+        self.five_day_avg = 0.0
+        self.ten_day_avg = 0.0
 
     def insert(self, db, table_name):
         """Inserts weight object into MySQL table

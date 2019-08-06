@@ -41,8 +41,8 @@
                 <tr>
                     <td>{{ row.date }}</td>
                     <td>{{ "%0.1f" | format(row.weight) }}</td>
-                    <td>{{ "%0.1f" | format(row.weight) }}</td>
-                    <td>{{ "%0.1f" | format(row.weight) }}</td>
+                    <td>{{ "%0.1f" | format(row.five_day_avg) }}</td>
+                    <td>{{ "%0.1f" | format(row.ten_day_avg) }}</td>
                     <td>{{ row.notes }}</td>
                     <td><a href="/weight/delete/{{ row.date }}">Delete</a></td>
                 </tr>
