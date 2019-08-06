@@ -1,7 +1,7 @@
 # TODO: doc
 from datetime import datetime
 
-def get_last_weights(db, table_name, num_weights=7):
+def get_last_weights(db, table_name, num_weights=100):
     query = "SELECT * FROM {} ORDER BY date DESC LIMIT {}".format(table_name, num_weights)
     cursor = db.client.cursor()
     cursor.execute(query)
