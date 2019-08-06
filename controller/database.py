@@ -2,23 +2,17 @@ from flask import Blueprint, render_template, request, abort, redirect
 
 import model.food as _food
 import pkg.config as config
-import pkg.db as _db
+import shared
 
 db_controller = Blueprint("db_controller", __name__)
 
 @db_controller.route("/database", methods=["GET"])
 def database_handler():
-    db = _db.DB(
-            config.values["mysql"]["username"],
-            config.values["mysql"]["password"],
-            config.values["mysql"]["host"],
-            config.values["mysql"]["database"]
-            )
     query = request.args.get("query", default="")
     if query:
-        foods = _food.search(db, config.values["mysql"]["food_table"], query.lower())
+        foods = _food.search(shared.db, config.values["mysql"]["food_table"], query.lower())
     else:
-        foods = _food.get_all_foods(db, config.values["mysql"]["food_table"])
+        foods = _food.get_all_foods(shared.db, config.values["mysql"]["food_table"])
     return render_template("database.html", active_page="database", foods=foods, query=query)
 
 @db_controller.route("/database/clear", methods=["GET"])
@@ -28,14 +22,8 @@ def database_clear_handler():
 @db_controller.route("/database/delete", methods=["POST"])
 def database_delete_handler():
     try:
-        db = _db.DB(
-            config.values["mysql"]["username"],
-            config.values["mysql"]["password"],
-            config.values["mysql"]["host"],
-            config.values["mysql"]["database"]
-            )
         name = request.form["name"]
-        _food.delete_by_name(db, config.values["mysql"]["food_table"], name)
+        _food.delete_by_name(shared.db, config.values["mysql"]["food_table"], name)
     except Exception as e: 
         # TODO: add banner message on error
         print("failed to delete food")
@@ -70,13 +58,7 @@ def database_add_handler():
                 )
         food = food.normalize(current=parsed["quantity"])
 
-        db = _db.DB(
-                config.values["mysql"]["username"],
-                config.values["mysql"]["password"],
-                config.values["mysql"]["host"],
-                config.values["mysql"]["database"]
-        )
-        food.insert(db, config.values["mysql"]["food_table"])
+        food.insert(shared.db, config.values["mysql"]["food_table"])
     except Exception as e: 
         # TODO: add banner message on error
         print("failed to add food")

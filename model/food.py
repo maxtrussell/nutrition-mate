@@ -1,3 +1,5 @@
+from dataclasses import dataclass, field
+
 import pkg.config as config
 
 import json
@@ -82,7 +84,7 @@ def row_to_food(row):
     return food
 
 def parse_servings(raw):
-    servings = {"100g": 100.0, "1g": 1.0}
+    servings = {}
     pairs = raw.split(",")
     for pair in pairs:
         keyvals = pair.split(":")
@@ -130,32 +132,24 @@ def search(database, table_name, search_text):
     cursor.close()
     return matches
 
+@dataclass
 class Food:
-    def __init__(self, 
-            name="",
-            calories=0.0,
-            fat=0.0,
-            carbs=0.0,
-            protein=0.0,
-            alcohol=0.0,
-            sugar=0.0,
-            fiber=0.0,
-            servings={},
-            user="",
-            ):
-        self.name = name
-        self.fat = fat
-        self.carbs = carbs
-        self.protein = protein
-        self.alcohol = alcohol
-        self.sugar = sugar
-        self.fiber = fiber
-        self.servings = servings
+    name: str = ""
+    calories: float = 0.0
+    fat: float = 0.0
+    carbs: float = 0.0
+    protein: float = 0.0
+    alcohol: float = 0.0
+    sugar: float = 0.0
+    fiber: float = 0.0
+    servings: dict = field(default_factory=lambda: {})
+    user: str = "maxtrussell"
+
+    def __post_init__(self):
+        self.servings["1g"] = 1
         self.servings["100g"] = 100
-        self.user = user
-        if calories == 0.0:
-            calories = self.calculate_calories()
-        self.calories = calories
+        if self.calories == 0.0:
+            self.calories = self.calculate_calories()
 
     def calculate_calories(self):
         """Calculates calories from macro nutrients

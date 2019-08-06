@@ -7,6 +7,7 @@ from controller.food import food_controller
 from controller.log import log_controller
 from controller.weight import weight_controller
 import pkg.config as config
+import shared
 
 app = Flask("Nutrition Mate")
 bootstrap = Bootstrap(app)
@@ -30,6 +31,7 @@ def home_handler():
 
 def init():
     config.load_config("conf/config.ini")
+    shared.init()
 
 if __name__ == "__main__":
     init()
