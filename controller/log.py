@@ -69,9 +69,9 @@ def log_delete_handler(id):
 @log_controller.route("/log/search")
 def log_search_handler():
     query = request.args.get("query", default="")
-    results = _food.search(shared.db, config.values["mysql"]["food_table"], query.lower())
+    results = _food.search(shared.db, config.values["mysql"]["food_table"], query.lower(), current_user.username)
     if len(results) == 1:
-        return redirect("/food/{}".format(results[0].name))
+        return redirect("/food/{}".format(results[0].id))
     else:
         return redirect(url_for("db_controller.database_handler", query=query))
 
