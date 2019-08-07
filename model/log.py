@@ -29,7 +29,7 @@ def delete_entry(db, log_table, time):
 
 def process_row(row):
     food = _food.row_to_food(row[6:])
-    log_entry = LogEntry(food, id=row[0], time=row[1], serving=row[3], quantity=row[4])
+    log_entry = LogEntry(food, id=row[0], time=row[1], serving=row[2], quantity=row[3])
     return log_entry
 
 class LogEntry:
