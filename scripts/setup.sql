@@ -3,6 +3,14 @@ CREATE USER IF NOT EXISTS 'maxtrussell'@'localhost';
 GRANT ALL PRIVILEGES ON nm.* TO 'maxtrussell'@'localhost';
 USE nm;
 
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    username VARCHAR(64) UNIQUE NOT NULL,
+    email VARCHAR(120) UNIQUE NOT NULL,
+    password_hash VARCHAR(128) NOT NULL,
+    PRIMARY KEY (ID)
+);
+
 CREATE TABLE IF NOT EXISTS food (
     name VARCHAR(255) NOT NULL,
     calories FLOAT NOT NULL,
@@ -13,8 +21,10 @@ CREATE TABLE IF NOT EXISTS food (
     sugar FLOAT,
     fiber FLOAT,
     servings JSON,
-    username VARCHAR(255),
-    PRIMARY KEY (name)
+    username VARCHAR(64),
+    PRIMARY KEY (name),
+    FOREIGN KEY (username)
+        REFERENCES users(username)
 );
 
 CREATE TABLE IF NOT EXISTS food_log (
@@ -23,17 +33,20 @@ CREATE TABLE IF NOT EXISTS food_log (
     name VARCHAR(255) NOT NULL,
     serving VARCHAR(255) NOT NULL,
     quantity FLOAT NOT NULL,
-    username VARCHAR(255),
+    username VARCHAR(64),
     PRIMARY KEY (id),
     FOREIGN KEY (name)
-        REFERENCES food(name)
+        REFERENCES food(name),
+    FOREIGN KEY (username)
+        REFERENCES users(username)
 );
 
 CREATE TABLE IF NOT EXISTS weight (
     date DATE NOT NULL,
     weight FLOAT NOT NULL,
     notes VARCHAR(255),
-    username VARCHAR(255),
-    PRIMARY KEY (date)
+    username VARCHAR(64),
+    PRIMARY KEY (date),
+    FOREIGN KEY (username)
+        REFERENCES users(username)
 );
-

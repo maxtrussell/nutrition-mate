@@ -1,12 +1,13 @@
-from flask import Blueprint, render_template, request, abort, redirect
+from flask import render_template, request, abort, redirect
+from flask_login import login_required
 
+from controller.routes import db_controller
 import model.food as _food
 import pkg.config as config
 import shared
 
-db_controller = Blueprint("db_controller", __name__)
-
 @db_controller.route("/database", methods=["GET"])
+@login_required
 def database_handler():
     query = request.args.get("query", default="")
     if query:
@@ -16,10 +17,12 @@ def database_handler():
     return render_template("database.html", active_page="database", foods=foods, query=query)
 
 @db_controller.route("/database/clear", methods=["GET"])
+@login_required
 def database_clear_handler():
     return redirect("/database")
 
 @db_controller.route("/database/delete", methods=["POST"])
+@login_required
 def database_delete_handler():
     try:
         name = request.form["name"]
@@ -33,6 +36,7 @@ def database_delete_handler():
         
 
 @db_controller.route("/database/add", methods=["POST"])
+@login_required
 def database_add_handler():
     try:
         if request.form["name"] == "" or request.form["quantity"] == "":

@@ -1,16 +1,17 @@
 from datetime import date, datetime
 
-from flask import Blueprint, render_template, request, abort, redirect, url_for
+from flask import render_template, request, abort, redirect, url_for
+from flask_login import login_required
 
+from controller.routes import log_controller
 import model.food as _food
 import model.log as _log
 import pkg.config as config
 from pkg.utils import toDate, toTime
 import shared
 
-log_controller = Blueprint("log_controller", __name__)
-
 @log_controller.route("/log")
+@login_required
 def log_handler():
     selected_date = request.args.get("selectedDate", default=date.today(), type=toDate)
     # TODO: rows=logEntries

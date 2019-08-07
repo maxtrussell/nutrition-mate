@@ -1,38 +1,34 @@
-from flask import Flask
-from flask import render_template
-from flask_bootstrap import Bootstrap
+import os
 
-from controller.database import db_controller
-from controller.food import food_controller
-from controller.log import log_controller
-from controller.weight import weight_controller
+import controller.database
+import controller.food
+import controller.home
+import controller.log
+import controller.login
+import controller.weight
+import controller.routes as routes
 import pkg.config as config
 import shared
+from view.registration_form import RegistrationForm
 
-app = Flask("Nutrition Mate")
-bootstrap = Bootstrap(app)
-app.register_blueprint(db_controller)
-app.register_blueprint(weight_controller)
-app.register_blueprint(food_controller)
-app.register_blueprint(log_controller)
-# TODO: register log
-
-@app.route("/log")
-def log_handler():
-    return render_template("log.html", active_page="log")
-
-@app.route("/meals")
-def meals_handler():
-    return render_template("meals.html", active_page="meals")
-
-@app.route("/")
-def home_handler():
-    return render_template("home.html", active_page="home")
+import model.user as users
 
 def init():
     config.load_config("conf/config.ini")
     shared.init()
 
+    # TODO: config these
+    shared.app.template_folder = os.path.join(os.getcwd(), "templates")
+    shared.app.static_folder = os.path.join(os.getcwd(), "static")
+
+    shared.app.register_blueprint(routes.login_controller)
+    shared.app.register_blueprint(routes.db_controller)
+    shared.app.register_blueprint(routes.weight_controller)
+    shared.app.register_blueprint(routes.food_controller)
+    shared.app.register_blueprint(routes.log_controller)
+    shared.app.register_blueprint(routes.home_controller)
+
+
 if __name__ == "__main__":
     init()
-    app.run(host=config.values["server"]["host"], port=config.values["server"]["port"])
+    shared.app.run(host=config.values["server"]["host"], port=config.values["server"]["port"])

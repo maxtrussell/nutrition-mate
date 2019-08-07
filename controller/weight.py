@@ -1,15 +1,15 @@
 from datetime import datetime
 
-from flask import Blueprint, render_template, request, abort, redirect
+from flask import render_template, request, abort, redirect
+from flask_login import login_required
 
+from controller.routes import weight_controller
 import model.weight as _weight
 import pkg.config as config
 import shared
 
-weight_controller = Blueprint("weight_controller", __name__)
-
-
 @weight_controller.route("/weight")
+@login_required
 def weight_handler():
     dt = datetime.now()
     date = dt.strftime("%Y-%m-%d")
@@ -17,6 +17,7 @@ def weight_handler():
     return render_template("weight.html", active_page="weight", date=date, weights=weights)
 
 @weight_controller.route("/weight/add", methods=["POST"])
+@login_required
 def weight_add_handler():
     try:
         if request.form["weight"] == "" or request.form["log_date"] == "":
@@ -31,6 +32,7 @@ def weight_add_handler():
         return redirect("/weight")
 
 @weight_controller.route("/weight/delete/<date>", methods=["GET"])
+@login_required
 def weight_delete_handler(date):
     date = datetime.strptime(date, "%Y-%m-%d")
     _weight.delete_by_date(shared.db, config.values["mysql"]["weight_table"], date)
