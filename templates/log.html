@@ -46,7 +46,7 @@
             {%- for row in entries -%}
             <tr>
                 <td>{{ row.time }}</td>
-                <td><a href="/food/{{ row.food.name }}">{{ row.food.name }}</a></td>
+                <td><a href="/food/{{ row.food.id }}">{{ row.food.name }}</a></td>
                 <td>{{ "%0.2f" | format(row.quantity) }} x {{ row.serving }}</td>
                 <td>{{ row.food.calories | int }}</td>
                 <td>{{ "%0.2f" | format(row.food.protein) }}</td>

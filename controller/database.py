@@ -1,5 +1,5 @@
 from flask import render_template, request, abort, redirect
-from flask_login import login_required
+from flask_login import current_user, login_required
 
 from controller.routes import db_controller
 import model.food as _food
@@ -9,11 +9,12 @@ import shared
 @db_controller.route("/database", methods=["GET"])
 @login_required
 def database_handler():
+    username = current_user.username
     query = request.args.get("query", default="")
     if query:
-        foods = _food.search(shared.db, config.values["mysql"]["food_table"], query.lower())
+        foods = _food.search(shared.db, config.values["mysql"]["food_table"], query.lower(), username)
     else:
-        foods = _food.get_all_foods(shared.db, config.values["mysql"]["food_table"])
+        foods = _food.get_all_foods(shared.db, config.values["mysql"]["food_table"], username)
     return render_template("database.html", active_page="database", foods=foods, query=query)
 
 @db_controller.route("/database/clear", methods=["GET"])
@@ -26,7 +27,7 @@ def database_clear_handler():
 def database_delete_handler():
     try:
         name = request.form["name"]
-        _food.delete_by_name(shared.db, config.values["mysql"]["food_table"], name)
+        _food.delete_by_name(shared.db, config.values["mysql"]["food_table"], name, current_user.username)
     except Exception as e: 
         # TODO: add banner message on error
         print("failed to delete food")
@@ -58,7 +59,7 @@ def database_add_handler():
                 name=parsed["name"], calories=parsed["calories"], fat=parsed["fat"],
                 carbs=parsed["carbs"], protein=parsed["protein"],
                 alcohol=parsed["alcohol"], sugar=parsed["sugar"], fiber=parsed["fiber"],
-                user="maxtrussell", servings=parsed["servings"]
+                user=current_user.username, servings=parsed["servings"]
                 )
         food = food.normalize(current=parsed["quantity"])
 

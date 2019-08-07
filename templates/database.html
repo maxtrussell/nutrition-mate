@@ -45,7 +45,7 @@
                 {# Fill out database rows #}
                 {%- for food in foods -%}
                 <tr>
-                    <td><a href="/food/{{ food.name | lower }}">{{ food.name }}</a></td>
+                    <td><a href="/food/{{ food.id | lower }}">{{ food.name }}</a></td>
                     <td>100g</td>
                     <td>{{ food.calories | int }}</td>
                     <td>{{ "%0.2f" | format(food.fat) }}</td>

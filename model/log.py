@@ -3,15 +3,15 @@ from datetime import date, datetime, timedelta
 
 import model.food as _food
 
-# SELECT * FROM food_log INNER JOIN food ON (food_log.name=food.name) WHERE food_log.name="Apple";
-def get_entries_by_day(db, log_table, food_table, start=date.today()):
+def get_entries_by_day(db, log_table, food_table, start=date.today(), username=""):
     end = start + timedelta(days=1)
     query = (
-            "SELECT * FROM {0} INNER JOIN {1} ON ({0}.name={1}.name) ".format(log_table, food_table) +
-            "WHERE {0}.time >= %s AND {0}.time < %s ORDER BY time DESC".format(log_table)
+            "SELECT * FROM {0} INNER JOIN {1} ON ({0}.food_id={1}.id AND {0}.username={1}.username) ".format(log_table, food_table) +
+            "WHERE {0}.time >= %s AND {0}.time < %s AND {0}.username = %s ".format(log_table) +
+            "ORDER BY time DESC"
             )
     cursor = db.client.cursor()
-    cursor.execute(query, (start, end))
+    cursor.execute(query, (start, end, username))
 
     entries = []
     for entry in cursor.fetchall():
@@ -29,12 +29,12 @@ def delete_entry(db, log_table, time):
 
 def process_row(row):
     food = _food.row_to_food(row[6:])
-    logEntry = LogEntry(food, id=row[0], time=row[1], serving=row[3], quantity=row[4])
-    return logEntry
+    log_entry = LogEntry(food, id=row[0], time=row[1], serving=row[3], quantity=row[4])
+    return log_entry
 
 class LogEntry:
     def __init__(
-            self, food, id=None, time=datetime.now(), username="maxtrussell",
+            self, food, id=None, time=datetime.now(), username="",
             quantity=0.0, serving="100g"
             ):
         self.food = food.normalize(target=quantity*food.servings[serving])
@@ -53,12 +53,12 @@ class LogEntry:
         """
         query = (
                 "INSERT INTO {}".format(table_name) +
-                "(time, name, serving, quantity, username) VALUES " +
+                "(time, food_id, serving, quantity, username) VALUES " +
                 "(%s, %s, %s, %s, %s)"
                 )
         cursor = db.client.cursor()
         cursor.execute(query,
-                (self.time, self.food.name, self.serving, self.quantity, self.username)
+                (self.time, self.food.id, self.serving, self.quantity, self.username)
                 )
         db.client.commit()
         cursor.close()

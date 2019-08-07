@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from flask import render_template, request, abort, redirect
-from flask_login import login_required
+from flask_login import current_user, login_required
 
 from controller.routes import weight_controller
 import model.weight as _weight
@@ -13,7 +13,9 @@ import shared
 def weight_handler():
     dt = datetime.now()
     date = dt.strftime("%Y-%m-%d")
-    weights = _weight.get_last_weights(shared.db, config.values["mysql"]["weight_table"])
+    weights = _weight.get_last_weights(
+            shared.db, config.values["mysql"]["weight_table"], username=current_user.username
+            )
     return render_template("weight.html", active_page="weight", date=date, weights=weights)
 
 @weight_controller.route("/weight/add", methods=["POST"])
@@ -25,15 +27,16 @@ def weight_add_handler():
         weight = _weight.Weight(float(request.form["weight"]))
         weight.date = datetime.strptime(request.form["log_date"], "%Y-%m-%d")
         weight.notes = request.form["notes"]
+        weight.username = current_user.username
         weight.insert(shared.db, config.values["mysql"]["weight_table"])
     except Exception as e:
         print(e)
     finally:
         return redirect("/weight")
 
-@weight_controller.route("/weight/delete/<date>", methods=["GET"])
+@weight_controller.route("/weight/delete/<id>", methods=["GET"])
 @login_required
-def weight_delete_handler(date):
-    date = datetime.strptime(date, "%Y-%m-%d")
-    _weight.delete_by_date(shared.db, config.values["mysql"]["weight_table"], date)
+def weight_delete_handler(id):
+    print(id)
+    _weight.delete_by_id(shared.db, config.values["mysql"]["weight_table"], id)
     return redirect("/weight")

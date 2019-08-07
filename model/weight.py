@@ -1,34 +1,33 @@
 # TODO: doc
 from datetime import datetime
 
-def get_last_weights(db, table_name, num_weights=100):
-    query = "SELECT * FROM {} ORDER BY date DESC LIMIT {}".format(table_name, num_weights)
+def get_last_weights(db, table_name, num_weights=100, username=""):
+    query = "SELECT * FROM {} WHERE username = %s ORDER BY date DESC LIMIT {}".format(table_name, num_weights)
     cursor = db.client.cursor()
-    cursor.execute(query)
+    cursor.execute(query, (username,))
 
     weights = []
     for row in cursor.fetchall():
         weight = row_to_weight(row)
-        weight.five_day_avg = get_rolling_average(db, table_name, weight.date, 5)
-        weight.ten_day_avg = get_rolling_average(db, table_name, weight.date, 10)
+        weight.five_day_avg = get_rolling_average(db, table_name, weight.date, 5, username)
+        weight.ten_day_avg = get_rolling_average(db, table_name, weight.date, 10, username)
         weights.append(weight)
 
     cursor.close()
     return weights
 
-def get_rolling_average(db, table_name, start_date, num_days):
-    query = "select avg(weight) from ( select * from {} WHERE date <= %s ORDER BY date DESC LIMIT %s  ) as T;".format(table_name)
+def get_rolling_average(db, table_name, start_date, num_days, username):
+    query = "select avg(weight) from ( select * from {} WHERE date <= %s AND username = %s ORDER BY date DESC LIMIT %s  ) as T;".format(table_name)
     cursor = db.client.cursor()
-    cursor.execute(query, (start_date, num_days))
+    cursor.execute(query, (start_date, username, num_days))
     avg = cursor.fetchone()[0]
     cursor.close()
     return avg
 
-def delete_by_date(db, table_name, date):
-    date = format_date(date)
-    query = "DELETE FROM {} WHERE date=%s".format(table_name)
+def delete_by_id(db, table_name, id):
+    query = "DELETE FROM {} WHERE id=%s".format(table_name)
     cursor = db.client.cursor()
-    cursor.execute(query, (date,))
+    cursor.execute(query, (id,))
     db.client.commit()
     cursor.close()
 
@@ -36,10 +35,11 @@ def format_date(date=datetime.now()):
     return date.strftime("%Y-%m-%d")
 
 def row_to_weight(row):
-    return Weight(row[1], date=row[0], notes=row[2])
+    return Weight(row[2], date=row[1], notes=row[3], id=row[0], username=row[4])
 
 class Weight:
-    def __init__(self, weight, date=datetime.now(), notes="", username="maxtrussell"):
+    def __init__(self, weight, date=datetime.now(), notes="", username="", id=-1):
+        self.id = id
         self.weight = weight
         self.date = format_date(date)
         self.notes = notes

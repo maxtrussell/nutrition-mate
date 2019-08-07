@@ -1,7 +1,7 @@
 from datetime import date, datetime
 
 from flask import render_template, request, abort, redirect, url_for
-from flask_login import login_required
+from flask_login import current_user, login_required
 
 from controller.routes import log_controller
 import model.food as _food
@@ -14,12 +14,12 @@ import shared
 @login_required
 def log_handler():
     selected_date = request.args.get("selectedDate", default=date.today(), type=toDate)
-    # TODO: rows=logEntries
     entries = _log.get_entries_by_day(
             shared.db, 
             config.values["mysql"]["log_table"], 
             config.values["mysql"]["food_table"], 
-            selected_date
+            selected_date,
+            current_user.username
             )
 
     # generate daily sums
@@ -42,15 +42,18 @@ def log_handler():
 @log_controller.route("/log/add", methods=["POST"])
 def log_add_handler():
     selected_date = request.form.get("selectedDate", default=None)
-    name = request.form.get("name")
+    id = request.form.get("id")
     serving = request.form.get("serving")
     quantity = request.form.get("quantity", type=float)
-    username = request.form.get("username", default="maxtrussell")
+    username = current_user.username
 
-    food = _food.get_food(shared.db, config.values["mysql"]["food_table"], name)
+    food = _food.get_food(shared.db, config.values["mysql"]["food_table"], id, username)
     
-    entry = _log.LogEntry(food, time=selected_date, quantity=quantity, serving=serving)
-    entry.insert(shared.db, config.values["mysql"]["log_table"], )
+    entry = _log.LogEntry(
+            food, id=food.id, time=selected_date, quantity=quantity, serving=serving,
+            username=username
+            )
+    entry.insert(shared.db, config.values["mysql"]["log_table"])
     return redirect(url_for("log_controller.log_handler", selectedDate=selected_date))
 
 @log_controller.route("/log/delete/<id>", methods=["GET"])

@@ -16,7 +16,7 @@
             <option value="{{ name }}">{{ name }}: {{ qty }}</option>
             {% endfor %}
         </select>
-        <input name="name" type="hidden" value="{{ food.name }}"></input>
+        <input name="id" type="hidden" value="{{ food.id }}"></input>
         <input type="date" name="selectedDate" value="{{ date }}">
         <button type="submit" class="btn btn-primary pad-left">Add to Log</button>
     </form>

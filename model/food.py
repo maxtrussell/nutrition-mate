@@ -4,7 +4,7 @@ import pkg.config as config
 
 import json
 
-def get_all_foods(database, table_name):
+def get_all_foods(database, table_name, username=""):
     """Gets all foods from given MySQL table
 
     Parameters:
@@ -15,9 +15,9 @@ def get_all_foods(database, table_name):
         foods ([]Food): list of food objects from table
     """
     # send the query
-    query = "SELECT * FROM {} LIMIT 100".format(table_name)
+    query = "SELECT * FROM {} WHERE username = %s LIMIT 100".format(table_name)
     cursor = database.client.cursor()
-    cursor.execute(query)
+    cursor.execute(query, (username,))
 
     foods = []
     for row in cursor.fetchall():
@@ -26,7 +26,7 @@ def get_all_foods(database, table_name):
     cursor.close()
     return foods
 
-def get_food(database, table_name, food_name):
+def get_food(database, table_name, food_id, username=""):
     """Gets a food by name from a MySQL table
 
     Parameters:
@@ -37,9 +37,9 @@ def get_food(database, table_name, food_name):
     Returns:
         food (Food): food object from table
     """
-    query = "SELECT * FROM {} WHERE lower(name)=%s".format(table_name)
+    query = "SELECT * FROM {} WHERE id=%s AND username=%s".format(table_name)
     cursor = database.client.cursor()
-    cursor.execute(query, (food_name.lower(),))
+    cursor.execute(query, (food_id, username))
 
     row = cursor.fetchone()
     food = row_to_food(row)
@@ -47,11 +47,11 @@ def get_food(database, table_name, food_name):
     cursor.close()
     return food
 
-def search(db, table, search):
+def search(db, table, search, username=""):
     search = "%" + search + "%"
-    query = "SELECT * FROM {} WHERE lower(name) LIKE %s LIMIT 100".format(table)
+    query = "SELECT * FROM {} WHERE username=%s AND lower(name) LIKE %s LIMIT 100".format(table)
     cursor = database.client.cursor()
-    cursor.execute(query)
+    cursor.execute(query, (username, search))
 
     foods = []
     for row in cursor.fetchall():
@@ -71,16 +71,17 @@ def row_to_food(row):
         food (Food): a newly instantiated Food object
     """
     food = Food()
-    food.name = row[0]
-    food.calories = row[1]
-    food.fat = row[2]
-    food.carbs = row[3]
-    food.protein = row[4]
-    food.alcohol = row[5]
-    food.sugar = row[6]
-    food.fiber = row[7]
-    food.servings = json.loads(row[8])
-    food.user = row[9]
+    food.name = row[1]
+    food.calories = row[2]
+    food.fat = row[3]
+    food.carbs = row[4]
+    food.protein = row[5]
+    food.alcohol = row[6]
+    food.sugar = row[7]
+    food.fiber = row[8]
+    food.servings = json.loads(row[9])
+    food.user = row[10]
+    food.id = row[0]
     return food
 
 def parse_servings(raw):
@@ -94,16 +95,16 @@ def parse_servings(raw):
             servings[key] = val
     return servings
 
-def delete_by_name(database, table_name, food_name):
+def delete_by_name(database, table_name, food_name, username):
     """Delete food by name from MySQL table
     
     Parameters:
         database (db.db): MySQL database connection
         table_name (string): name of the table to delete from
     """
-    query = "DELETE FROM {} WHERE lower(name)=%s".format(table_name)
+    query = "DELETE FROM {} WHERE username=%s, lower(name)=%s".format(table_name)
     cursor = database.client.cursor()
-    cursor.execute(query, (food_name.lower(),))
+    cursor.execute(query, (username, food_name.lower()))
     database.client.commit()
     cursor.close()
 
@@ -143,7 +144,8 @@ class Food:
     sugar: float = 0.0
     fiber: float = 0.0
     servings: dict = field(default_factory=lambda: {})
-    user: str = "maxtrussell"
+    user: str = ""
+    id: int = 0
 
     def __post_init__(self):
         self.servings["1g"] = 1
@@ -172,7 +174,7 @@ class Food:
             normalized (Food): The new normalized Food object
         """
         ratio = target/current
-        normalized = Food(name=self.name, servings=self.servings, user=self.user)
+        normalized = Food(name=self.name, servings=self.servings, user=self.user, id=self.id)
         normalized.calories = ratio * self.calories
         normalized.fat = ratio * self.fat
         normalized.carbs = ratio * self.carbs
@@ -217,14 +219,14 @@ class Food:
         query = (
                 "UPDATE {} SET calories=%s, fat=%s, carbs=%s, protein=%s, ".format(table_name) +
                 "alcohol=%s, sugar=%s, fiber=%s, servings=%s, username=%s " +
-                "WHERE name=%s"
+                "WHERE name=%s AND username=%s"
                 )
         cursor = database.client.cursor()
         cursor.execute(
                 query, (
                     self.calories, self.fat, self.carbs, self.protein,
                     self.alcohol, self.sugar, self.fiber, json.dumps(self.servings),
-                    self.user, self.name
+                    self.user, self.name, self.user
                 )
         )
         database.client.commit()

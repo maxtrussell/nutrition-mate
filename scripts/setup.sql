@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS food (
+    id INTEGER NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     calories FLOAT NOT NULL,
     fat FLOAT NOT NULL,
@@ -22,31 +23,26 @@ CREATE TABLE IF NOT EXISTS food (
     fiber FLOAT,
     servings JSON,
     username VARCHAR(64),
-    PRIMARY KEY (name),
-    FOREIGN KEY (username)
-        REFERENCES users(username)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS food_log (
     id INTEGER NOT NULL AUTO_INCREMENT,
     time TIMESTAMP NOT NULL,
-    name VARCHAR(255) NOT NULL,
+    food_id INTEGER NOT NULL,
     serving VARCHAR(255) NOT NULL,
     quantity FLOAT NOT NULL,
     username VARCHAR(64),
     PRIMARY KEY (id),
-    FOREIGN KEY (name)
-        REFERENCES food(name),
-    FOREIGN KEY (username)
-        REFERENCES users(username)
+    FOREIGN KEY (food_id)
+        REFERENCES food(id)
 );
 
 CREATE TABLE IF NOT EXISTS weight (
+    id INTEGER NOT NULL AUTO_INCREMENT,
     date DATE NOT NULL,
     weight FLOAT NOT NULL,
     notes VARCHAR(255),
-    username VARCHAR(64),
-    PRIMARY KEY (date),
-    FOREIGN KEY (username)
-        REFERENCES users(username)
+    username VARCHAR(64) NOT NULL,
+    PRIMARY KEY (id)
 );
