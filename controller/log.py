@@ -32,6 +32,7 @@ def log_handler():
         sugarSum += entry.food.sugar
         fiberSum += entry.food.fiber
         alcoholSum += entry.food.alcohol
+        entry.time = entry.time.strftime("%-I:%M %p")
 
     return render_template(
             "log.html", active_page="log", selectedDate=selected_date, entries=entries,
@@ -48,9 +49,14 @@ def log_add_handler():
     username = current_user.username
 
     food = _food.get_food(shared.db, config.values["mysql"]["food_table"], id, username)
+
+    # if the selected date is today, include hours:minutes
+    time = selected_date
+    if selected_date == date.today().strftime("%Y-%m-%d"):
+        time = datetime.now()
     
     entry = _log.LogEntry(
-            food, id=food.id, time=selected_date, quantity=quantity, serving=serving,
+            food, id=food.id, time=time, quantity=quantity, serving=serving,
             username=username
             )
     entry.insert(shared.db, config.values["mysql"]["log_table"])
