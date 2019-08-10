@@ -1,21 +1,49 @@
-<html>
-    {% include "top_nav.html" %}
-    <head>
-        <title>Nutrition Mate</title>
-        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    </head>
+{% extends "bootstrap/base.html" %}
 
+{% block title %}
+    {% if title %}{{ title }} - Nutrition-Mate{% else %}Nutrition-Mate{% endif %}
+{% endblock %}
 
-    <body>
+{% block styles %}
+{{super()}}
+<link rel="stylesheet"
+      href="{{url_for('static', filename='styles/custom.css')}}">
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Nutrition Mate</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li{% if active_page == "home" %} class="active" {% endif %}><a href="/">Home</a></li>
+            <li{% if active_page == "log" %} class="active" {% endif %}><a href="/log">Log</a></li>
+            <li{% if active_page == "database" %} class="active" {% endif %}><a href="/database">Database</a></li>
+            <li{% if active_page == "meals" %} class="active" {% endif %}><a href="/meals">Meals</a></li>
+            <li{% if active_page == "weight" %} class="active" {% endif %}><a href="/weight">Weight</a></li>
+            {% if current_user.is_anonymous %}
+            <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% else %}
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <ul>
             {% for message in messages %}
-            <li>{{ message }}</li>
+            <div class="alert alert-info" role="alert">{{ message }}</div>
             {% endfor %}
-        </ul>
         {% endif %}
         {% endwith %}
-        {% block content %}{% endblock %}
-    </body>
-</html>
+
+        {# application content needs to be provided in the app_content block #}
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
