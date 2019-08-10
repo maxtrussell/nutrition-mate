@@ -1,4 +1,4 @@
-from flask import render_template, request, abort, redirect
+from flask import render_template, request, abort, redirect, flash
 from flask_login import current_user, login_required
 
 from controller.routes import db_controller
@@ -28,10 +28,9 @@ def database_delete_handler():
     try:
         name = request.form["name"]
         _food.delete_by_name(shared.db, config.values["mysql"]["food_table"], name, current_user.username)
+        flash("Successfully deleted food '{}'".format(name))
     except Exception as e: 
-        # TODO: add banner message on error
-        print("failed to delete food")
-        print(e)
+        flash("Failed to delete food '{}': {}".format(name, e))
     finally:
         return redirect("/database")
         
@@ -64,9 +63,8 @@ def database_add_handler():
         food = food.normalize(current=parsed["quantity"])
 
         food.insert(shared.db, config.values["mysql"]["food_table"])
+        flash("Successfully added food '{}'".format(food.name))
     except Exception as e: 
-        # TODO: add banner message on error
-        print("failed to add food")
-        print(e)
+        flash("Failed to add food '{}': {}".format(food.name, e))
     finally:
         return redirect("/database")

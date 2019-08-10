@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from flask import render_template, request, abort, redirect, url_for
+from flask import render_template, request, abort, redirect, url_for, flash
 from flask_login import current_user, login_required
 
 from controller.routes import log_controller
@@ -60,6 +60,7 @@ def log_add_handler():
             username=username
             )
     entry.insert(shared.db, config.values["mysql"]["log_table"])
+    flash("Successfully added '{} x {} of {}' to log".format(quantity, serving, food.name))
     return redirect(url_for("log_controller.log_handler", selectedDate=selected_date))
 
 @log_controller.route("/log/delete/<id>", methods=["GET"])
@@ -70,6 +71,7 @@ def log_delete_handler(id):
         selected_date = toDate(selected_date)
     else:
         selected_date = datetime.now().date()
+    flash("Successfully deleted log entry!")
     return redirect(url_for("log_controller.log_handler", selectedDate=selected_date))
 
 @log_controller.route("/log/search")
@@ -78,6 +80,9 @@ def log_search_handler():
     results = _food.search(shared.db, config.values["mysql"]["food_table"], query.lower(), current_user.username)
     if len(results) == 1:
         return redirect("/food/{}".format(results[0].id))
+    elif len(results) == 0:
+        flash("No results for food '{}'".format(query))
+        return redirect(url_for("log_controller.log_handler"))
     else:
         return redirect(url_for("db_controller.database_handler", query=query))
 
