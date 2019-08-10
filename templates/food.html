@@ -1,53 +1,47 @@
-{% include "base.html" %}
+{% extends "base.html" %}
+
+{% block app_content %}
 {% include "log_add_modal.html" %}
-<head>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/custom.css') }}">
-</head>
+<h1 align="center">{{ food.name }}</h1>
 
+<form action="/log/add" method="post" autocomplete="off" class="pad-vert form-inline" align="center">
+    <input name="quantity" type="number" step="0.01" placeholder="1.00" class="form-control"></input>
+    X
+    <select name="serving" class="form-control">
+        {% for name, qty in food.servings.items() %}
+        <option value="{{ name }}">{{ name }}: {{ qty }}</option>
+        {% endfor %}
+    </select>
+    <input name="id" type="hidden" value="{{ food.id }}"></input>
+    <input type="date" name="selectedDate" value="{{ date }}" class="form-control">
+    <button type="submit" class="btn btn-primary pad-left">Add to Log</button>
+</form>
 
-<div align="center" class="slim">
-    <h1 align="center" class="pad-vert slim">{{ food.name }}</h1>
-
-    <form action="/log/add" method="post" autocomplete="off" class="pad-vert">
-        <input name="quantity" type="number" step="0.01" placeholder="1.00"></input>
-        X
-        <select name="serving">
-            {% for name, qty in food.servings.items() %}
-            <option value="{{ name }}">{{ name }}: {{ qty }}</option>
-            {% endfor %}
-        </select>
-        <input name="id" type="hidden" value="{{ food.id }}"></input>
-        <input type="date" name="selectedDate" value="{{ date }}">
-        <button type="submit" class="btn btn-primary pad-left">Add to Log</button>
-    </form>
-
-    <h3>Nutrition Info</h3>
-    <div class="tableFixHead" style="clear: left">
-        <table class="table table-striped table-bordered table-hover" align="center">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Calories</th>
-                    <th>Fat</th>
-                    <th>Carbs</th>
-                    <th>Protein</th>
-                    <th>Sugar</th>
-                    <th>Fiber</th>
-                    <th>Alcohol</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ food.calories | int }}</td>
-                    <td>{{ "%0.2f" | format(food.fat) }}</td>
-                    <td>{{ "%0.2f" | format(food.carbs) }}</td>
-                    <td>{{ "%0.2f" | format(food.protein) }}</td>
-                    <td>{{ "%0.2f" | format(food.sugar) }}</td>
-                    <td>{{ "%0.2f" | format(food.fiber) }}</td>
-                    <td>{{ "%0.2f" | format(food.alcohol) }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-
+<h2 align="center">Nutrition Info</h2>
+<div class="tableFixHead" style="clear: left">
+    <table class="table table-striped table-bordered table-hover" align="center">
+        <thead class="thead-dark">
+            <tr>
+                <th>Calories</th>
+                <th>Fat</th>
+                <th>Carbs</th>
+                <th>Protein</th>
+                <th>Sugar</th>
+                <th>Fiber</th>
+                <th>Alcohol</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ food.calories | int }}</td>
+                <td>{{ "%0.2f" | format(food.fat) }}</td>
+                <td>{{ "%0.2f" | format(food.carbs) }}</td>
+                <td>{{ "%0.2f" | format(food.protein) }}</td>
+                <td>{{ "%0.2f" | format(food.sugar) }}</td>
+                <td>{{ "%0.2f" | format(food.fiber) }}</td>
+                <td>{{ "%0.2f" | format(food.alcohol) }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+{% endblock %}
