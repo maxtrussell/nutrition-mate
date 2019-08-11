@@ -97,16 +97,16 @@ def parse_servings(raw):
             servings[key] = val
     return servings
 
-def delete_by_name(database, table_name, food_name, username):
-    """Delete food by name from MySQL table
+def delete_by_id(database, table_name, id, username):
+    """Delete food by id from MySQL table
     
     Parameters:
         database (db.db): MySQL database connection
         table_name (string): name of the table to delete from
     """
-    query = "DELETE FROM {} WHERE username=%s, lower(name)=%s".format(table_name)
+    query = "DELETE FROM {} WHERE username=%s AND id=%s".format(table_name)
     cursor = database.client.cursor()
-    cursor.execute(query, (username, food_name.lower()))
+    cursor.execute(query, (username, id))
     database.client.commit()
     cursor.close()
 

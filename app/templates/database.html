@@ -2,7 +2,6 @@
 
 {% block app_content %}
 {% include "db_add_modal.html" %}
-{% include "db_delete_modal.html" %}
 <h1 align="center">Food Database</h1>
 
 <div align="center" class="pad-vert form-inline">
@@ -34,7 +33,7 @@
                 <th>Sugar</th>
                 <th>Fiber</th>
                 <th>Alcohol</th>
-                <th>Log</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -50,7 +49,7 @@
                 <td>{{ "%0.2f" | format(food.sugar) }}</td>
                 <td>{{ "%0.2f" | format(food.fiber) }}</td>
                 <td>{{ "%0.2f" | format(food.alcohol) }}</td>
-                <td><a href="#logAdd" data-target="#logAdd" data-toggle="modal">Add</a></td>
+                <td><a href="/database/delete/{{ food.id }}">Delete</a></td>
             </tr>
             {%- endfor -%}
         </tbody>

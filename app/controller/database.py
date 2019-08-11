@@ -28,16 +28,15 @@ def database_clear_handler():
     return redirect("/database")
 
 
-@db_bp.route("/database/delete", methods=["POST"])
+@db_bp.route("/database/delete/<int:id>", methods=["GET"])
 @login_required
-def database_delete_handler():
+def database_delete_handler(id):
     try:
-        name = request.form.get("name", default="")
-        _food.delete_by_name(
-            get_db(config), config.db.FOODS, name, current_user.username)
-        flash("Successfully deleted food '{}'".format(name))
+        _food.delete_by_id(
+            get_db(config), config.db.FOODS, id, current_user.username)
+        flash("Successfully deleted food")
     except Exception as e:
-        flash("Failed to delete food '{}': {}".format(name, e))
+        flash("Failed to delete food: {}".format(e))
     finally:
         return redirect(url_for("db_bp.database_handler"))
 
