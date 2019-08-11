@@ -1,41 +1,48 @@
-from flask import render_template, request, abort, redirect, flash
+from flask import render_template, request, redirect, flash, Blueprint, url_for
 from flask_login import current_user, login_required
 
-from controller.routes import db_controller
-import model.food as _food
-import pkg.config as config
-import shared
+import app.model.food as _food
+from app.pkg.config import Config
+from app.pkg.db import get_db
 
-@db_controller.route("/database", methods=["GET"])
+db_bp = Blueprint("db_bp", __name__)
+config = Config()
+
+@db_bp.route("/database", methods=["GET"])
 @login_required
 def database_handler():
     username = current_user.username
     query = request.args.get("query", default="")
     if query:
-        foods = _food.search(shared.db, config.values["mysql"]["food_table"], query.lower(), username)
+        foods = _food.search(
+            get_db(config), config.db.FOODS, query.lower(), username)
     else:
-        foods = _food.get_all_foods(shared.db, config.values["mysql"]["food_table"], username)
-    return render_template("database.html", active_page="database", foods=foods, query=query)
+        foods = _food.get_all_foods(get_db(config), config.db.FOODS, username)
+    return render_template(
+        "database.html", active_page="database", foods=foods, query=query)
 
-@db_controller.route("/database/clear", methods=["GET"])
+
+@db_bp.route("/database/clear", methods=["GET"])
 @login_required
 def database_clear_handler():
     return redirect("/database")
 
-@db_controller.route("/database/delete", methods=["POST"])
+
+@db_bp.route("/database/delete", methods=["POST"])
 @login_required
 def database_delete_handler():
     try:
-        name = request.form["name"]
-        _food.delete_by_name(shared.db, config.values["mysql"]["food_table"], name, current_user.username)
+        name = request.form.get("name", default="")
+        _food.delete_by_name(
+            get_db(config), config.db.FOODS, name, current_user.username)
         flash("Successfully deleted food '{}'".format(name))
-    except Exception as e: 
+    except Exception as e:
         flash("Failed to delete food '{}': {}".format(name, e))
     finally:
-        return redirect("/database")
-        
+        return redirect(url_for("db_bp.database_handler"))
 
-@db_controller.route("/database/add", methods=["POST"])
+
+@db_bp.route("/database/add", methods=["POST"])
 @login_required
 def database_add_handler():
     try:
@@ -62,9 +69,9 @@ def database_add_handler():
                 )
         food = food.normalize(current=parsed["quantity"])
 
-        food.insert(shared.db, config.values["mysql"]["food_table"])
+        food.insert(get_db(config), config.db.FOODS)
         flash("Successfully added food '{}'".format(food.name))
-    except Exception as e: 
+    except Exception as e:
         flash("Failed to add food '{}': {}".format(food.name, e))
     finally:
         return redirect("/database")

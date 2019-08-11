@@ -1,23 +1,25 @@
 from datetime import date, datetime
 
-from flask import render_template, request, abort, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, Blueprint
 from flask_login import current_user, login_required
 
-from controller.routes import log_controller
-import model.food as _food
-import model.log as _log
-import pkg.config as config
-from pkg.utils import toDate, toTime
-import shared
+import app.model.food as _food
+import app.model.log as _log
+from app.pkg.config import Config
+from app.pkg.utils import toDate
+from app.pkg.db import get_db
 
-@log_controller.route("/log")
+log_bp = Blueprint("log_bp", __name__)
+config = Config()
+
+@log_bp.route("/log")
 @login_required
 def log_handler():
     selected_date = request.args.get("selectedDate", default=date.today(), type=toDate)
     entries = _log.get_entries_by_day(
-            shared.db, 
-            config.values["mysql"]["log_table"], 
-            config.values["mysql"]["food_table"], 
+            get_db(config), 
+            config.db.LOG, 
+            config.db.FOODS, 
             selected_date,
             current_user.username
             )
@@ -40,7 +42,7 @@ def log_handler():
             fatSum=fatSum, carbsSum=carbsSum, alcoholSum=alcoholSum
             )
 
-@log_controller.route("/log/add", methods=["POST"])
+@log_bp.route("/log/add", methods=["POST"])
 def log_add_handler():
     selected_date = request.form.get("selectedDate", default=None)
     id = request.form.get("id")
@@ -48,7 +50,7 @@ def log_add_handler():
     quantity = request.form.get("quantity", type=float)
     username = current_user.username
 
-    food = _food.get_food(shared.db, config.values["mysql"]["food_table"], id, username)
+    food = _food.get_food(get_db(config), config.db.FOODS, id, username)
 
     # if the selected date is today, include hours:minutes
     time = selected_date
@@ -59,31 +61,31 @@ def log_add_handler():
             food, id=food.id, time=time, quantity=quantity, serving=serving,
             username=username
             )
-    entry.insert(shared.db, config.values["mysql"]["log_table"])
+    entry.insert(get_db(config), config.db.LOG)
     flash("Successfully added '{} x {} of {}' to log".format(quantity, serving, food.name))
-    return redirect(url_for("log_controller.log_handler", selectedDate=selected_date))
+    return redirect(url_for("log_bp.log_handler", selectedDate=selected_date))
 
-@log_controller.route("/log/delete/<id>", methods=["GET"])
+@log_bp.route("/log/delete/<id>", methods=["GET"])
 def log_delete_handler(id):
-    _log.delete_entry(shared.db, config.values["mysql"]["log_table"], id)
+    _log.delete_entry(get_db(config), config.db.LOG, id)
     selected_date = request.args.get("selectedDate", default="")
     if selected_date != "":
         selected_date = toDate(selected_date)
     else:
         selected_date = datetime.now().date()
     flash("Successfully deleted log entry!")
-    return redirect(url_for("log_controller.log_handler", selectedDate=selected_date))
+    return redirect(url_for("log_bp.log_handler", selectedDate=selected_date))
 
-@log_controller.route("/log/search")
+@log_bp.route("/log/search")
 def log_search_handler():
     query = request.args.get("query", default="")
-    results = _food.search(shared.db, config.values["mysql"]["food_table"], query.lower(), current_user.username)
+    results = _food.search(get_db(config), config.db.FOODS, query.lower(), current_user.username)
     if len(results) == 1:
         return redirect("/food/{}".format(results[0].id))
     elif len(results) == 0:
         flash("No results for food '{}'".format(query))
-        return redirect(url_for("log_controller.log_handler"))
+        return redirect(url_for("log_bp.log_handler"))
     else:
-        return redirect(url_for("db_controller.database_handler", query=query))
+        return redirect(url_for("db_bp.database_handler", query=query))
 
 

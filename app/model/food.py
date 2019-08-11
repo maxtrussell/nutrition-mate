@@ -1,8 +1,10 @@
 from dataclasses import dataclass, field
 
-import pkg.config as config
+from app.pkg.config import Config
 
 import json
+
+config = Config()
 
 def get_all_foods(database, table_name, username=""):
     """Gets all foods from given MySQL table

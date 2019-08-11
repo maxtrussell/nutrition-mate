@@ -1,34 +1,26 @@
-import os
+import app.controller.database as db
+import app.controller.food as food
+import app.controller.home as home
+import app.controller.log as log
+import app.controller.login as login
+import app.controller.weight as weight
+from app.pkg.config import Config
+from app import create_app
 
-import controller.database
-import controller.food
-import controller.home
-import controller.log
-import controller.login
-import controller.weight
-import controller.routes as routes
-import pkg.config as config
-import shared
-from view.registration_form import RegistrationForm
 
-import model.user as users
+def run():
+    app = create_app()
 
-def init():
-    config.load_config("conf/config.ini")
-    shared.init()
+    app.register_blueprint(login.login_bp)
+    app.register_blueprint(db.db_bp)
+    app.register_blueprint(weight.weight_bp)
+    app.register_blueprint(food.food_bp)
+    app.register_blueprint(log.log_bp)
+    app.register_blueprint(home.home_bp)
 
-    # TODO: config these
-    shared.app.template_folder = os.path.join(os.getcwd(), "templates")
-    shared.app.static_folder = os.path.join(os.getcwd(), "static")
-
-    shared.app.register_blueprint(routes.login_controller)
-    shared.app.register_blueprint(routes.db_controller)
-    shared.app.register_blueprint(routes.weight_controller)
-    shared.app.register_blueprint(routes.food_controller)
-    shared.app.register_blueprint(routes.log_controller)
-    shared.app.register_blueprint(routes.home_controller)
+    config = Config()
+    app.run(host=config.server.HOST, port=config.server.PORT)
 
 
 if __name__ == "__main__":
-    init()
-    shared.app.run(host=config.values["server"]["host"], port=config.values["server"]["port"])
+    run()

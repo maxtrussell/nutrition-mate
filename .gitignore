@@ -6,3 +6,4 @@ env
 external
 secrets
 *__pycache__
+.vscode

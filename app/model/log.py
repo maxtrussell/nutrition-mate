@@ -1,7 +1,7 @@
 # TODO: test, doc
 from datetime import date, datetime, timedelta
 
-import model.food as _food
+import app.model.food as _food
 
 def get_entries_by_day(db, log_table, food_table, start=date.today(), username=""):
     end = start + timedelta(days=1)
