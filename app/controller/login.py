@@ -2,14 +2,14 @@ from flask import Blueprint, flash, render_template, request, redirect, url_for
 from flask_login import current_user, login_user, logout_user
 
 import app.model.user as _user
-from app.pkg.config import Config
+from app.pkg.config import Config, get_secrets
 from app.pkg.db import get_db
 from app.view.login_form import LoginForm
 from app.view.registration_form import RegistrationForm
 from app import login
 
 login_bp = Blueprint("login_bp", __name__)
-config = Config()
+config = get_secrets(Config())
 
 @login.user_loader
 def load_user(id):
@@ -45,6 +45,7 @@ def register():
     if form.validate_on_submit():
         if form.registration_key.data != config.secrets.REGISTRATION_KEY:
             flash("Incorrect registration key")
+            print(config.secrets.REGISTRATION_KEY)
             return redirect(url_for("login_bp.register"))
 
         user = _user.User(username=form.username.data, email=form.email.data)

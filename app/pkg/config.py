@@ -1,6 +1,9 @@
 import os
+import sys
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+from app.pkg.gcp import SecretFetcher
+
+basedir = os.path.abspath(os.path.dirname(sys.argv[0]))
 
 
 class GCP:
@@ -34,3 +37,10 @@ class Config:
     db = MySQL()
     secrets = Secrets()
     server = Server()
+
+
+def get_secrets(config):
+    sf = SecretFetcher(config.gcp.CREDS, config.gcp.BUCKET,
+                       config.gcp.SECRET_DIR)
+    config.secrets.REGISTRATION_KEY = sf.fetch_secret("registration_key")
+    return config
