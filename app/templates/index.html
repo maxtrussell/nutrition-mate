@@ -1,6 +1,11 @@
-
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
+    {% if current_user.username%}
     <h1>Hi, {{ current_user.username }}!</h1>
+    {% else %}
+    <h1>Weclome to Nutrition Mate!</h1>
+    <p>New User? <a href="{{ url_for('login_bp.register') }}">Click to Register!</a></p>
+    <p><a href="{{ url_for('login_bp.login') }}">Or click here to sign in!</a></p>
+    {% endif %}
 {% endblock %}
