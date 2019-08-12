@@ -45,7 +45,6 @@ def register():
     if form.validate_on_submit():
         if form.registration_key.data != config.secrets.REGISTRATION_KEY:
             flash("Incorrect registration key")
-            print(config.secrets.REGISTRATION_KEY)
             return redirect(url_for("login_bp.register"))
 
         user = _user.User(username=form.username.data, email=form.email.data)

@@ -195,17 +195,25 @@ class Food:
         """
         query = (
                 "UPDATE {} SET calories=%s, fat=%s, carbs=%s, protein=%s, ".format(table_name) +
-                "alcohol=%s, sugar=%s, fiber=%s, servings=%s, username=%s " +
-                "WHERE name=%s AND username=%s"
+                "alcohol=%s, sugar=%s, fiber=%s, servings=%s " +
+                "WHERE id=%s"
                 )
         cursor = database.client.cursor()
         cursor.execute(
                 query, (
                     self.calories, self.fat, self.carbs, self.protein,
-                    self.alcohol, self.sugar, self.fiber, json.dumps(self.servings),
-                    self.user, self.name, self.user
+                    self.alcohol, self.sugar, self.fiber,
+                    json.dumps(self.servings), self.id
                 )
         )
         database.client.commit()
         cursor.close()
+    
+    def serving_string(self):
+        s = ""
+        for key, val in self.servings.items():
+            s += "{}: {}, ".format(key, val)
+        # trim trailing comma and space
+        s = s[:-2]
+        return s
 
