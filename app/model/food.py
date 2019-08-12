@@ -194,15 +194,15 @@ class Food:
             table_name (string): name of the table to update in
         """
         query = (
-                "UPDATE {} SET calories=%s, fat=%s, carbs=%s, protein=%s, ".format(table_name) +
+                "UPDATE {} SET name=%s, calories=%s, fat=%s, carbs=%s, protein=%s, ".format(table_name) +
                 "alcohol=%s, sugar=%s, fiber=%s, servings=%s " +
                 "WHERE id=%s"
                 )
         cursor = database.client.cursor()
         cursor.execute(
                 query, (
-                    self.calories, self.fat, self.carbs, self.protein,
-                    self.alcohol, self.sugar, self.fiber,
+                    self.name, self.calories, self.fat, self.carbs,
+                    self.protein, self.alcohol, self.sugar, self.fiber,
                     json.dumps(self.servings), self.id
                 )
         )

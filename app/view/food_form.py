@@ -28,7 +28,6 @@ class FoodForm(FlaskForm):
         match = re.fullmatch(p, servings.data)
         if not match:
             raise ValidationError("Servings field is not valid.")
-        print(match.group(0))
         
 
     def set_fields(self, food):
