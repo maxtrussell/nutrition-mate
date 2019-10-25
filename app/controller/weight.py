@@ -2,6 +2,7 @@ from datetime import datetime
 
 from flask import render_template, request, redirect, flash, Blueprint, url_for
 from flask_login import current_user, login_required
+import json
 
 import app.model.weight as _weight
 from app.pkg.config import Config
@@ -39,3 +40,18 @@ def weight_add_handler():
 def weight_delete_handler(id):
     _weight.delete_by_id(get_db(config), config.db.WEIGHTS, id)
     return redirect(url_for("weight_bp.weight_handler"))
+
+@weight_bp.route("/api/weight", methods=["GET"])
+def api_get_weight():
+    # TODO: add api authentication
+    user = request.args.get("username", default="")
+    weights = _weight.get_last_weights(
+        get_db(config), config.db.WEIGHTS, username=user
+    )
+
+    # Convert data to json format
+    data = {}
+    for weight in weights:
+        data[weight.date] = weight.weight
+    return json.dumps(data)
+
