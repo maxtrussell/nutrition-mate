@@ -14,7 +14,7 @@ def get_weights(username: str, start: date, end: date):
     weights = {}
     for date_str, weight in raw_weights.items():
         curr_date = parse_date(date_str)
-        if curr_date >= start and curr_date < end:
+        if curr_date >= start and curr_date <= end:
             weights[curr_date] = weight
     return weights
 
