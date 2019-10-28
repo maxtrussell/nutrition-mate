@@ -50,7 +50,9 @@ def get_food(database, table_name, food_id, username=""):
     return food
 
 def search(db, table, search, username):
-    s_words = search.split()
+    # limit search to five words for performance reasons
+    s_words = search.split()[:5]
+
     all_results = []
     for word in s_words:
         word = "%" + word + "%"
