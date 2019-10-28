@@ -29,7 +29,7 @@ def get_all_foods(database, table_name, username=""):
     return foods
 
 def get_food(database, table_name, food_id, username=""):
-    """Gets a food by name from a MySQL table
+    """Gets a food by id from a MySQL table
 
     Parameters:
         database (db.DB): MySQL db object 
@@ -50,17 +50,23 @@ def get_food(database, table_name, food_id, username=""):
     return food
 
 def search(db, table, search, username):
-    search = "%" + search + "%"
-    query = "SELECT * FROM {} WHERE username=%s AND lower(name) LIKE %s LIMIT 100".format(table)
-    cursor = db.client.cursor()
-    cursor.execute(query, (username, search))
+    # limit search to five words for performance reasons
+    s_words = search.split()[:5]
 
-    foods = []
-    for row in cursor.fetchall():
-        foods.append(row_to_food(row))
+    all_results = []
+    for word in s_words:
+        word = "%" + word + "%"
+        query = "SELECT * FROM {} WHERE username=%s AND lower(name) LIKE %s LIMIT 100".format(table)
+        cursor = db.client.cursor()
+        cursor.execute(query, (username, word.lower()))
+
+        results = set()
+        for row in cursor.fetchall():
+            results.add(row_to_food(row))
+        all_results.append(results)
 
     cursor.close()
-    return foods
+    return set.intersection(*all_results)
 
 
 def row_to_food(row):
@@ -110,7 +116,7 @@ def delete_by_id(database, table_name, id, username):
     database.client.commit()
     cursor.close()
 
-@dataclass
+@dataclass()
 class Food:
     name: str = ""
     calories: float = 0.0
@@ -129,6 +135,9 @@ class Food:
         self.servings["100g"] = 100
         if self.calories == 0.0:
             self.calories = self.calculate_calories()
+
+    def __hash__(self):
+        return self.id
 
     def calculate_calories(self):
         """Calculates calories from macro nutrients
