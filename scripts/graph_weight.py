@@ -4,6 +4,7 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 import requests
+import sys
 import typing as t
 
 ENDPOINT = 'http://nutrition-mate.com/api/weight?username={}'
@@ -22,8 +23,7 @@ def graph_weights(
     weights: t.Dict[date, float],
     start: date,
     end: date,
-    regression: bool=False,
-    stats: bool=False
+    goal: float,
     ) -> None:
     """Plots weight in matplotlib
 
@@ -40,42 +40,67 @@ def graph_weights(
             start_date = curr_date
     xvals, yvals = [], []
     for date, weight in weights.items():
-        if date < start or date > end:
-            continue
         days_elapsed = date - start_date
         xvals.append(days_elapsed.days)
         yvals.append(weight)
-    plt.plot(xvals, yvals, 'b-')
-    if regression:
-        m,b = np.polyfit(xvals, yvals, 1)
-        plt.plot(xvals, [m*x+b for x in xvals], 'r--')
-        if stats:
-            print(f'Regression: y = {m:.2f}x + {b:.2f}')
+    plt.plot(xvals, yvals, 'b-', label='weight')
+    m,b = np.polyfit(xvals, yvals, 1)
+    plt.plot(xvals, [m*x+b for x in xvals], 'r--', label='regression')
+    stats = (
+        f'===== GRAPH =====\n'
+        f'Regression: y = {m:.2f}x + {b:.2f}\n'
+    )
 
-def stats(weights: t.Dict[str, float]):
-    num_days = (max(weights.keys()) - min(weights.keys())).days
+    if goal:
+        m,b = goal/7, min(yvals)
+        plt.plot(xvals, [m*x+b for x in xvals], 'g:', label='goal')
+        stats += f'Goal: y = {m:.2f}x + {b:.2f}\n'
+
+    plt.xlabel(f'Days since {start}')
+    plt.ylabel('Weight in pounds')
+    plt.legend(loc='best')
+    print(stats)
+
+def stats(weights: t.Dict[date, float]):
+    first_date, last_date = min(weights.keys()), max(weights.keys())
+    num_days = (last_date - first_date).days
     w_max = max(weights.values())
     w_min = min(weights.values())
-    w_range = w_max - w_min
-    w_avg_change = 1.0 * w_range/num_days
+    w_delta = weights[last_date] - weights[first_date]
+    w_avg_change = 7.0 * w_delta/num_days
     print(
         f'===== STATS ====\n'
         f'Total Days: {num_days}\n'
-        f'Min: {w_min}, Max: {w_max}, Range: {w_range:.1f}\n'
-        f'Avg Change per Day: {w_avg_change:.2f}'
+        f'Min: {w_min}, Max: {w_max}, Delta: {w_delta:.1f}\n'
+        f'Avg Change per week: {w_avg_change:.2f}\n'
     )
+
+def report(weights: t.Dict[date, float], goal: float):
+    start_date = min(weights.keys())
+    curr_date = max(weights.keys())
+    curr_day = (curr_date - start_date).days
+    m, b = goal/7, weights[start_date]
+
+    ideal_weight = m*curr_day + b
+    predicted_day = (weights[curr_date] - weights[start_date]) / m
+
+    print(
+        f'===== REPORT =====\n'
+        f'Current day: {curr_day}\n'
+        f'Current weight: {weights[curr_date]}, Ideal weight: {ideal_weight:.1f}\n'
+        f'You are {predicted_day - curr_day:.1f} day(s) off schedule.\n'
+    )
+
 
 def parse_date(ds: str):
     return datetime.strptime(ds, '%Y-%m-%d').date()
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--username', type=str, required=True)
-    parser.add_argument('--start', type=str, default=None)
-    parser.add_argument('--end', type=str, default=None)
-    parser.add_argument('--regression', action='store_true')
-    parser.add_argument('--stats', action='store_true')
-    parser.add_argument('--graph', action='store_true')
+    parser.add_argument('--username', required=True)
+    parser.add_argument('--start', default=None)
+    parser.add_argument('--end', default=None)
+    parser.add_argument('--goal', type=float, default=None)
     args = parser.parse_args()
     
     # set defaults for time range
@@ -83,12 +108,14 @@ def main():
     end = parse_date(args.end) if args.end else datetime.now().date()
 
     weights = get_weights(args.username, start, end)
-    if args.stats:
-        stats(weights)
-    graph_weights(weights, start, end, regression=args.regression,
-            stats=args.stats)
-    if args.graph:
-        plt.show()
+    if len(weights) == 0:
+        print(f'No weights found for period ({args.start}, {args.end})')
+        sys.exit(0)
+    stats(weights)
+    graph_weights(weights, start, end, args.goal)
+    if args.goal:
+        report(weights, args.goal)
+    plt.show()
 
 if __name__ == '__main__':
     main()
