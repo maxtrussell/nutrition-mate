@@ -66,7 +66,7 @@ def search(db, table, search, username):
         all_results.append(results)
 
     cursor.close()
-    return set.intersection(*all_results)
+    return list(set.intersection(*all_results))
 
 
 def row_to_food(row):
