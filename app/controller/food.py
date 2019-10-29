@@ -14,7 +14,7 @@ config = Config()
 @food_bp.route("/food/<id>")
 @login_required
 def food_handler(id):
-    serving = request.args.get("serving", default=None)
+    serving = request.args.get("serving", default="100g")
     try:
         food = _food.get_food(get_db(config), config.db.FOODS, id, current_user.username)
         if serving:
