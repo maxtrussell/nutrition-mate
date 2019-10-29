@@ -14,9 +14,16 @@ config = Config()
 @food_bp.route("/food/<id>")
 @login_required
 def food_handler(id):
+    serving = request.args.get("serving", default=None)
     try:
         food = _food.get_food(get_db(config), config.db.FOODS, id, current_user.username)
-        return render_template("food.html", food=food, date=date.today())
+        if serving:
+            if serving not in food.servings:
+                flash(f"No such serving '{serving}' for food '{food.name}'.")
+                return redirect(url_for("food_bp.food_handler", id=id))
+            serving_size = food.servings[serving]
+            food = food.normalize(target=serving_size)
+        return render_template("food.html", food=food, date=date.today(), selected_serving=serving)
     except Exception as e:
         flash("Could not get food: {}".format(e))
         return redirect(url_for("home_bp.index"))
