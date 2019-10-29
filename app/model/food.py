@@ -221,7 +221,8 @@ class Food:
     def serving_string(self):
         s = ""
         for key, val in self.servings.items():
-            s += "{}: {}, ".format(key, val)
+            if key != "100g" and key != "1g":
+                s += "{}: {}, ".format(key, val)
         # trim trailing comma and space
         s = s[:-2]
         return s

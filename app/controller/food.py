@@ -43,6 +43,9 @@ def edit(id):
     if form.validate_on_submit():
         food.name = form.name.data
         food.servings = _food.parse_servings(form.servings.data)
+        # Ensure 1g and 100g serving sizes exist
+        food.servings["1g"] = 1
+        food.servings["100g"] = 100
         food.calories = form.calories.data
         food.fat = form.fat.data
         food.carbs = form.carbs.data
