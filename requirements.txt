@@ -6,6 +6,7 @@ cycler==0.10.0
 dominate==2.3.5
 Flask==1.1.1
 Flask-Bootstrap==3.3.7.1
+Flask-HTTPAuth==3.3.0
 Flask-Login==0.4.1
 Flask-WTF==0.14.2
 google-api-core==1.14.0

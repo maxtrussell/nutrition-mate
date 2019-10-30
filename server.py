@@ -1,3 +1,4 @@
+import app.api as api
 import app.controller.database as db
 import app.controller.food as food
 import app.controller.home as home
@@ -17,6 +18,7 @@ def run():
     app.register_blueprint(food.food_bp)
     app.register_blueprint(log.log_bp)
     app.register_blueprint(home.home_bp)
+    app.register_blueprint(api.bp)
 
     config = Config()
     app.run(host=config.server.HOST, port=config.server.PORT)

@@ -40,18 +40,3 @@ def weight_add_handler():
 def weight_delete_handler(id):
     _weight.delete_by_id(get_db(config), config.db.WEIGHTS, id)
     return redirect(url_for("weight_bp.weight_handler"))
-
-@weight_bp.route("/api/weight", methods=["GET"])
-def api_get_weight():
-    # TODO: add api authentication
-    user = request.args.get("username", default="")
-    weights = _weight.get_last_weights(
-        get_db(config), config.db.WEIGHTS, username=user
-    )
-
-    # Convert data to json format
-    data = {}
-    for weight in weights:
-        data[weight.date] = weight.weight
-    return json.dumps(data)
-
