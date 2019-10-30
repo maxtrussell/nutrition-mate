@@ -1,4 +1,4 @@
-from flask import g
+from flask import g, jsonify
 import json
 
 from app.api import bp
@@ -21,4 +21,4 @@ def get_weight():
     data = {}
     for weight in weights:
         data[weight.date] = weight.weight
-    return json.dumps(data)
+    return jsonify(data)
