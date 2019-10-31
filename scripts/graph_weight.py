@@ -10,11 +10,17 @@ import typing as t
 
 ENDPOINT = 'https://nutrition-mate.com/api/weight'
 
-def get_weights(username: str, password: str, start: date, end: date, local: bool=False):
-    r = requests.get(
-        ENDPOINT.format(username),
-        auth=requests.auth.HTTPBasicAuth(username, password),
-    )
+def get_weights(username: str, start: date, end: date, local: bool=False):
+    # 3 attempts to get password
+    for i in range(3):
+        password = getpass()
+        r = requests.get(
+            ENDPOINT.format(username),
+            auth=requests.auth.HTTPBasicAuth(username, password),
+        )
+        print('Sorry, try again.')
+        if r.status_code != 401:
+            break
     r.raise_for_status()
     raw_weights = json.loads(r.content)
     weights = {}
@@ -114,14 +120,13 @@ def main():
     parser.add_argument('--end', default=None)
     parser.add_argument('--goal', type=float, default=None)
     args = parser.parse_args()
-
-    password = getpass()
+    
     
     # set defaults for time range
     start = parse_date(args.start) if args.start else date(1, 1, 1)
     end = parse_date(args.end) if args.end else datetime.now().date()
 
-    weights = get_weights(args.username, password, start, end)
+    weights = get_weights(args.username, start, end)
     if len(weights) == 0:
         print(f'No weights found for period ({args.start}, {args.end})')
         sys.exit(0)
