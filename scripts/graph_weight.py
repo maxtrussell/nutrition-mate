@@ -43,28 +43,35 @@ def graph_weights(
     for curr_date in weights:
         if curr_date < start_date:
             start_date = curr_date
-    xvals, yvals = [], []
+    vals = []
     for date, weight in weights.items():
         days_elapsed = date - start_date
-        xvals.append(days_elapsed.days)
-        yvals.append(weight)
+        vals.append((days_elapsed.days, weight))
+    vals = sorted(vals, key=lambda x: x[0])
+    xvals = [x[0] for x in vals]
+    yvals = [y[1] for y in vals]
     plt.plot(xvals, yvals, 'b-', label='weight')
-    m,b = np.polyfit(xvals, yvals, 1)
-    plt.plot(xvals, [m*x+b for x in xvals], 'r--', label='regression')
-    stats = (
-        f'===== GRAPH =====\n'
-        f'Regression: y = {m:.2f}x + {b:.2f}\n'
-    )
-
     if goal:
         m,b = goal/7, min(yvals)
         plt.plot(xvals, [m*x+b for x in xvals], 'g:', label='goal')
-        stats += f'Goal: y = {m:.2f}x + {b:.2f}\n'
+    n = 7
+    plt.plot(xvals, rolling_avg(yvals, n), 'r--', label=f'{n} day avg')
 
-    plt.xlabel(f'Days since {start}')
+    plt.xlabel(f'Days since {start_date}')
     plt.ylabel('Weight in pounds')
     plt.legend(loc='best')
-    print(stats)
+
+
+def rolling_avg(vals: t.List[float], n: int=3):
+    avgs = []
+    for i, val in enumerate(vals):
+        if i+1 < n:
+            cumsum = sum(vals[:i+1])
+            avgs.append(cumsum/(i+1))
+        else:
+            cumsum = sum(vals[(i+1)-n:i+1])
+            avgs.append(cumsum/n)
+    return avgs
 
 def stats(weights: t.Dict[date, float]):
     first_date, last_date = min(weights.keys()), max(weights.keys())
@@ -111,7 +118,7 @@ def main():
     password = getpass()
     
     # set defaults for time range
-    start = parse_date(args.start) if args.start else date()
+    start = parse_date(args.start) if args.start else date(1, 1, 1)
     end = parse_date(args.end) if args.end else datetime.now().date()
 
     weights = get_weights(args.username, password, start, end)
