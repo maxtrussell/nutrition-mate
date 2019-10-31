@@ -18,9 +18,9 @@ def get_weights(username: str, start: date, end: date, local: bool=False):
             ENDPOINT.format(username),
             auth=requests.auth.HTTPBasicAuth(username, password),
         )
-        print('Sorry, try again.')
         if r.status_code != 401:
             break
+        print('Sorry, try again.')
     r.raise_for_status()
     raw_weights = json.loads(r.content)
     weights = {}
