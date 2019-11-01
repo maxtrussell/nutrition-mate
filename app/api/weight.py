@@ -1,6 +1,5 @@
 from datetime import datetime
 from flask import g, jsonify, request, Response
-import json
 
 from app.api import bp
 from app.api.auth import basic_auth
