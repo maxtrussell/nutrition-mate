@@ -1,0 +1,33 @@
+[
+    {
+        "name": "Egg",
+        "serving": {
+            "1 small": 38,
+            "1 medium": 44,
+            "1 large": 50,
+            "1 jumbo": 63
+        },
+        "calories": 143,
+        "fat": 9.51,
+        "carbs": 0.72,
+        "protein": 12.56,
+        "fiber": 0,
+        "sugar": 0.37,
+        "quantity": 100
+    },
+    {
+        "name": "2% Milk",
+        "serving": {
+            "1 fl oz": 30.4,
+            "1 cup": 244,
+            "1/2 cup": 122
+        },
+        "calories": 50,
+        "fat": 1.98,
+        "carbs": 4.8,
+        "protein": 3.3,
+        "fiber": 0,
+        "sugar": 5.06,
+        "quantity": 100
+   }
+]
