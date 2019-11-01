@@ -1,4 +1,5 @@
 from flask import g, jsonify, request, Response
+import typing as t
 
 from app.api import bp
 from app.api.auth import basic_auth
@@ -19,25 +20,31 @@ def get_food(id: int):
 @basic_auth.login_required
 def post_food():
     # TODO: return uri to new food
+    if isinstance(request.json, list):
+        for food_dict in request.json:
+            _add_food(food_dict)
+    else:
+        _add_food(request.json)
+    return jsonify({"success": True})
+
+def _add_food(data: t.Dict):
     try:
         new_food = _food.Food(
-            name=request.json['name'],
-            calories=request.json.get('calories'),
-            servings=request.json.get('servings', {}),
-            fat=request.json.get('fat', 0.0),
-            carbs=request.json.get('carbs', 0.0),
-            protein=request.json.get('protein', 0.0),
-            alcohol=request.json.get('alcohol', 0.0),
-            sugar=request.json.get('sugar', 0.0),
-            fiber=request.json.get('fiber', 0.0),
+            name=data['name'],
+            calories=data.get('calories'),
+            servings=data.get('servings', {}),
+            fat=data.get('fat', 0.0),
+            carbs=data.get('carbs', 0.0),
+            protein=data.get('protein', 0.0),
+            alcohol=data.get('alcohol', 0.0),
+            sugar=data.get('sugar', 0.0),
+            fiber=data.get('fiber', 0.0),
             user=g.current_user.username,
         )
-        new_food = new_food.normalize(request.json['quantity'])
+        new_food = new_food.normalize(data['quantity'])
         new_food.insert(get_db(config), config.db.FOODS)
     except KeyError as e:
         return bad_request("'name' and 'quantity' are required.")
     except Exception as e:
         return error_response(500)
-    return jsonify({"success": True})
-
 
