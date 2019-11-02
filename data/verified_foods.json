@@ -1,7 +1,7 @@
 [
     {
         "name": "Egg",
-        "serving": {
+        "servings": {
             "1 small": 38,
             "1 medium": 44,
             "1 large": 50,
@@ -17,7 +17,7 @@
     },
     {
         "name": "2% Milk",
-        "serving": {
+        "servings": {
             "1 fl oz": 30.4,
             "1 cup": 244,
             "1/2 cup": 122
