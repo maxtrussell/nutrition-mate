@@ -1,18 +1,17 @@
 [
     {
-        "name": "Egg",
+        "name": "1% Milk",
         "servings": {
-            "1 small": 38,
-            "1 medium": 44,
-            "1 large": 50,
-            "1 jumbo": 63
+            "1 fl oz": 30.4,
+            "1 cup": 244,
+            "1/2 cup": 122
         },
-        "calories": 143,
-        "fat": 9.51,
-        "carbs": 0.72,
-        "protein": 12.56,
+        "calories": 42,
+        "fat": 0.97,
+        "carbs": 4.99,
+        "protein": 3.37,
         "fiber": 0,
-        "sugar": 0.37,
+        "sugar": 5.2,
         "quantity": 100
     },
     {
@@ -29,5 +28,66 @@
         "fiber": 0,
         "sugar": 5.06,
         "quantity": 100
-   }
+    },
+    {
+        "name": "Egg",
+        "servings": {
+            "1 small": 38,
+            "1 medium": 44,
+            "1 large": 50,
+            "1 jumbo": 63
+        },
+        "calories": 143,
+        "fat": 9.51,
+        "carbs": 0.72,
+        "protein": 12.56,
+        "fiber": 0,
+        "sugar": 0.37,
+        "quantity": 100
+    },
+    {
+        "name": "Butter",
+        "servings": {
+            "1 tbsp": 14.2,
+            "1 cup": 227,
+            "1 stick": 113
+        },
+        "calories": 717,
+        "fat": 81.11,
+        "carbs": 0.06,
+        "protein": 0.85,
+        "fiber": 0,
+        "sugar": 0,
+        "quantity": 100
+    },
+    {
+        "name": "Skim Milk",
+        "servings": {
+            "1 fl oz": 30.5,
+            "1 cup": 244,
+            "1/2 cup": 122
+        },
+        "calories": 34,
+        "fat": 0.08,
+        "carbs": 4.96,
+        "protein": 3.37,
+        "fiber": 0,
+        "sugar": 5.09,
+        "quantity": 100
+    },
+    {
+        "name": "Whole Milk",
+        "servings": {
+            "1 fl oz": 30.5,
+            "1 cup": 244,
+            "1/2 cup": 122
+        },
+        "calories": 61,
+        "fat": 3.25,
+        "carbs": 4.8,
+        "protein": 3.15,
+        "fiber": 0,
+        "sugar": 5.05,
+        "quantity": 100
+    }
 ]
