@@ -1,5 +1,6 @@
 from datetime import datetime
 from flask import g, jsonify, request, Response
+import typing as t
 
 from app.api import bp
 from app.api.auth import basic_auth
@@ -27,9 +28,18 @@ def get_weight():
 @bp.route('/api/weight', methods=['POST'])
 @basic_auth.login_required
 def post_weight():
-    dt = request.json.get('date')
-    weight = request.json.get('weight')
-    notes = request.json.get('notes', '')
+    # TODO: return URI to new weight
+    if isinstance(request.json, list):
+        for weight_dict in request.json:
+            _add_weight(weight_dict)
+    else:
+        _add_weight(request.json)
+    return jsonify({"success": True})
+
+def _add_weight(data: t.Dict):
+    dt = data.get('date')
+    weight = data.get('weight')
+    notes = data.get('notes', '')
     if not dt:
         return bad_request('date is a required field.')
     if not weight:
@@ -40,7 +50,6 @@ def post_weight():
         w.notes = notes
         w.username = g.current_user.username
         w.insert(get_db(config), config.db.WEIGHTS)
-        return Response('', status=201, mimetype='application/json')
     except ValueError as e:
         return bad_request(str(e))
     except Exception as e:
