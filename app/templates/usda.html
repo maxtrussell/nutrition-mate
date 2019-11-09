@@ -3,16 +3,13 @@
 {% block app_content %}
 <h1 align="center">USDA Search Results</h1>
 
-<ul class="list-group">
+<div class="list-group">
   {% for result in results %}
-  <form method="post" action="/usda">
+  <form method="get" action="/usda/detail">
     <input type="hidden" name="fdcID" value="{{result.id}}">
-    <input type="hidden" name="description" value="{{result.description}}">
-    <li class="list-group-item">
-      <button type="submit" class="btn-link">{{result.description}}</button>
-    </li>
+    <button type="submit" class="list-group-item list-group-item-action">{{result.description}}</button>
   </form>
   {% endfor %}
-</ul>
+</div>
 
 {% endblock %} 

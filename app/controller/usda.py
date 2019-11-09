@@ -15,17 +15,23 @@ SEARCH_PATH = "/fdc/v1/search"
 FOOD_DETAIL_PATH = "/fdc/v1/{}"
 API_KEY = config.secrets.USDA_API_KEY
 
-@usda_bp.route("/usda", methods=["GET"])
+@usda_bp.route("/usda/search", methods=["GET"])
 @login_required
-def usda():
+def usda_search():
     query = request.args.get("query")
     results = _search(query)
     return render_template("usda.html", title="USDA", results=results[:10])
 
+@usda_bp.route("/usda/detail", methods=["GET"])
+@login_required
+def usda_get_food():
+    result = _get_food(request.args.get("fdcID"))
+    return render_template("usda_detail.html", title="USDA", food=result)
+
 class SearchResult():
     def __init__(self, result: t.Dict):
-        self.description = results["description"]
-        self.id = results["fdc_id"]
+        self.description = result["description"]
+        self.id = result["fdcId"]
 
 # Sends search to USDA API
 def _search(food_name: str):
@@ -37,6 +43,13 @@ def _search(food_name: str):
     results = []
     for food in r.json()["foods"]:
         if food["dataType"] == "Survey (FNDDS)":
-            results.append(food)
+            results.append(SearchResult(food))
     return results
 
+# Gets food by fdc id
+def _get_food(fdc_id: int):
+    endpoint = BASE_URL + FOOD_DETAIL_PATH.format(fdc_id)
+    params = {"api_key": API_KEY}
+    r = requests.get(endpoint, params=params)
+    r.raise_for_status()
+    return r.json()
