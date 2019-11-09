@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<h1 align="center">USDA Search Results</h1>
+
+<ul class="list-group">
+  {% for result in results %}
+  <form method="post" action="/usda">
+    <input type="hidden" name="fdcID" value="{{result.id}}">
+    <input type="hidden" name="description" value="{{result.description}}">
+    <li class="list-group-item">
+      <button type="submit" class="btn-link">{{result.description}}</button>
+    </li>
+  </form>
+  {% endfor %}
+</ul>
+
+{% endblock %} 

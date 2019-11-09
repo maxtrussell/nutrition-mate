@@ -25,6 +25,7 @@ class MySQL:
 
 class Secrets:
     REGISTRATION_KEY = ""
+    USDA_API_KEY = ""
 
 
 class Server:
@@ -43,4 +44,5 @@ def get_secrets(config):
     sf = SecretFetcher(config.gcp.CREDS, config.gcp.BUCKET,
                        config.gcp.SECRET_DIR)
     config.secrets.REGISTRATION_KEY = sf.fetch_secret("registration_key")
+    config.secrets.USDA_API_KEY = sf.fetch_secret("usda_api_key")
     return config

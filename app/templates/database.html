@@ -2,11 +2,15 @@
 
 {% block app_content %}
 {% include "db_add_modal.html" %}
+{% include "db_usda_modal.html" %}
 <h1 align="center">Food Database</h1>
 
 <div align="center" class="pad-vert form-inline">
     <div style="float:left;">
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addModal">Add</button>
+    </div>
+    <div style="float:left; padding-left: 4px;">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#usdaModal">Add from USDA</button>
     </div>
     <div align="right">
         <form action="/database" style="display: inline-block;" autocomplete="off">
