@@ -24,7 +24,7 @@ class FoodForm(FlaskForm):
     submit = SubmitField("Confirm")
 
     def validate_servings(self, servings):
-        p = "^([a-zA-Z0-9 ]*:[ ]*\d+,[ ]*)*[a-zA-Z0-9 ]*:[ ]*\d+[ ]*$"
+        p = "^([a-zA-Z0-9 ]*:[ ]*[\d\.]+,[ ]*)*[a-zA-Z0-9 ]*:[ ]*[\d\.]+[ ]*$"
         match = re.fullmatch(p, servings.data)
         if not match:
             raise ValidationError("Servings field is not valid.")
