@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from flask import render_template, request, redirect, url_for, flash, Blueprint
+from flask import render_template, request, redirect, url_for, flash, Blueprint, Markup
 from flask_login import current_user, login_required
 
 import app.model.food as _food
@@ -62,7 +62,8 @@ def log_add_handler():
             username=username
             )
     entry.insert(get_db(config), config.db.LOG)
-    flash("Successfully added '{} x {} of {}' to log".format(quantity, serving, food.name))
+    food_link = f'<a href="/food/{id}">{food.name}</a>'
+    flash(Markup("Successfully added '{} x {} of {}' to log".format(quantity, serving, food_link)))
     return redirect(url_for("log_bp.log_handler", selectedDate=selected_date))
 
 @log_bp.route("/log/delete/<id>", methods=["GET"])

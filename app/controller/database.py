@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, flash, Blueprint, url_for
+from flask import render_template, request, redirect, flash, Blueprint, url_for, Markup
 from flask_login import current_user, login_required
 
 import app.model.food as _food
@@ -68,8 +68,9 @@ def database_add_handler():
                 )
         food = food.normalize(current=parsed["quantity"])
 
-        food.insert(get_db(config), config.db.FOODS)
-        flash("Successfully added food '{}'".format(food.name))
+        food.id = food.insert(get_db(config), config.db.FOODS)
+        food_link = f'<a href="/food/{food.id}">{food.name}</a>'
+        flash(Markup(f"Successfully added food '{food_link}'"))
     except Exception as e:
         flash("Failed to add food '{}': {}".format(food.name, e))
     finally:

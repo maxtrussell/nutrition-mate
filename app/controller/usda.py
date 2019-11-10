@@ -1,5 +1,5 @@
 from ast import literal_eval
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Markup
 from flask_login import current_user, login_required
 import requests
 import typing as t
@@ -65,8 +65,9 @@ def usda_save_food():
                 food.__setattr__(attr, literal_eval(val))
             else:
                 food.__setattr__(attr, val)
-        food.insert(get_db(config), config.db.FOODS)
-        flash(f"Sucessfully added '{food.name}' from USDA!")
+        food.id = food.insert(get_db(config), config.db.FOODS)
+        food_link = f'<a href="/food/{food.id}">{food.name}</a>'
+        flash(Markup(f"Sucessfully added '{food_link}' from USDA!"))
     except Exception as e:
         flash(f"Failed to add food from USDA")
     return redirect(url_for("db_bp.database_handler"))

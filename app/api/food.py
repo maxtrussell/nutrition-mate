@@ -19,13 +19,14 @@ def get_food(id: int):
 @bp.route("/api/food", methods=["POST"])
 @basic_auth.login_required
 def post_food():
-    # TODO: return uri to new food
+    data = {"success": True}
     if isinstance(request.json, list):
+        data["ids"] = []
         for food_dict in request.json:
-            _add_food(food_dict)
+            data["ids"].append(_add_food(food_dict))
     else:
-        _add_food(request.json)
-    return jsonify({"success": True})
+        data["id"] = _add_food(request.json)
+    return jsonify(data)
 
 def _add_food(data: t.Dict):
     try:
@@ -42,7 +43,8 @@ def _add_food(data: t.Dict):
             user=g.current_user.username,
         )
         new_food = new_food.normalize(data['quantity'])
-        new_food.insert(get_db(config), config.db.FOODS)
+        food_id = new_food.insert(get_db(config), config.db.FOODS)
+        return food_id
     except KeyError as e:
         return bad_request("'name' and 'quantity' are required.")
     except Exception as e:
