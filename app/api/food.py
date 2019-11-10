@@ -28,6 +28,14 @@ def post_food():
         data["id"] = _add_food(request.json)
     return jsonify(data)
 
+@bp.route("/api/food", methods=["DELETE"])
+@basic_auth.login_required
+def delete_food():
+    ids = request.json.get("ids")
+    for food_id in ids:
+        _food.delete_by_id(get_db(config), config.db.FOODS, food_id, g.current_user.username)
+    return jsonify({"success": True})
+
 def _add_food(data: t.Dict):
     try:
         new_food = _food.Food(
