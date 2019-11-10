@@ -193,7 +193,9 @@ class Food:
                 )
         )
         database.client.commit()
+        food_id = cursor.lastrowid
         cursor.close()
+        return food_id
 
     def update(self, database, table_name):
         """Update food item in MySQL table
