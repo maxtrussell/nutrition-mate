@@ -61,10 +61,22 @@
                 <td><b>Total</b></td>
                 <td></td>
                 <td></td>
-                <td><b>{{ calorieSum | round | int }}</b></td>
-                <td><b>{{ proteinSum | round | int }}</b></td>
-                <td><b>{{ sugarSum | round | int }}</b></td>
-                <td><b>{{ fiberSum | round | int }}</b></td>
+                <td><b>
+                    {{ calorieSum | round | int }}
+                    {% if user.calories_goal %} / {{ user.calories_goal }}{% endif %} 
+                </b></td>
+                <td><b>
+                    {{ proteinSum | round | int }}
+                    {% if user.protein_goal %} / {{ user.protein_goal }}{% endif %} 
+                </b></td>
+                <td><b>
+                    {{ sugarSum | round | int }}
+                    {% if user.sugar_goal %} / {{ user.sugar_goal }}{% endif %} 
+                </b></td>
+                <td><b>
+                    {{ fiberSum | round | int }}
+                    {% if user.fiber_goal %} / {{ user.fiber_goal }}{% endif %} 
+                </b></td>
                 <td></td>
             </tr>
         </tbody>

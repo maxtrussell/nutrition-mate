@@ -57,7 +57,7 @@ def _add_food(data: t.Dict):
             fiber=data.get('fiber', 0.0),
             user=g.current_user.username,
         )
-        new_food = new_food.normalize(data['quantity'])
+        new_food = new_food.normalize(data.get('quantity', 100))
         food_id = new_food.insert(get_db(config), config.db.FOODS)
         return food_id
     except KeyError as e:

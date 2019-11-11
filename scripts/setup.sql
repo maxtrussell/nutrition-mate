@@ -8,7 +8,15 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(64) UNIQUE NOT NULL,
     email VARCHAR(120) UNIQUE NOT NULL,
     password_hash VARCHAR(128) NOT NULL,
-    PRIMARY KEY (ID)
+    calories_goal INTEGER,
+    fat_goal INTEGER,
+    carbs_goal INTEGER,
+    protein_goal INTEGER,
+    fiber_goal INTEGER,
+    sugar_goal INTEGER,
+    usda_api_key VARCHAR(64),
+    view_verified_foods BOOLEAN DEFAULT TRUE,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS food (

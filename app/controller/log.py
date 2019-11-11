@@ -5,6 +5,7 @@ from flask_login import current_user, login_required
 
 import app.model.food as _food
 import app.model.log as _log
+import app.model.user as _user
 from app.pkg.config import Config
 from app.pkg.utils import toDate
 from app.pkg.db import get_db
@@ -36,8 +37,11 @@ def log_handler():
         alcoholSum += entry.food.alcohol
         entry.time = entry.time.strftime("%-I:%M %p")
 
+    # get user goals
+    user = _user.get_user_by_username(get_db(config), config.db.USERS, current_user.username)
+
     return render_template(
-            "log.html", active_page="log", selectedDate=selected_date, entries=entries,
+            "log.html", active_page="log", user=user, selectedDate=selected_date, entries=entries,
             calorieSum=calorieSum, proteinSum=proteinSum, sugarSum=sugarSum, fiberSum=fiberSum,
             fatSum=fatSum, carbsSum=carbsSum, alcoholSum=alcoholSum
             )

@@ -22,6 +22,7 @@
             <li{% if active_page == "database" %} class="active" {% endif %}><a href="/database">Database</a></li>
             <li{% if active_page == "meals" %} class="active" {% endif %}><a href="/meals">Meals</a></li>
             <li{% if active_page == "weight" %} class="active" {% endif %}><a href="/weight">Weight</a></li>
+            <li{% if active_page == "preferences" %} class="active" {% endif %}><a href="/preferences">Preferences</a></li>
             {% if current_user.is_anonymous %}
             <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
             <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
