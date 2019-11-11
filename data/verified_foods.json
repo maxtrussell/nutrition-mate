@@ -1,93 +1,664 @@
 [
-    {
-        "name": "1% Milk",
-        "servings": {
-            "1 fl oz": 30.4,
-            "1 cup": 244,
-            "1/2 cup": 122
-        },
-        "calories": 42,
-        "fat": 0.97,
-        "carbs": 4.99,
-        "protein": 3.37,
-        "fiber": 0,
-        "sugar": 5.2,
-        "quantity": 100
+  {
+    "alcohol": 0,
+    "calories": 61,
+    "carbs": 4.8,
+    "fat": 3.25,
+    "fiber": 0,
+    "id": 2,
+    "name": "Milk, whole",
+    "protein": 3.15,
+    "servings": {
+      "1 cup": 244,
+      "1 fl oz": 30.5,
+      "1 individual school container": 244,
+      "100g": 100,
+      "1g": 1,
+      "Guideline amount per cup of cold cereal": 122,
+      "Guideline amount per cup of hot cereal": 61,
+      "Guideline amount per fl oz of beverage": 2.5
     },
-    {
-        "name": "2% Milk",
-        "servings": {
-            "1 fl oz": 30.4,
-            "1 cup": 244,
-            "1/2 cup": 122
-        },
-        "calories": 50,
-        "fat": 1.98,
-        "carbs": 4.8,
-        "protein": 3.3,
-        "fiber": 0,
-        "sugar": 5.06,
-        "quantity": 100
+    "sugar": 5.05,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 143,
+    "carbs": 0.72,
+    "fat": 9.51,
+    "fiber": 0,
+    "id": 5,
+    "name": "Egg, whole, raw",
+    "protein": 12.56,
+    "servings": {
+      "1 cup (4.86 eggs)": 243,
+      "1 extra large": 56,
+      "1 jumbo": 63,
+      "1 large": 50,
+      "1 medium": 44,
+      "1 small": 38,
+      "100g": 100,
+      "1g": 1
     },
-    {
-        "name": "Egg",
-        "servings": {
-            "1 small": 38,
-            "1 medium": 44,
-            "1 large": 50,
-            "1 jumbo": 63
-        },
-        "calories": 143,
-        "fat": 9.51,
-        "carbs": 0.72,
-        "protein": 12.56,
-        "fiber": 0,
-        "sugar": 0.37,
-        "quantity": 100
+    "sugar": 0.37,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 50,
+    "carbs": 4.8,
+    "fat": 1.98,
+    "fiber": 0,
+    "id": 8,
+    "name": "Milk, reduced fat (2%)",
+    "protein": 3.3,
+    "servings": {
+      "1 cup": 244,
+      "1 fl oz": 30.5,
+      "1 individual school container": 244,
+      "100g": 100,
+      "1g": 1,
+      "Guideline amount per cup of cold cereal": 122,
+      "Guideline amount per cup of hot cereal": 61,
+      "Guideline amount per fl oz of beverage": 2.5
     },
-    {
-        "name": "Butter",
-        "servings": {
-            "1 tbsp": 14.2,
-            "1 cup": 227,
-            "1 stick": 113
-        },
-        "calories": 717,
-        "fat": 81.11,
-        "carbs": 0.06,
-        "protein": 0.85,
-        "fiber": 0,
-        "sugar": 0,
-        "quantity": 100
+    "sugar": 5.06,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 42,
+    "carbs": 4.99,
+    "fat": 0.97,
+    "fiber": 0,
+    "id": 9,
+    "name": "Milk, low fat (1%)",
+    "protein": 3.37,
+    "servings": {
+      "1 cup": 244,
+      "1 fl oz": 30.5,
+      "1 individual school container": 244,
+      "100g": 100,
+      "1g": 1,
+      "Guideline amount per cup of cold cereal": 122,
+      "Guideline amount per cup of hot cereal": 61,
+      "Guideline amount per fl oz of beverage": 2.5
     },
-    {
-        "name": "Skim Milk",
-        "servings": {
-            "1 fl oz": 30.5,
-            "1 cup": 244,
-            "1/2 cup": 122
-        },
-        "calories": 34,
-        "fat": 0.08,
-        "carbs": 4.96,
-        "protein": 3.37,
-        "fiber": 0,
-        "sugar": 5.09,
-        "quantity": 100
+    "sugar": 5.2,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 34,
+    "carbs": 4.96,
+    "fat": 0.08,
+    "fiber": 0,
+    "id": 10,
+    "name": "Milk, fat free (skim)",
+    "protein": 3.37,
+    "servings": {
+      "1 cup": 244,
+      "1 fl oz": 30.5,
+      "1 individual school container": 244,
+      "100g": 100,
+      "1g": 1,
+      "Guideline amount per cup of cold cereal": 122,
+      "Guideline amount per cup of hot cereal": 61,
+      "Guideline amount per fl oz of beverage": 2.5
     },
-    {
-        "name": "Whole Milk",
-        "servings": {
-            "1 fl oz": 30.5,
-            "1 cup": 244,
-            "1/2 cup": 122
-        },
-        "calories": 61,
-        "fat": 3.25,
-        "carbs": 4.8,
-        "protein": 3.15,
-        "fiber": 0,
-        "sugar": 5.05,
-        "quantity": 100
-    }
+    "sugar": 5.09,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 717,
+    "carbs": 0.06,
+    "fat": 81.11,
+    "fiber": 0,
+    "id": 11,
+    "name": "Butter, stick, salted",
+    "protein": 0.85,
+    "servings": {
+      "1 cup": 227,
+      "1 pat (1\" sq, 1/3\" high)": 5,
+      "1 stick": 113,
+      "1 tablespoon": 14.2,
+      "100g": 100,
+      "1g": 1,
+      "Guideline amount on large sandwich": 28,
+      "Guideline amount on regular sandwich": 14,
+      "Guideline amount per slice of bread/roll": 7.1,
+      "one inch of stick": 23
+    },
+    "sugar": 0.06,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 165,
+    "carbs": 0,
+    "fat": 3.88,
+    "fiber": 0,
+    "id": 12,
+    "name": "Chicken, breast, roasted, broiled, or baked, skin not eaten",
+    "protein": 30.98,
+    "servings": {
+      "1 breast quarter (yield after cooking, bone and skin removed)": 126,
+      "1 cubic inch, boneless, cooked, skin removed": 17,
+      "1 cup, cooked, diced": 135,
+      "1 medium slice (approx 2\" x 1-1/2\" x 1/4\")": 14,
+      "1 oz, boneless, cooked (yield after skin removed)": 26,
+      "1 oz, boneless, cooked, skinless": 28,
+      "1 oz, boneless, raw (yield after cooking, skin removed)": 17,
+      "1 oz, boneless, raw, without skin (yield after cooking)": 19,
+      "1 oz, with bone, cooked (yield after bone and skin removed)": 21,
+      "1 oz, with bone, cooked, without skin (yield after bone removed)": 22,
+      "1 oz, with bone, raw (yield after cooking, bone and skin removed)": 14,
+      "1 oz, with bone, raw, without skin (yield after cooking, bone removed)": 15,
+      "1 tender, NFS": 45,
+      "1 thick slice (approx 2\" x 1-1/2\" x 3/8\")": 21,
+      "1 thin slice (approx 2\" x 1-1/2\" x 1/8\")": 7,
+      "1/2 large breast (yield after cooking, bone and skin removed)": 135,
+      "1/2 medium breast (yield after cooking, bone and skin removed)": 120,
+      "1/2 small breast (yield after cooking, bone and skin removed)": 105,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 884,
+    "carbs": 0,
+    "fat": 100,
+    "fiber": 0,
+    "id": 25,
+    "name": "Peanut oil",
+    "protein": 0,
+    "servings": {
+      "1 cup": 216,
+      "1 tablespoon": 13.5,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 3.9,
+    "calories": 43,
+    "carbs": 3.55,
+    "fat": 0,
+    "fiber": 0,
+    "id": 26,
+    "name": "Beer",
+    "protein": 0.46,
+    "servings": {
+      "1 bottle (40 fl oz)": 1200,
+      "1 can or bottle (12 fl oz)": 360,
+      "1 can or bottle (16 fl oz)": 480,
+      "1 fl oz": 30,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 7.7,
+    "calories": 58,
+    "carbs": 0.27,
+    "fat": 0,
+    "fiber": 0,
+    "id": 27,
+    "name": "Beer, higher alcohol",
+    "protein": 0.9,
+    "servings": {
+      "1 can or bottle (12 fl oz)": 360,
+      "1 can or bottle (16 fl oz)": 480,
+      "1 fl oz": 30,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 33.4,
+    "calories": 231,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "id": 28,
+    "name": "Liquor",
+    "protein": 0,
+    "servings": {
+      "1 drink": 63,
+      "1 fl oz": 28,
+      "1 jigger": 42,
+      "1 shot": 42,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 360,
+    "carbs": 79.34,
+    "fat": 0.58,
+    "fiber": 1.4,
+    "id": 29,
+    "name": "Rice, white, medium-grain, raw, enriched",
+    "protein": 6.61,
+    "servings": {
+      "1 cup": 195,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 368,
+    "carbs": 64.16,
+    "fat": 6.07,
+    "fiber": 7,
+    "id": 30,
+    "name": "Quinoa, uncooked",
+    "protein": 14.12,
+    "servings": {
+      "1 cup": 170,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 375,
+    "carbs": 67.5,
+    "fat": 7.5,
+    "fiber": 10,
+    "id": 31,
+    "name": "Oatmeal, rolled, dry",
+    "protein": 12.5,
+    "servings": {
+      "1 half cup": 40,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 2.5,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 52,
+    "carbs": 13.81,
+    "fat": 0.17,
+    "fiber": 2.4,
+    "id": 32,
+    "name": "Apple, raw",
+    "protein": 0.26,
+    "servings": {
+      "1 crabapple": 35,
+      "1 cup, NFS": 125,
+      "1 cup, quartered or chopped": 125,
+      "1 cup, sliced": 110,
+      "1 large (3-1/4\" dia)": 223,
+      "1 medium (3\" dia)": 182,
+      "1 oz, with skin, yields": 26,
+      "1 ring": 14,
+      "1 slice": 17,
+      "1 small (2-3/4\" dia)": 149,
+      "1 thin slice": 7,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 10.39,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 47,
+    "carbs": 11.75,
+    "fat": 0.12,
+    "fiber": 2.4,
+    "id": 33,
+    "name": "Orange, raw",
+    "protein": 0.94,
+    "servings": {
+      "1 cup, sections": 180,
+      "1 large (3-1/16\" dia)": 184,
+      "1 medium (2-5/8\" dia)": 131,
+      "1 oz yields": 21,
+      "1 section or slice": 17,
+      "1 small (2-3/8\" dia)": 96,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 9.35,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 52,
+    "carbs": 11.94,
+    "fat": 0.65,
+    "fiber": 6.5,
+    "id": 34,
+    "name": "Raspberries, red, raw",
+    "protein": 1.2,
+    "servings": {
+      "1 cup": 123,
+      "1 oz yields": 27,
+      "1 pint, as purchased, yields": 312,
+      "10 raspberries": 19,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 4.42,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 57,
+    "carbs": 14.49,
+    "fat": 0.33,
+    "fiber": 2.4,
+    "id": 35,
+    "name": "Blueberries, raw",
+    "protein": 0.74,
+    "servings": {
+      "1 cup": 148,
+      "1 oz yields": 28,
+      "100g": 100,
+      "1g": 1,
+      "50 berries": 68
+    },
+    "sugar": 9.96,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 43,
+    "carbs": 9.61,
+    "fat": 0.49,
+    "fiber": 5.3,
+    "id": 36,
+    "name": "Blackberries, raw",
+    "protein": 1.39,
+    "servings": {
+      "1 blackberry": 5.1,
+      "1 cup": 144,
+      "1 oz yields": 27,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 4.88,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 89,
+    "carbs": 22.84,
+    "fat": 0.33,
+    "fiber": 2.6,
+    "id": 37,
+    "name": "Banana, raw",
+    "protein": 1.09,
+    "servings": {
+      "1 cup, NFS": 150,
+      "1 cup, mashed": 225,
+      "1 cup, sliced": 150,
+      "1 extra large (9\" or longer)": 152,
+      "1 extra small (less than 6\" long)": 81,
+      "1 large (8\" to 8-7/8\" long)": 136,
+      "1 linear inch": 16,
+      "1 medium (7\" to 7-7/8\" long)": 118,
+      "1 oz yields": 18,
+      "1 slice": 6,
+      "1 small (6\" to 6-7/8\" long)": 101,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 12.23,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 39,
+    "carbs": 9.54,
+    "fat": 0.25,
+    "fiber": 1.5,
+    "id": 38,
+    "name": "Peach, raw",
+    "protein": 0.91,
+    "servings": {
+      "1 cup, NFS": 154,
+      "1 cup, diced": 168,
+      "1 cup, sliced": 154,
+      "1 extra large (3\" dia)": 224,
+      "1 large (2-3/4\" dia)": 175,
+      "1 medium (2-2/3\" dia)": 150,
+      "1 oz yields": 27,
+      "1 slice": 12.5,
+      "1 small (2-1/2\" dia)": 130,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 8.39,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 30,
+    "carbs": 7.55,
+    "fat": 0.15,
+    "fiber": 0.4,
+    "id": 39,
+    "name": "Watermelon, raw",
+    "protein": 0.61,
+    "servings": {
+      "1 cup, NFS": 152,
+      "1 large melon": 6000,
+      "1 large wedge/slice": 572,
+      "1 medium melon": 5200,
+      "1 medium wedge/slice": 286,
+      "1 miniature melon": 1300,
+      "1 oz yields": 15,
+      "1 small melon": 3200,
+      "1 small wedge/slice": 71,
+      "10 watermelon balls": 122,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 6.2,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 160,
+    "carbs": 8.53,
+    "fat": 14.66,
+    "fiber": 6.7,
+    "id": 40,
+    "name": "Avocado, raw",
+    "protein": 2,
+    "servings": {
+      "1 avocado, California (black skin)": 136,
+      "1 avocado, Florida (green skin)": 304,
+      "1 avocado, NS as to Florida or California": 201,
+      "1 cup, NFS": 146,
+      "1 cup, cubes": 150,
+      "1 cup, mashed or pureed": 230,
+      "1 cup, sliced": 146,
+      "1 oz yields": 21,
+      "1 slice": 10,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0.66,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 598,
+    "carbs": 22.31,
+    "fat": 51.36,
+    "fiber": 5,
+    "id": 41,
+    "name": "Peanut butter",
+    "protein": 22.21,
+    "servings": {
+      "1 tablespoon": 16,
+      "100g": 100,
+      "1g": 1,
+      "Guideline amount per slice of bread/roll": 8
+    },
+    "sugar": 10.49,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 95,
+    "carbs": 21.55,
+    "fat": 0.11,
+    "fiber": 2.6,
+    "id": 42,
+    "name": "White potato, roasted, fat not added in cooking",
+    "protein": 2.53,
+    "servings": {
+      "1 cup": 122,
+      "1 large (3\" to 4-1/4\" dia, raw)": 227,
+      "1 medium (2-1/4\" to 3\" dia, raw)": 131,
+      "1 oz, raw, yields": 17,
+      "1 small (1-3/4\" to 2-1/4\" dia, raw)": 105,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 1.01,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 107,
+    "carbs": 19.75,
+    "fat": 2.54,
+    "fiber": 3.1,
+    "id": 43,
+    "name": "Sweet potato, NFS",
+    "protein": 1.92,
+    "servings": {
+      "1 cup, mashed": 205,
+      "1 large (larger than 2-1/4\" dia, raw)": 185,
+      "1 medium (2\" dia, 5\" long, raw)": 119,
+      "1 small (less than 1-3/4\" dia, raw)": 65,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 6.17,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 567,
+    "carbs": 16.13,
+    "fat": 49.24,
+    "fiber": 8.5,
+    "id": 44,
+    "name": "Peanuts, all types, raw",
+    "protein": 25.8,
+    "servings": {
+      "1 cup": 146,
+      "1 oz": 28.35,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 4.72,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 593,
+    "carbs": 19.61,
+    "fat": 52.55,
+    "fiber": 11.5,
+    "id": 45,
+    "name": "Almonds, NFS",
+    "protein": 21.19,
+    "servings": {
+      "1 cup": 141,
+      "1 cup, in shell, yields": 57,
+      "1 oz (22 whole kernels)": 28.35,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 4.45,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 691,
+    "carbs": 13.86,
+    "fat": 71.97,
+    "fiber": 9.6,
+    "id": 46,
+    "name": "Pecans",
+    "protein": 9.17,
+    "servings": {
+      "1 cup, NFS": 99,
+      "1 cup, chopped": 109,
+      "1 cup, halves": 99,
+      "1 oz (19 halves)": 28.35,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 3.97,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 654,
+    "carbs": 13.71,
+    "fat": 65.21,
+    "fiber": 6.7,
+    "id": 47,
+    "name": "Walnuts, NFS",
+    "protein": 15.23,
+    "servings": {
+      "1 cup, NFS": 120,
+      "1 cup, chopped": 120,
+      "1 cup, ground": 80,
+      "1 cup, in shell, yields (7 nuts)": 28,
+      "1 cup, shelled (50 halves)": 100,
+      "1 nut": 4,
+      "1 oz (14 halves)": 28.35,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 2.61,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 367,
+    "carbs": 76.25,
+    "fat": 3.2,
+    "fiber": 3.6,
+    "id": 48,
+    "name": "Rice, brown, long-grain, raw",
+    "protein": 7.54,
+    "servings": {
+      "1 cup": 185,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0.66,
+    "user": "testuser"
+  }
 ]

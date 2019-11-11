@@ -10,16 +10,23 @@ from app.pkg.db import get_db
 
 config = Config()
 
+@bp.route("/api/food", methods=["GET"])
+@basic_auth.login_required
+def get_all_foods():
+    foods = _food.get_all_foods(get_db(config), config.db.FOODS, g.current_user.username)
+    foods_json = [food.__dict__ for food in foods]
+    return jsonify({"foods": foods_json})
+
 @bp.route("/api/food/<id>", methods=["GET"])
 @basic_auth.login_required
 def get_food(id: int):
-    # TODO
-    pass
+    food = _food.get_food(get_db(config), config.db.FOODS, id, g.current_user.username)
+    return jsonify(food.__dict__)
 
 @bp.route("/api/food", methods=["POST"])
 @basic_auth.login_required
 def post_food():
-    data = {"success": True}
+    data = {}
     if isinstance(request.json, list):
         data["ids"] = []
         for food_dict in request.json:

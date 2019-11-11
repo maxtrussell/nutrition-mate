@@ -93,6 +93,9 @@ def _parse_food(usda_food: t.Dict):
         if not portion_description or portion_description == "Quantity not specified":
             continue
         servings[portion_description] = portion["gramWeight"]
+
+    if "householdServingFullText" in usda_food and "servingSize" in usda_food:
+        servings[usda_food["householdServingFullText"]] = usda_food["servingSize"]
     food.servings = servings
 
     # parse nutrition info
