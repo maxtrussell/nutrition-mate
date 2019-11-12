@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<h2 align="center">USDA Search Results</h1>
+<br>
+<form action="/usda/search" align="center" autocomplete="off" class="md-form">
+    <div class="form-inline">
+        <label>Data Type:</label>
+        <div class="form-check pad-down">
+            <input type="checkbox" class="form-check-input" value="Foundation" name="foundation" {% if "Foundation" in datatypes %}checked{% endif %}>
+            Foundation
+            <input type="checkbox" class="form-check-input" value="Survey (FNDDS)" name="survey" {% if "Survey (FNDDS)" in datatypes or datatypes|length == 0 %}checked{% endif %}> 
+            Survey (FNDDS)
+            <input type="checkbox" class="form-check-input" value="Branded" name="branded" {% if "Branded" in datatypes %}checked{% endif %}>
+            Branded
+            <input type="checkbox" class="form-check-input" value="SR Legacy" name="srlegacy" {% if "SR Legacy" in datatypes %}checked{% endif %}>
+            SR Legacy
+        </div>
+    </div>
+    <div class="form-inline">
+    <input name="query" type="text" class="form-control" style="width: 50%;" value="{{ query }}"></input>
+    <button type="submit" class="btn btn-info">Search</button>
+    </div>
+</form>
+<br>
+<div class="list-group">
+  {% for result in results %}
+  <form method="get" action="/usda/detail">
+    <input type="hidden" name="fdcID" value="{{result.id}}">
+    <button type="submit" class="list-group-item list-group-item-action">{{result.description}}</button>
+  </form>
+  {% endfor %}
+</div>
+
+{% endblock %} 

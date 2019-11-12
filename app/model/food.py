@@ -6,7 +6,7 @@ import json
 
 config = Config()
 
-def get_all_foods(database, table_name, username=""):
+def get_all_foods(database, table_name, username="", show_verified=False):
     """Gets all foods from given MySQL table
 
     Parameters:
@@ -17,9 +17,14 @@ def get_all_foods(database, table_name, username=""):
         foods ([]Food): list of food objects from table
     """
     # send the query
-    query = "SELECT * FROM {} WHERE username = %s LIMIT 100".format(table_name)
-    cursor = database.client.cursor()
-    cursor.execute(query, (username,))
+    if show_verified:
+        query = "SELECT * FROM {} WHERE username = %s OR username = %s LIMIT 100".format(table_name)
+        cursor = database.client.cursor()
+        cursor.execute(query, (username, "admin"))
+    else:
+        query = "SELECT * FROM {} WHERE username = %s LIMIT 100".format(table_name)
+        cursor = database.client.cursor()
+        cursor.execute(query, (username,))
 
     foods = []
     for row in cursor.fetchall():
@@ -28,7 +33,7 @@ def get_all_foods(database, table_name, username=""):
     cursor.close()
     return foods
 
-def get_food(database, table_name, food_id, username=""):
+def get_food(database, table_name, food_id, username="", show_verified=False):
     """Gets a food by id from a MySQL table
 
     Parameters:
@@ -39,9 +44,14 @@ def get_food(database, table_name, food_id, username=""):
     Returns:
         food (Food): food object from table
     """
-    query = "SELECT * FROM {} WHERE id=%s AND username=%s".format(table_name)
-    cursor = database.client.cursor()
-    cursor.execute(query, (food_id, username))
+    if show_verified:
+        query = "SELECT * FROM {} WHERE id=%s AND (username=%s or username=%s)".format(table_name)
+        cursor = database.client.cursor()
+        cursor.execute(query, (food_id, username, "admin"))
+    else:
+        query = "SELECT * FROM {} WHERE id=%s AND username=%s".format(table_name)
+        cursor = database.client.cursor()
+        cursor.execute(query, (food_id, username))
 
     row = cursor.fetchone()
     food = row_to_food(row)
@@ -49,16 +59,21 @@ def get_food(database, table_name, food_id, username=""):
     cursor.close()
     return food
 
-def search(db, table, search, username):
+def search(db, table, search, username, show_verified=False):
     # limit search to five words for performance reasons
     s_words = search.split()[:5]
 
     all_results = []
     for word in s_words:
         word = "%" + word + "%"
-        query = "SELECT * FROM {} WHERE username=%s AND lower(name) LIKE %s LIMIT 100".format(table)
-        cursor = db.client.cursor()
-        cursor.execute(query, (username, word.lower()))
+        if show_verified:
+            query = "SELECT * FROM {} WHERE (username=%s OR username=%s) AND lower(name) LIKE %s LIMIT 100".format(table)
+            cursor = db.client.cursor()
+            cursor.execute(query, (username, "admin", word.lower()))
+        else:
+            query = "SELECT * FROM {} WHERE username=%s AND lower(name) LIKE %s LIMIT 100".format(table)
+            cursor = db.client.cursor()
+            cursor.execute(query, (username, word.lower()))
 
         results = set()
         for row in cursor.fetchall():
@@ -193,7 +208,9 @@ class Food:
                 )
         )
         database.client.commit()
+        food_id = cursor.lastrowid
         cursor.close()
+        return food_id
 
     def update(self, database, table_name):
         """Update food item in MySQL table

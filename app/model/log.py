@@ -6,12 +6,12 @@ import app.model.food as _food
 def get_entries_by_day(db, log_table, food_table, start=date.today(), username=""):
     end = start + timedelta(days=1)
     query = (
-            "SELECT * FROM {0} INNER JOIN {1} ON ({0}.food_id={1}.id AND {0}.username={1}.username) ".format(log_table, food_table) +
-            "WHERE {0}.time >= %s AND {0}.time < %s AND {0}.username = %s ".format(log_table) +
+            "SELECT * FROM {0} INNER JOIN {1} ON ({0}.food_id={1}.id AND ({0}.username={1}.username OR {1}.username=%s)) ".format(log_table, food_table) +
+            "WHERE {0}.time >= %s AND {0}.time < %s AND ({0}.username = %s) ".format(log_table) +
             "ORDER BY time DESC"
             )
     cursor = db.client.cursor()
-    cursor.execute(query, (start, end, username))
+    cursor.execute(query, ("admin", start, end, username))
 
     entries = []
     for entry in cursor.fetchall():
@@ -19,6 +19,17 @@ def get_entries_by_day(db, log_table, food_table, start=date.today(), username="
 
     cursor.close()
     return entries
+
+def get_entry_by_id(db, log_table, food_table, id, username):
+    query = (
+            "SELECT * FROM {0} INNER JOIN {1} ON ({0}.food_id={1}.id AND ({0}.username={1}.username OR {1}.username=%s)) ".format(log_table, food_table) +
+            "WHERE {0}.id-%s".format(log_table)
+            )
+    cursor = db.client.cursor()
+    cursor.execute(query, (username, id))
+    result = cursor.fetchone()
+    if result:
+        return process_row(result)
 
 def delete_entry(db, log_table, time):
     query = "DELETE FROM {} WHERE id=%s".format(log_table)

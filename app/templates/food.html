@@ -19,7 +19,8 @@
 
 <h2 align="center">Nutrition Info</h2>
 <form action="{{ url_for("food_bp.edit", id=food.id) }}" class="pad-down" style="display: inline-block;">
-    <input class="btn btn-default" value="Edit" type="submit"></input>
+    <input class="btn btn-default" value="Edit" type="submit" {% if user.username != food.user %}disabled{% endif %}>
+    </input>
 </form>
 <form action="{{ url_for("food_bp.food_handler", id=food.id) }}" method="get" class="form-inline pad-down" style="float: right;">
     <div align="right">

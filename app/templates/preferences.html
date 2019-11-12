@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1>Preferences</h1>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+    <br>
+
+    <h4><a href="/docs/DRI">Not sure? Here are some recommendations.</a></h4>
+    <h4><a href="https://fdc.nal.usda.gov/api-key-signup.html">USDA API key signup.</a></h4>
+{% endblock %}

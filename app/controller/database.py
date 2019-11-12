@@ -1,7 +1,8 @@
-from flask import render_template, request, redirect, flash, Blueprint, url_for
+from flask import render_template, request, redirect, flash, Blueprint, url_for, Markup
 from flask_login import current_user, login_required
 
 import app.model.food as _food
+import app.model.user as _user
 from app.pkg.config import Config
 from app.pkg.db import get_db
 
@@ -12,14 +13,17 @@ config = Config()
 @login_required
 def database_handler():
     username = current_user.username
+    user = _user.get_user_by_username(get_db(config), config.db.USERS, current_user.username)
     query = request.args.get("query", default="")
     if query:
         foods = _food.search(
-            get_db(config), config.db.FOODS, query.lower(), username)
+            get_db(config), config.db.FOODS, query.lower(), username, user.view_verified_foods
+        )
     else:
-        foods = _food.get_all_foods(get_db(config), config.db.FOODS, username)
+        foods = _food.get_all_foods(get_db(config), config.db.FOODS, username, user.view_verified_foods)
     return render_template(
-        "database.html", active_page="database", foods=foods, query=query)
+        "database.html", active_page="database", foods=foods, query=query, user=user
+    )
 
 
 @db_bp.route("/database/clear", methods=["GET"])
@@ -32,13 +36,17 @@ def database_clear_handler():
 @login_required
 def database_delete_handler(id):
     try:
+        user = _user.get_user_by_username(get_db(config), config.db.USERS, current_user.username)
+        food = _food.get_food(get_db(config), config.db.FOODS, id, current_user.username, user.view_verified_foods)
+        if user.username != food.user:
+            flash("You do not have edit permissions for this item.")
+            return redirect(url_for("food_bp.food_handler", id=id))
         _food.delete_by_id(
             get_db(config), config.db.FOODS, id, current_user.username)
         flash("Successfully deleted food")
     except Exception as e:
         flash("Failed to delete food: {}".format(e))
-    finally:
-        return redirect(url_for("db_bp.database_handler"))
+    return redirect(url_for("db_bp.database_handler"))
 
 
 @db_bp.route("/database/add", methods=["POST"])
@@ -68,8 +76,9 @@ def database_add_handler():
                 )
         food = food.normalize(current=parsed["quantity"])
 
-        food.insert(get_db(config), config.db.FOODS)
-        flash("Successfully added food '{}'".format(food.name))
+        food.id = food.insert(get_db(config), config.db.FOODS)
+        food_link = f'<a href="/food/{food.id}">{food.name}</a>'
+        flash(Markup(f"Successfully added food '{food_link}'"))
     except Exception as e:
         flash("Failed to add food '{}': {}".format(food.name, e))
     finally:

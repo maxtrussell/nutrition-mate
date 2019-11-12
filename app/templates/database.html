@@ -2,11 +2,15 @@
 
 {% block app_content %}
 {% include "db_add_modal.html" %}
+{% include "db_usda_modal.html" %}
 <h1 align="center">Food Database</h1>
 
 <div align="center" class="pad-vert form-inline">
     <div style="float:left;">
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addModal">Add</button>
+    </div>
+    <div style="float:left; padding-left: 4px;">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#usdaModal">Add from USDA</button>
     </div>
     <div align="right">
         <form action="/database" style="display: inline-block;" autocomplete="off">
@@ -39,7 +43,9 @@
             {# Fill out database rows #}
             {%- for food in foods -%}
             <tr>
-                <td><a href="/food/{{ food.id | lower }}">{{ food.name }}</a></td>
+                <td><a href="/food/{{ food.id | lower }}">
+                        {% if food.user != user.username %}*{% endif %}{{ food.name }}
+                </a></td>
                 <td>100g</td>
                 <td>{{ food.calories | int }}</td>
                 <td>{{ "%0.2f" | format(food.fat) }}</td>
@@ -48,11 +54,21 @@
                 <td>{{ "%0.2f" | format(food.sugar) }}</td>
                 <td>{{ "%0.2f" | format(food.fiber) }}</td>
                 <td>{{ "%0.2f" | format(food.alcohol) }}</td>
-                <td><a href="/database/delete/{{ food.id }}">Delete</a></td>
+                <td>
+                    {% if food.user == user.username %}
+                        <a href="/database/delete/{{ food.id }}">Delete</a>
+                    {% endif %}
+                </td>
             </tr>
             {%- endfor -%}
         </tbody>
     </table>
 </div>
+
+<br>
+<p>
+* means the food is a verified food and cannot be modified. To disable go
+<a href="/preferences">here</a>.
+</p>
 {% endblock %}
 

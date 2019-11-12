@@ -58,7 +58,7 @@ def graph_weights(
     yvals = [y[1] for y in vals]
     plt.plot(xvals, yvals, 'b-', label='weight')
     if goal:
-        m,b = goal/7, min(yvals)
+        m,b = goal/7, yvals[0]
         plt.plot(xvals, [m*x+b for x in xvals], 'g:', label='goal')
     n = 7
     plt.plot(xvals, rolling_avg(yvals, n), 'r--', label=f'{n} day avg')

@@ -4,12 +4,6 @@ import re
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, FloatField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
-import app.model.user as _user
-from app.pkg.config import Config
-from app.pkg.db import get_db
-
-config = Config()
-
 class FoodForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     servings = StringField("Servings")
@@ -24,7 +18,7 @@ class FoodForm(FlaskForm):
     submit = SubmitField("Confirm")
 
     def validate_servings(self, servings):
-        p = "^([a-zA-Z0-9 ]*:[ ]*\d+,[ ]*)*[a-zA-Z0-9 ]*:[ ]*\d+[ ]*$"
+        p = "^([a-zA-Z0-9\./ ]*:[ ]*[\d\.]+,[ ]*)*[a-zA-Z0-9\./ ]*:[ ]*[\d\.]+[ ]*$"
         match = re.fullmatch(p, servings.data)
         if not match:
             raise ValidationError("Servings field is not valid.")
