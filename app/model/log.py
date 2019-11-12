@@ -26,8 +26,9 @@ def get_entry_by_id(db, log_table, food_table, id, username):
             "WHERE {0}.id=%s".format(log_table)
             )
     cursor = db.client.cursor()
-    cursor.execute(query, (username, id))
+    cursor.execute(query, ("admin", id))
     result = cursor.fetchone()
+    print(result)
     if result:
         return process_row(result)
 
