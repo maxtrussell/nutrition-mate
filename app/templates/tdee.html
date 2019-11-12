@@ -2,7 +2,11 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>TDEE</h1>
+    <h1>TDEE Calculator</h1>
+
+    <p>
+    TDEE is short for Total Daily Energy Expenditure, which is the measure of 
+    energy that a person uses per day.
     <div class="row">
         <div class="col-md-4">
             {{ wtf.quick_form(form) }}

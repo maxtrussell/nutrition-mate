@@ -1,4 +1,5 @@
 import app.api as api
+import app.controller.blog as blog
 import app.controller.database as db
 import app.controller.food as food
 import app.controller.home as home
@@ -18,6 +19,7 @@ def run():
 
     app.register_blueprint(login.login_bp)
     app.register_blueprint(db.db_bp)
+    app.register_blueprint(blog.blog_bp)
     app.register_blueprint(weight.weight_bp)
     app.register_blueprint(food.food_bp)
     app.register_blueprint(log.log_bp)
