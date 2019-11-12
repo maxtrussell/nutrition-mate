@@ -42,4 +42,4 @@ def preferences_handler():
             user.view_verified_foods = False
         user.update(get_db(config), config.db.USERS)
         flash("Successfully updated preferences!")
-    return render_template("preferences.html", form=form)
+    return render_template("preferences.html", form=form, active_page="preferences")
