@@ -38,6 +38,8 @@ def preferences_handler():
             else:
                 # float type
                 user.__setattr__(key, int(val))
+        if "view_verified_foods" not in request.form:
+            user.view_verified_foods = False
         user.update(get_db(config), config.db.USERS)
         flash("Successfully updated preferences!")
     return render_template("preferences.html", form=form)

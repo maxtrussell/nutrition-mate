@@ -43,7 +43,9 @@
             {# Fill out database rows #}
             {%- for food in foods -%}
             <tr>
-                <td><a href="/food/{{ food.id | lower }}">{{ food.name }}</a></td>
+                <td><a href="/food/{{ food.id | lower }}">
+                        {% if food.user != user.username %}*{% endif %}{{ food.name }}
+                </a></td>
                 <td>100g</td>
                 <td>{{ food.calories | int }}</td>
                 <td>{{ "%0.2f" | format(food.fat) }}</td>
@@ -52,11 +54,21 @@
                 <td>{{ "%0.2f" | format(food.sugar) }}</td>
                 <td>{{ "%0.2f" | format(food.fiber) }}</td>
                 <td>{{ "%0.2f" | format(food.alcohol) }}</td>
-                <td><a href="/database/delete/{{ food.id }}">Delete</a></td>
+                <td>
+                    {% if food.user == user.username %}
+                        <a href="/database/delete/{{ food.id }}">Delete</a>
+                    {% endif %}
+                </td>
             </tr>
             {%- endfor -%}
         </tbody>
     </table>
 </div>
+
+<br>
+<p>
+* means the food is a verified food and cannot be modified. To disable go
+<a href="/preferences">here</a>.
+</p>
 {% endblock %}
 

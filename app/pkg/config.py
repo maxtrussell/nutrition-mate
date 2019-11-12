@@ -26,11 +26,13 @@ class MySQL:
 class Secrets:
     REGISTRATION_KEY = ""
     USDA_API_KEY = ""
+    ADMIN_USER_PASSWORD = ""
 
 
 class Server:
     HOST = "0.0.0.0"
     PORT = "5000"
+    ADMIN_EMAIL = "maxtrussell@gmail.com"
 
 
 class Config:
@@ -45,4 +47,5 @@ def get_secrets(config):
                        config.gcp.SECRET_DIR)
     config.secrets.REGISTRATION_KEY = sf.fetch_secret("registration_key")
     config.secrets.USDA_API_KEY = sf.fetch_secret("usda_api_key")
+    config.secrets.ADMIN_USER_PASSWORD = sf.fetch_secret("admin_user_password")
     return config

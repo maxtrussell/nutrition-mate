@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 
 import app.model.food as _food
+import app.model.user as _user
 from app.pkg.config import Config
 from app.pkg.db import get_db
 from app.view.food_form import FoodForm
@@ -14,16 +15,17 @@ config = Config()
 @food_bp.route("/food/<id>")
 @login_required
 def food_handler(id):
+    user = _user.get_user_by_username(get_db(config), config.db.USERS, current_user.username)
     serving = request.args.get("serving", default="100g")
     try:
-        food = _food.get_food(get_db(config), config.db.FOODS, id, current_user.username)
+        food = _food.get_food(get_db(config), config.db.FOODS, id, current_user.username, user.view_verified_foods)
         if serving:
             if serving not in food.servings:
                 flash(f"No such serving '{serving}' for food '{food.name}'.")
                 return redirect(url_for("food_bp.food_handler", id=id))
             serving_size = food.servings[serving]
             food = food.normalize(target=serving_size)
-        return render_template("food.html", food=food, date=date.today(), selected_serving=serving)
+        return render_template("food.html", food=food, date=date.today(), selected_serving=serving, user=user)
     except Exception as e:
         flash("Could not get food: {}".format(e))
         return redirect(url_for("home_bp.index"))
@@ -34,7 +36,11 @@ def edit(id):
     form = FoodForm()
     food = _food.Food()
     try:
-        food = _food.get_food(get_db(config), config.db.FOODS, id, current_user.username)
+        user = _user.get_user_by_username(get_db(config), config.db.USERS, current_user.username)
+        food = _food.get_food(get_db(config), config.db.FOODS, id, current_user.username, user.view_verified_foods)
+        if user.username != food.user:
+            flash("You do not have edit permissions for this item.")
+            return redirect(url_for("food_bp.food_handler", id=id))
     except Exception as e:
         flash("Could not get food: {}".format(e))
         return redirect(url_for("home_bp.index"))

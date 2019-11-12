@@ -53,8 +53,9 @@ def log_add_handler():
     serving = request.form.get("serving")
     quantity = request.form.get("quantity", type=float)
     username = current_user.username
+    user = _user.get_user_by_username(get_db(config), config.db.USERS, username)
 
-    food = _food.get_food(get_db(config), config.db.FOODS, id, username)
+    food = _food.get_food(get_db(config), config.db.FOODS, id, username, user.view_verified_foods)
 
     # if the selected date is today, include hours:minutes
     time = selected_date
@@ -72,6 +73,11 @@ def log_add_handler():
 
 @log_bp.route("/log/delete/<id>", methods=["GET"])
 def log_delete_handler(id):
+    user = _user.get_user_by_username(get_db(config), config.db.USERS, current_user.username)
+    entry = _log.get_entry_by_id(get_db(config), config.db.LOG, id, user.username)
+    if not entry:
+        flash("You do not have edit permissions for this item.")
+        return redirect(url_for("log_bp.log_handler", id=id))
     _log.delete_entry(get_db(config), config.db.LOG, id)
     selected_date = request.args.get("selectedDate", default="")
     if selected_date != "":
@@ -84,7 +90,8 @@ def log_delete_handler(id):
 @log_bp.route("/log/search")
 def log_search_handler():
     query = request.args.get("query", default="")
-    results = _food.search(get_db(config), config.db.FOODS, query.lower(), current_user.username)
+    user = _user.get_user_by_username(get_db(config), config.db.USERS, current_user.username)
+    results = _food.search(get_db(config), config.db.FOODS, query.lower(), current_user.username, user.view_verified_foods)
     if len(results) == 1:
         return redirect("/food/{}".format(results[0].id))
     elif len(results) == 0:
