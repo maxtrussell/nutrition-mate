@@ -74,7 +74,7 @@ def log_add_handler():
 @log_bp.route("/log/delete/<id>", methods=["GET"])
 def log_delete_handler(id):
     user = _user.get_user_by_username(get_db(config), config.db.USERS, current_user.username)
-    entry = _log.get_entry_by_id(get_db(config), config.db.LOG, id, user.username)
+    entry = _log.get_entry_by_id(get_db(config), config.db.LOG, config.db.FOODS, id, user.username)
     if not entry:
         flash("You do not have edit permissions for this item.")
         return redirect(url_for("log_bp.log_handler", id=id))

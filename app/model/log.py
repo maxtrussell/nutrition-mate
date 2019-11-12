@@ -20,10 +20,13 @@ def get_entries_by_day(db, log_table, food_table, start=date.today(), username="
     cursor.close()
     return entries
 
-def get_entry_by_id(db, log_table, id, username):
-    query = f"SELECT * FROM {log_table} WHERE id=%s AND username=%s"
+def get_entry_by_id(db, log_table, food_table, id, username):
+    query = (
+            "SELECT * FROM {0} INNER JOIN {1} ON ({0}.food_id={1}.id AND ({0}.username={1}.username OR {1}.username=%s)) ".format(log_table, food_table) +
+            "WHERE {0}.id-%s".format(log_table)
+            )
     cursor = db.client.cursor()
-    cursor.execute(query, (id, username))
+    cursor.execute(query, (username, id))
     result = cursor.fetchone()
     if result:
         return process_row(result)
