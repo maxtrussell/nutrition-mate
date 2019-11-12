@@ -77,7 +77,8 @@ def _daily_calories(
         weight_delta: float,
         tdee: int
     ):
-    return int(tdee + weight_delta * 3500 / 7)
+    # there are 7716 calories / kilogram of fat
+    return int(tdee + weight_delta * 7716 / 7)
 
 def _tdee(
         bmr: int,
