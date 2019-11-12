@@ -53,7 +53,7 @@
         {% if messages %}
             {% for message in messages %}
             <div class="alert alert-info" role="alert">
-                {{ message|safe }}
+                {{ message }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -61,6 +61,15 @@
             {% endfor %}
         {% endif %}
         {% endwith %}
+
+        <div class="blog">
+            <h2>{{ page.title }}</h2>
+            <h4>{{ page.author }}</h4>
+            <hr>
+            {{ page.html|safe }}
+            <a href="/blog">Back to blog</a>
+        </div>
+
 
         {# application content needs to be provided in the app_content block #}
         {% block app_content %}{% endblock %}

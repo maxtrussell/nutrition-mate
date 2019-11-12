@@ -5,6 +5,7 @@ from flask import (
     render_template,
     request,
     flash,
+    Markup,
 )
 
 from app.pkg.config import Config
@@ -60,7 +61,18 @@ def tdee_handler():
         tdee = _tdee(bmr, activity_level)
         if request.form.get("weight_delta"):
             daily_calories = _daily_calories(weight_delta, tdee)
-    return render_template("tdee.html", form=form, tdee=tdee, bmr=bmr, daily_calories=daily_calories)
+        else:
+            daily_calories = tdee
+
+        flash(
+            f"<b>Results:</b>\n"
+            f"<ul>\n"
+            f"<li>BMR: {bmr}</li>\n"
+            f"<li>TDEE: {tdee}</li>\n"
+            f"<li>Daily Caloric Target: {daily_calories}</li>\n"
+            f"</ul>"
+        )
+    return render_template("tdee.html", form=form)
 
 class ActivityLevel(Enum):
     SEDENTARY = 1.2

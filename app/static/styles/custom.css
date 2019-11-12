@@ -28,6 +28,23 @@
     overflow: auto;
 }
 
+p + p {
+    margin-top: 25px;
+}
+
+.blog {
+    max-width: 700px;
+    font-size: 16px;
+    line-height: 24px;
+    margin: auto;
+}
+
+.bigtext {
+    max-width: 700px;
+    font-size: 18px;
+    line-height: 24px;
+}
+
 .tableFixHead          { overflow-y: auto; max-height: 500px; height=100% }
 .tableFixHead thead th { position: sticky; top: 0; }
 th     { 
