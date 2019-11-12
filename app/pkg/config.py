@@ -32,7 +32,7 @@ class Secrets:
 class Server:
     HOST = "0.0.0.0"
     PORT = "5000"
-    ADMIN_EMAIL = "maxtrussell@gmail.com"
+    ADMIN_EMAIL = "bogus@gmail.com"
 
 
 class Config:

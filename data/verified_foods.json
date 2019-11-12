@@ -660,5 +660,45 @@
     },
     "sugar": 0.66,
     "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 123,
+    "carbs": 4.73,
+    "fat": 10.39,
+    "fiber": 0,
+    "id": 49,
+    "name": "Cream, half and half",
+    "protein": 3.13,
+    "servings": {
+      "1 cup": 242,
+      "1 fl oz": 30.2,
+      "1 individual container (.5 fl oz)": 15,
+      "100g": 100,
+      "1g": 1,
+      "Guideline amount per fl oz of beverage": 2.5
+    },
+    "sugar": 4.13,
+    "user": "testuser"
+  },
+  {
+    "alcohol": 0,
+    "calories": 468,
+    "carbs": 1.7,
+    "fat": 35.09,
+    "fiber": 0,
+    "id": 50,
+    "name": "Bacon or side pork, fresh, cooked",
+    "protein": 33.92,
+    "servings": {
+      "1 medium slice (yield after cooking)": 8,
+      "1 oz, raw (yield after cooking)": 8,
+      "100g": 100,
+      "1g": 1,
+      "Guideline amount if topping": 8,
+      "Guideline amount on regular sandwich": 16
+    },
+    "sugar": 0,
+    "user": "testuser"
   }
 ]
