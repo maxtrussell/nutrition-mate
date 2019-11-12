@@ -28,7 +28,7 @@
     overflow: auto;
 }
 
-.tableFixHead          { overflow-y: auto; max-height: 600px; height=100% }
+.tableFixHead          { overflow-y: auto; max-height: 500px; height=100% }
 .tableFixHead thead th { position: sticky; top: 0; }
 th     { 
     background:#404040; 

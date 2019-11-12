@@ -41,22 +41,6 @@
             </tr>
         </thead>
         <tbody>
-            {# Fill out database rows #}
-            {%- for row in entries -%}
-            <tr>
-                <td>{{ row.time }}</td>
-                <td><a href="/food/{{ row.food.id }}">{{ row.food.name }}</a></td>
-                <td>{{ "%0.2f" | format(row.quantity) }} x {{ row.serving }}</td>
-                <td>{{ row.food.calories | int }}</td>
-                <td>{{ "%0.2f" | format(row.food.protein) }}</td>
-                <td>{{ "%0.2f" | format(row.food.sugar) }}</td>
-                <td>{{ "%0.2f" | format(row.food.fiber) }}</td>
-                <form id="delete{{ row.id }}" action="/log/delete/{{ row.id }}">
-                    <td><a onclick="document.getElementById('delete{{ row.id }}').submit();">Delete</a></td>
-                    <input name="selectedDate" type="hidden" value="{{ selectedDate }}"></input>
-                </form>
-            </tr>
-            {%- endfor -%}
             <tr>
                 <td><b>Total</b></td>
                 <td></td>
@@ -79,6 +63,22 @@
                 </b></td>
                 <td></td>
             </tr>
+            {# Fill out database rows #}
+            {%- for row in entries -%}
+            <tr>
+                <td>{{ row.time }}</td>
+                <td><a href="/food/{{ row.food.id }}">{{ row.food.name }}</a></td>
+                <td>{{ "%0.2f" | format(row.quantity) }} x {{ row.serving }}</td>
+                <td>{{ row.food.calories | int }}</td>
+                <td>{{ "%0.2f" | format(row.food.protein) }}</td>
+                <td>{{ "%0.2f" | format(row.food.sugar) }}</td>
+                <td>{{ "%0.2f" | format(row.food.fiber) }}</td>
+                <form id="delete{{ row.id }}" action="/log/delete/{{ row.id }}">
+                    <td><a onclick="document.getElementById('delete{{ row.id }}').submit();">Delete</a></td>
+                    <input name="selectedDate" type="hidden" value="{{ selectedDate }}"></input>
+                </form>
+            </tr>
+            {%- endfor -%}
         </tbody>
     </table>
 </div>
