@@ -1,6 +1,6 @@
 title: Daily Nutrition
 author: Max Trussell
-date: 2019-11-12
+published: 2019-11-12
 
 **TLDR:**
 
