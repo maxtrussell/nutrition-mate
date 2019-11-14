@@ -5,7 +5,7 @@
 <h1 align="center">Weight Log</h1>
 <div align="center" class="pad-vert form-inline">
     <form action="/weight/add" method="post" style="display: inline-block;" autocomplete="off">
-        <input type="text" class="form-control" name="weight" placeholder="155.0" style="width:200px;">
+        <input type="text" class="form-control" name="weight" placeholder="155.0" style="width:200px;" required="true">
         <input type="text" class="form-control" name="notes" placeholder="notes" style="width:500px;">
         <input type="date" class="form-control" name="log_date" value="{{ date }}">
         <input type="submit" class="btn btn-default">
