@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block app_content %}
+
+
+<div class="blog">
+    <h2>{{ meal.name }}</h2>
+    <h3>Ingredients</h3>
+    <ul>
+        {% for ingredient in meal.ingredients %}
+        <form action="/ingredients/{{ ingredient.id }}" method="delete">
+            <li>
+            {{ ingredient.food.name }}, {{ ingredient.serving_label }} ({{ ingredient.quantity }}g)
+                <input type="submit" class="btn btn-link" value="Delete">
+            </li>
+        </form>
+        {% endfor %}
+        <form action="/ingredients/1" method="delete">
+            <li>Test food, 1 cup (244g)
+                <input type="submit" class="btn btn-link" value="Delete">
+            </li>
+        </form>
+    </ul>
+
+    <button type="button" class="btn btn-default">Add Ingredient</button>
+</div>
+    
+
+
+{% endblock %}
