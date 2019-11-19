@@ -1,3 +1,22 @@
-{% include "base.html" %}
+{% extends "base.html" %}
 
-<h1 align="center">Meals</h1>
+{% block app_content %}
+
+<h2 align="center">Meals</h2>
+<br>
+
+<form action="/meals" alight="center" autocomplete="off" class="md-form">
+    <input name="query" type="text" class="form-control" placeholder="Search" 
+        value="{{query}}" aria-label="Search" required="true">
+</form>
+
+<div class="list-group">
+  {% for meal in meals %}
+  <form method="get" action="/meal/{{meal.id}}">
+      <button type="submit" class="list-group-item list-group-item-action">{{meal.name}}: {{meal.total}}</button>
+  </form>
+  {% endfor %}
+</div>
+
+{% endblock %}
+

@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS food (
     sugar FLOAT,
     fiber FLOAT,
     servings JSON,
+    default_serving VARCHAR(128),
     username VARCHAR(64),
     PRIMARY KEY (id)
 );
@@ -55,3 +56,25 @@ CREATE TABLE IF NOT EXISTS weight (
     username VARCHAR(64) NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS meals (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    name VARCHAR(128) NOT NULL,
+    username VARCHAR(64) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS ingredients (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    meal_id INTEGER NOT NULL,
+    food_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    serving_label VARCHAR(255),
+    PRIMARY KEY (id),
+    FOREIGN KEY (meal_id)
+        REFERENCES meals(id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (food_id)
+        REFERENCES food(id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=INNODB;

@@ -16,6 +16,8 @@ class MySQL:
     USERNAME = "maxtrussell"
     PASSWORD = ""
     HOST = "localhost"
+    MEALS = "meals"
+    INGREDIENTS = "ingredients"
     DB = "nm"
     FOODS = "food"
     WEIGHTS = "weight"

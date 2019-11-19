@@ -5,6 +5,7 @@ import app.controller.food as food
 import app.controller.home as home
 import app.controller.log as log
 import app.controller.login as login
+import app.controller.meals as meals
 import app.controller.preferences as preferences
 import app.controller.tdee as tdee
 import app.controller.usda as usda
@@ -23,6 +24,7 @@ def run():
     app.register_blueprint(weight.weight_bp)
     app.register_blueprint(food.food_bp)
     app.register_blueprint(log.log_bp)
+    app.register_blueprint(meals.meals_bp)
     app.register_blueprint(preferences.preferences_bp)
     app.register_blueprint(tdee.tdee_bp)
     app.register_blueprint(home.home_bp)
