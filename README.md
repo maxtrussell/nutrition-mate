@@ -20,7 +20,7 @@ Nutrition-mate is a web application for tracking daily calories, macro nutrients
 
 Nutrition-mate is a Flask web application backed by a mySQL database. As of the moment the front end is pure Flask and Bootstrap with no extra javascript or frameworks.
 
-I have an instance running at [https://nutrition-mate.com]. If you would like a registration key, email me at maxtrussell@gmail.com. No promises I can give one to everybody though, as it is currently running an a GCP f1-micro instance (with 0.6 GB memory).
+I have an instance running at https://nutrition-mate.com. If you would like a registration key, email me at maxtrussell@gmail.com. No promises I can give one to everybody though, as it is currently running an a GCP f1-micro instance (with 0.6 GB memory).
 
 ### Install Guide
 
@@ -66,7 +66,7 @@ $ pip install -r requirements.txt
 $ python server.py
 ```
 
-7. In another tab test nutrition-mate
+7. In another terminal test nutrition-mate
 
 ```
 $ curl localhost:5000
