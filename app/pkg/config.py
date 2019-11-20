@@ -31,7 +31,7 @@ class Secrets:
 
 class Server:
     HOST = "0.0.0.0"
-    PORT = "5000"
+    PORT = "5001"
     ADMIN_EMAIL = "bogus@gmail.com"
 
 

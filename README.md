@@ -66,7 +66,7 @@ $ python server.py
 7. In another terminal test nutrition-mate
 
 ```bash
-$ curl localhost:5000
+$ curl localhost:5001
 ```
 
 8. (optional) To seed your admin database with 'verified foods'

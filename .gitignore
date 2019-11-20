@@ -7,3 +7,4 @@ external
 secrets
 *__pycache__
 .vscode
+backups
