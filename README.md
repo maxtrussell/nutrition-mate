@@ -32,9 +32,7 @@ $ cd nutrition-mate
 2. Install dependencies. If you're running MacOS use brew instead. If you're running Windows, you probably know better than I do.
 
 ```bash
-$ sudo apt install python3.7
-$ sudo apt install python3.7-venv
-$ sudo apt install mysql-server
+$ sudo apt install -y python3.7 python3.7-venv mysql-server
 ```
 
 3. Setup mysql database. You can see the script in nutrition-mate/scripts/setup.sql.
@@ -72,7 +70,7 @@ $ curl localhost:5001
 8. (optional) To seed your admin database with 'verified foods'
 
 ```bash
-$ python scripts/seed_foods.py -f data/verified_foods.json --username admin --endpoint localhost:5000/food
+$ python scripts/seed_foods.py -f data/verified_foods.json --username admin --endpoint localhost:5000/api/food
 ```
 
 ## Screenshots

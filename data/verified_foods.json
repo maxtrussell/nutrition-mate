@@ -5,7 +5,7 @@
     "carbs": 4.8,
     "fat": 3.25,
     "fiber": 0,
-    "id": 2,
+    "id": 99,
     "name": "Milk, whole",
     "protein": 3.15,
     "servings": {
@@ -19,7 +19,7 @@
       "Guideline amount per fl oz of beverage": 2.5
     },
     "sugar": 5.05,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -27,7 +27,7 @@
     "carbs": 0.72,
     "fat": 9.51,
     "fiber": 0,
-    "id": 5,
+    "id": 100,
     "name": "Egg, whole, raw",
     "protein": 12.56,
     "servings": {
@@ -41,7 +41,7 @@
       "1g": 1
     },
     "sugar": 0.37,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -49,7 +49,7 @@
     "carbs": 4.8,
     "fat": 1.98,
     "fiber": 0,
-    "id": 8,
+    "id": 101,
     "name": "Milk, reduced fat (2%)",
     "protein": 3.3,
     "servings": {
@@ -63,7 +63,7 @@
       "Guideline amount per fl oz of beverage": 2.5
     },
     "sugar": 5.06,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -71,7 +71,7 @@
     "carbs": 4.99,
     "fat": 0.97,
     "fiber": 0,
-    "id": 9,
+    "id": 102,
     "name": "Milk, low fat (1%)",
     "protein": 3.37,
     "servings": {
@@ -85,7 +85,7 @@
       "Guideline amount per fl oz of beverage": 2.5
     },
     "sugar": 5.2,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -93,7 +93,7 @@
     "carbs": 4.96,
     "fat": 0.08,
     "fiber": 0,
-    "id": 10,
+    "id": 103,
     "name": "Milk, fat free (skim)",
     "protein": 3.37,
     "servings": {
@@ -107,7 +107,7 @@
       "Guideline amount per fl oz of beverage": 2.5
     },
     "sugar": 5.09,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -115,7 +115,7 @@
     "carbs": 0.06,
     "fat": 81.11,
     "fiber": 0,
-    "id": 11,
+    "id": 104,
     "name": "Butter, stick, salted",
     "protein": 0.85,
     "servings": {
@@ -131,7 +131,7 @@
       "one inch of stick": 23
     },
     "sugar": 0.06,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -139,7 +139,7 @@
     "carbs": 0,
     "fat": 3.88,
     "fiber": 0,
-    "id": 12,
+    "id": 105,
     "name": "Chicken, breast, roasted, broiled, or baked, skin not eaten",
     "protein": 30.98,
     "servings": {
@@ -165,7 +165,7 @@
       "1g": 1
     },
     "sugar": 0,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -173,7 +173,7 @@
     "carbs": 0,
     "fat": 100,
     "fiber": 0,
-    "id": 25,
+    "id": 106,
     "name": "Peanut oil",
     "protein": 0,
     "servings": {
@@ -183,7 +183,7 @@
       "1g": 1
     },
     "sugar": 0,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 3.9,
@@ -191,7 +191,7 @@
     "carbs": 3.55,
     "fat": 0,
     "fiber": 0,
-    "id": 26,
+    "id": 107,
     "name": "Beer",
     "protein": 0.46,
     "servings": {
@@ -203,7 +203,7 @@
       "1g": 1
     },
     "sugar": 0,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 7.7,
@@ -211,7 +211,7 @@
     "carbs": 0.27,
     "fat": 0,
     "fiber": 0,
-    "id": 27,
+    "id": 108,
     "name": "Beer, higher alcohol",
     "protein": 0.9,
     "servings": {
@@ -222,7 +222,7 @@
       "1g": 1
     },
     "sugar": 0,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 33.4,
@@ -230,7 +230,7 @@
     "carbs": 0,
     "fat": 0,
     "fiber": 0,
-    "id": 28,
+    "id": 109,
     "name": "Liquor",
     "protein": 0,
     "servings": {
@@ -242,7 +242,7 @@
       "1g": 1
     },
     "sugar": 0,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -250,7 +250,7 @@
     "carbs": 79.34,
     "fat": 0.58,
     "fiber": 1.4,
-    "id": 29,
+    "id": 110,
     "name": "Rice, white, medium-grain, raw, enriched",
     "protein": 6.61,
     "servings": {
@@ -259,7 +259,7 @@
       "1g": 1
     },
     "sugar": 0,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -267,7 +267,7 @@
     "carbs": 64.16,
     "fat": 6.07,
     "fiber": 7,
-    "id": 30,
+    "id": 111,
     "name": "Quinoa, uncooked",
     "protein": 14.12,
     "servings": {
@@ -276,7 +276,7 @@
       "1g": 1
     },
     "sugar": 0,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -284,7 +284,7 @@
     "carbs": 67.5,
     "fat": 7.5,
     "fiber": 10,
-    "id": 31,
+    "id": 112,
     "name": "Oatmeal, rolled, dry",
     "protein": 12.5,
     "servings": {
@@ -293,7 +293,7 @@
       "1g": 1
     },
     "sugar": 2.5,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -301,7 +301,7 @@
     "carbs": 13.81,
     "fat": 0.17,
     "fiber": 2.4,
-    "id": 32,
+    "id": 113,
     "name": "Apple, raw",
     "protein": 0.26,
     "servings": {
@@ -320,7 +320,7 @@
       "1g": 1
     },
     "sugar": 10.39,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -328,7 +328,7 @@
     "carbs": 11.75,
     "fat": 0.12,
     "fiber": 2.4,
-    "id": 33,
+    "id": 114,
     "name": "Orange, raw",
     "protein": 0.94,
     "servings": {
@@ -342,7 +342,7 @@
       "1g": 1
     },
     "sugar": 9.35,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -350,7 +350,7 @@
     "carbs": 11.94,
     "fat": 0.65,
     "fiber": 6.5,
-    "id": 34,
+    "id": 115,
     "name": "Raspberries, red, raw",
     "protein": 1.2,
     "servings": {
@@ -362,7 +362,7 @@
       "1g": 1
     },
     "sugar": 4.42,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -370,7 +370,7 @@
     "carbs": 14.49,
     "fat": 0.33,
     "fiber": 2.4,
-    "id": 35,
+    "id": 116,
     "name": "Blueberries, raw",
     "protein": 0.74,
     "servings": {
@@ -381,7 +381,7 @@
       "50 berries": 68
     },
     "sugar": 9.96,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -389,7 +389,7 @@
     "carbs": 9.61,
     "fat": 0.49,
     "fiber": 5.3,
-    "id": 36,
+    "id": 117,
     "name": "Blackberries, raw",
     "protein": 1.39,
     "servings": {
@@ -400,7 +400,7 @@
       "1g": 1
     },
     "sugar": 4.88,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -408,7 +408,7 @@
     "carbs": 22.84,
     "fat": 0.33,
     "fiber": 2.6,
-    "id": 37,
+    "id": 118,
     "name": "Banana, raw",
     "protein": 1.09,
     "servings": {
@@ -427,7 +427,7 @@
       "1g": 1
     },
     "sugar": 12.23,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -435,7 +435,7 @@
     "carbs": 9.54,
     "fat": 0.25,
     "fiber": 1.5,
-    "id": 38,
+    "id": 119,
     "name": "Peach, raw",
     "protein": 0.91,
     "servings": {
@@ -452,7 +452,7 @@
       "1g": 1
     },
     "sugar": 8.39,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -460,7 +460,7 @@
     "carbs": 7.55,
     "fat": 0.15,
     "fiber": 0.4,
-    "id": 39,
+    "id": 120,
     "name": "Watermelon, raw",
     "protein": 0.61,
     "servings": {
@@ -478,7 +478,7 @@
       "1g": 1
     },
     "sugar": 6.2,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -486,7 +486,7 @@
     "carbs": 8.53,
     "fat": 14.66,
     "fiber": 6.7,
-    "id": 40,
+    "id": 121,
     "name": "Avocado, raw",
     "protein": 2,
     "servings": {
@@ -503,7 +503,7 @@
       "1g": 1
     },
     "sugar": 0.66,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -511,7 +511,7 @@
     "carbs": 22.31,
     "fat": 51.36,
     "fiber": 5,
-    "id": 41,
+    "id": 122,
     "name": "Peanut butter",
     "protein": 22.21,
     "servings": {
@@ -521,7 +521,7 @@
       "Guideline amount per slice of bread/roll": 8
     },
     "sugar": 10.49,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -529,7 +529,7 @@
     "carbs": 21.55,
     "fat": 0.11,
     "fiber": 2.6,
-    "id": 42,
+    "id": 123,
     "name": "White potato, roasted, fat not added in cooking",
     "protein": 2.53,
     "servings": {
@@ -542,7 +542,7 @@
       "1g": 1
     },
     "sugar": 1.01,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -550,7 +550,7 @@
     "carbs": 19.75,
     "fat": 2.54,
     "fiber": 3.1,
-    "id": 43,
+    "id": 124,
     "name": "Sweet potato, NFS",
     "protein": 1.92,
     "servings": {
@@ -562,7 +562,7 @@
       "1g": 1
     },
     "sugar": 6.17,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -570,7 +570,7 @@
     "carbs": 16.13,
     "fat": 49.24,
     "fiber": 8.5,
-    "id": 44,
+    "id": 125,
     "name": "Peanuts, all types, raw",
     "protein": 25.8,
     "servings": {
@@ -580,7 +580,7 @@
       "1g": 1
     },
     "sugar": 4.72,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -588,7 +588,7 @@
     "carbs": 19.61,
     "fat": 52.55,
     "fiber": 11.5,
-    "id": 45,
+    "id": 126,
     "name": "Almonds, NFS",
     "protein": 21.19,
     "servings": {
@@ -599,7 +599,7 @@
       "1g": 1
     },
     "sugar": 4.45,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -607,7 +607,7 @@
     "carbs": 13.86,
     "fat": 71.97,
     "fiber": 9.6,
-    "id": 46,
+    "id": 127,
     "name": "Pecans",
     "protein": 9.17,
     "servings": {
@@ -619,7 +619,7 @@
       "1g": 1
     },
     "sugar": 3.97,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -627,7 +627,7 @@
     "carbs": 13.71,
     "fat": 65.21,
     "fiber": 6.7,
-    "id": 47,
+    "id": 128,
     "name": "Walnuts, NFS",
     "protein": 15.23,
     "servings": {
@@ -642,7 +642,7 @@
       "1g": 1
     },
     "sugar": 2.61,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
@@ -650,7 +650,7 @@
     "carbs": 76.25,
     "fat": 3.2,
     "fiber": 3.6,
-    "id": 48,
+    "id": 129,
     "name": "Rice, brown, long-grain, raw",
     "protein": 7.54,
     "servings": {
@@ -659,46 +659,114 @@
       "1g": 1
     },
     "sugar": 0.66,
-    "user": "testuser"
+    "user": "admin"
   },
   {
     "alcohol": 0,
-    "calories": 123,
-    "carbs": 4.73,
-    "fat": 10.39,
+    "calories": 163,
+    "carbs": 0,
+    "fat": 5.89,
     "fiber": 0,
-    "id": 49,
-    "name": "Cream, half and half",
-    "protein": 3.13,
+    "id": 146,
+    "name": "Ground beef, 95% or more lean, cooked",
+    "protein": 25.58,
     "servings": {
-      "1 cup": 242,
-      "1 fl oz": 30.2,
-      "1 individual container (.5 fl oz)": 15,
+      "1 cocktail meatball": 7,
+      "1 cubic inch, cooked": 15,
+      "1 cubic inch, raw (yield after cooking)": 11.3,
+      "1 cup, cooked": 123,
+      "1 cup, raw, yield cooked": 163,
+      "1 large meatball": 42,
+      "1 large patty (6.5 oz, raw) (yield after cooking)": 133,
+      "1 medium meatball": 28,
+      "1 medium patty (4.5 oz, raw) (yield after cooking)": 92,
+      "1 oz, cooked": 28.35,
+      "1 oz, raw (yield after cooking)": 20,
+      "1 quarter lb patty (1/4 lb, raw) (yield after cooking)": 82,
+      "1 small meatball": 14,
+      "1 small patty (3.5 oz, raw) (yield after cooking)": 72,
       "100g": 100,
-      "1g": 1,
-      "Guideline amount per fl oz of beverage": 2.5
-    },
-    "sugar": 4.13,
-    "user": "testuser"
-  },
-  {
-    "alcohol": 0,
-    "calories": 468,
-    "carbs": 1.7,
-    "fat": 35.09,
-    "fiber": 0,
-    "id": 50,
-    "name": "Bacon or side pork, fresh, cooked",
-    "protein": 33.92,
-    "servings": {
-      "1 medium slice (yield after cooking)": 8,
-      "1 oz, raw (yield after cooking)": 8,
-      "100g": 100,
-      "1g": 1,
-      "Guideline amount if topping": 8,
-      "Guideline amount on regular sandwich": 16
+      "1g": 1
     },
     "sugar": 0,
-    "user": "testuser"
+    "user": "admin"
+  },
+  {
+    "alcohol": 0,
+    "calories": 202,
+    "carbs": 0,
+    "fat": 10.59,
+    "fiber": 0,
+    "id": 147,
+    "name": "Ground beef, 90% - 94% lean, cooked",
+    "protein": 25,
+    "servings": {
+      "1 cubic inch, cooked": 15,
+      "1 cubic inch, raw (yield after cooking)": 11.3,
+      "1 cup, cooked": 123,
+      "1 cup, raw, yield cooked": 163,
+      "1 large patty (6.5 oz, raw) (yield after cooking)": 133,
+      "1 medium patty (4.5 oz, raw) (yield after cooking)": 92,
+      "1 oz, cooked": 28.35,
+      "1 oz, raw (yield after cooking)": 20,
+      "1 quarter lb patty (1/4 lb, raw) (yield after cooking)": 82,
+      "1 small patty (3.5 oz, raw) (yield after cooking)": 72,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0,
+    "user": "admin"
+  },
+  {
+    "alcohol": 0,
+    "calories": 244,
+    "carbs": 0,
+    "fat": 15.81,
+    "fiber": 0,
+    "id": 148,
+    "name": "Ground beef, 80% - 84% lean, cooked (formerly lean)",
+    "protein": 23.84,
+    "servings": {
+      "1 cubic inch, cooked": 15,
+      "1 cubic inch, raw (yield after cooking)": 10.6,
+      "1 cup, cooked": 123,
+      "1 cup, raw, yield cooked": 153,
+      "1 large patty (6.5 oz, raw) (yield after cooking)": 125,
+      "1 medium patty (4.5 oz, raw) (yield after cooking)": 87,
+      "1 oz, cooked": 28.35,
+      "1 oz, raw (yield after cooking)": 19,
+      "1 quarter lb patty (1/4 lb, raw) (yield after cooking)": 77,
+      "1 small patty (3.5 oz, raw) (yield after cooking)": 67,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0,
+    "user": "admin"
+  },
+  {
+    "alcohol": 0,
+    "calories": 230,
+    "carbs": 0,
+    "fat": 13.9,
+    "fiber": 0,
+    "id": 149,
+    "name": "Ground beef, 85% - 89% lean, cooked (formerly extra lean)",
+    "protein": 24.42,
+    "servings": {
+      "1 cubic inch, cooked": 15,
+      "1 cubic inch, raw (yield after cooking)": 10.6,
+      "1 cup, cooked": 123,
+      "1 cup, raw, yield cooked": 153,
+      "1 large patty (6.5 oz, raw) (yield after cooking)": 125,
+      "1 medium patty (4.5 oz, raw) (yield after cooking)": 87,
+      "1 oz, cooked": 28.35,
+      "1 oz, raw (yield after cooking)": 19,
+      "1 quarter lb patty (1/4 lb, raw) (yield after cooking)": 77,
+      "1 small patty (3.5 oz, raw) (yield after cooking)": 67,
+      "100g": 100,
+      "1g": 1
+    },
+    "sugar": 0,
+    "user": "admin"
   }
 ]
