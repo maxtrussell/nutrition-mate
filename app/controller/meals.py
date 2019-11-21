@@ -36,4 +36,5 @@ def meals_handler():
 @login_required
 def meal_handler(id: int):
     meal = _meal.get_by_id(get_db(config), config.db.MEALS, id)
+    meal.get_ingredients(get_db(config), config.db.INGREDIENTS, config.db.FOODS)
     return render_template("meal.html", meal=meal)

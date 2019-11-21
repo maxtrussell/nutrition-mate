@@ -11,6 +11,7 @@ def get_by_id(db, table_name, id):
     meal = Meal(
         name=result["name"],
         username=result["username"],
+        servings=result["servings"],
     )
     meal.id = result["id"]
     return meal
@@ -25,6 +26,7 @@ def get_by_username(db, table_name, username):
         meal = Meal(
             name=result["name"],
             username=result["username"],
+            servings=result["servings"],
         )
         meal.id = result["id"]
         meals.append(meal)
@@ -35,11 +37,13 @@ class Meal():
         self,
         name: str,
         username: str,
+        servings: int,
         ingredients: t.List[ingredient.Ingredient]=[],
     ):
         self.id = -1
         self.name = name
         self.username = username
+        self.servings = servings
         self.ingredients = ingredients
 
     def insert(self, db, table_name):

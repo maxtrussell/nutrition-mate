@@ -3,8 +3,25 @@
 
 
 <div class="blog">
-    <h2>{{ meal.name }}</h2>
-    <h3>Ingredients</h3>
+    <h2>
+        {{ meal.name }}
+        <button type="button" class="btn btn-default" style="float: right;">Edit</button>
+    </h2>
+    <form action="/log/add" method="post" autocomplete="off" class="pad-vert form-inline">
+        <input name="quantity" type="number" step="0.01" placeholder="1.00" class="form-control" required="true"></input>
+        Servings
+        <input name="id" type="hidden" value=""></input>
+        <input type="date" name="selectedDate" class="form-control">
+        <button type="submit" class="btn btn-primary pad-left">Add to Log</button>
+    </form>
+    <hr>
+    <p>
+        Makes {{ meal.servings }} serving{% if meal.servings != 1 %}s{% endif %}.
+    </p>
+    <h3>
+        Ingredients
+        <button type="button" class="btn btn-default" style="float: right;">Add Ingredient</button>
+    </h3>
     <ul>
         {% for ingredient in meal.ingredients %}
         <form action="/ingredients/{{ ingredient.id }}" method="delete">
@@ -14,14 +31,19 @@
             </li>
         </form>
         {% endfor %}
-        <form action="/ingredients/1" method="delete">
-            <li>Test food, 1 cup (244g)
-                <input type="submit" class="btn btn-link" value="Delete">
-            </li>
-        </form>
     </ul>
 
-    <button type="button" class="btn btn-default">Add Ingredient</button>
+    <h3>Nutrition Facts (per serving)</h3>
+    <ul>
+        <li>Calories: {{ (meal.total.calories / meal.servings) | round | int }}</li>
+        <li>Fat: {{ (meal.total.fat / meal.servings) | round | int }}</li>
+        <li>Carbs: {{ (meal.total.carbs / meal.servings) | round | int }}</li>
+        <li>Protein: {{ (meal.total.protein / meal.servings) | round | int }}</li>
+        <li>Fiber: {{ (meal.total.fiber / meal.servings) | round | int }}</li>
+        <li>Sugar: {{ (meal.total.sugar / meal.servings) | round | int }}</li>
+    </ul>
+
+
 </div>
     
 
