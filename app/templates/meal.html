@@ -7,27 +7,16 @@
         {{ meal.name }}
         <button type="button" class="btn btn-default" style="float: right;">Edit</button>
     </h2>
-    <form action="/log/add" method="post" autocomplete="off" class="pad-vert form-inline">
-        <input name="quantity" type="number" step="0.01" placeholder="1.00" class="form-control" required="true"></input>
-        Servings
-        <input name="id" type="hidden" value=""></input>
-        <input type="date" name="selectedDate" class="form-control">
-        <button type="submit" class="btn btn-primary pad-left">Add to Log</button>
-    </form>
     <hr>
     <p>
         Makes {{ meal.servings }} serving{% if meal.servings != 1 %}s{% endif %}.
     </p>
-    <h3>
-        Ingredients
-        <button type="button" class="btn btn-default" style="float: right;">Add Ingredient</button>
-    </h3>
+    <h3>Ingredients</h3>
     <ul>
         {% for ingredient in meal.ingredients %}
         <form action="/ingredients/{{ ingredient.id }}" method="delete">
             <li>
             {{ ingredient.food.name }}, {{ ingredient.serving_label }} ({{ ingredient.quantity }}g)
-                <input type="submit" class="btn btn-link" value="Delete">
             </li>
         </form>
         {% endfor %}
