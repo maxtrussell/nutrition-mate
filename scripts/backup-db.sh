@@ -13,8 +13,8 @@ num_backups=$(ls $backups_dir | wc -l)
 
 if [ $num_backups -ge $backups_limit ]; then
     let num_to_remove=$num_backups-$backups_limit
-    rm $(ls $backups_dir | sort -r | tail -n $num_to_remove)
+    rm $(find $backups_dir -name *.gz | sort -r | tail -n $num_to_remove)
 fi
 
 # 3. sync backups with gcp bucket
-gsutil rsync /opt/nutrition-mate/backups gs://nutrition-mate/
+gsutil rsync -d /opt/nutrition-mate/backups gs://nutrition-mate/
