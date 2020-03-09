@@ -37,10 +37,16 @@ def post_food():
 
 @bp.route("/api/food", methods=["DELETE"])
 @basic_auth.login_required
-def delete_food():
+def delete_foods():
     ids = request.json.get("ids")
     for food_id in ids:
         _food.delete_by_id(get_db(config), config.db.FOODS, food_id, g.current_user.username)
+    return jsonify({"success": True})
+
+@bp.route("/api/food/<id>", methods=["DELETE"])
+@basic_auth.login_required
+def delete_food(id: int):
+    _food.delete_by_id(get_db(config), config.db.FOODS, id, g.current_user.username)
     return jsonify({"success": True})
 
 def _add_food(data: t.Dict):
